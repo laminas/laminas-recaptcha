@@ -8,9 +8,9 @@
  * @package   Zend_Service
  */
 
-namespace ZendTest\Service\ReCaptcha;
+namespace ZendServiceTest\ReCaptcha;
 
-use Zend\Service\ReCaptcha;
+use ZendService\ReCaptcha;
 
 /**
  * @category   Zend
@@ -28,10 +28,10 @@ class MailHideTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         if (!extension_loaded('mcrypt')) {
-            $this->markTestSkipped('Zend\Service\ReCaptcha tests skipped due to missing mcrypt extension');
+            $this->markTestSkipped('ZendService\ReCaptcha tests skipped due to missing mcrypt extension');
         }
         if ($this->publicKey == 'public mailhide key' || $this->privateKey == 'private mailhide key') {
-            $this->markTestSkipped('Zend\Service\ReCaptcha\MailHide tests skipped due to missing keys');
+            $this->markTestSkipped('ZendService\ReCaptcha\MailHide tests skipped due to missing keys');
         }
         $this->mailHide = new ReCaptcha\MailHide();
     }

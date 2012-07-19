@@ -8,7 +8,7 @@
  * @package   Zend_Service
  */
 
-namespace Zend\Service\ReCaptcha;
+namespace ZendService\ReCaptcha;
 
 use Zend\Http\Response as HTTPResponse;
 
@@ -66,7 +66,7 @@ class Response
      * Set the status
      *
      * @param string $status
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return \ZendService\ReCaptcha\Response
      */
     public function setStatus($status)
     {
@@ -103,7 +103,7 @@ class Response
      * Set the error code
      *
      * @param string $errorCode
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return \ZendService\ReCaptcha\Response
      */
     public function setErrorCode($errorCode)
     {
@@ -126,7 +126,7 @@ class Response
      * Populate this instance based on a Zend_Http_Response object
      *
      * @param \Zend\Http\Response $response
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return \ZendService\ReCaptcha\Response
      */
     public function setFromHttpResponse(HTTPResponse $response)
     {

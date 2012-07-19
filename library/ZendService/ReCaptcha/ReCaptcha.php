@@ -8,7 +8,7 @@
  * @package   Zend_Service
  */
 
-namespace Zend\Service\ReCaptcha;
+namespace ZendService\ReCaptcha;
 
 use Traversable;
 use Zend\Http\Client as HttpClient;
@@ -100,7 +100,7 @@ class ReCaptcha
     /**
      * Response from the verify server
      *
-     * @var \Zend\Service\ReCaptcha\Response
+     * @var \ZendService\ReCaptcha\Response
      */
     protected $_response = null;
 
@@ -176,7 +176,7 @@ class ReCaptcha
      * Set the ip property
      *
      * @param string $ip
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
+     * @return \ZendService\ReCaptcha\ReCaptcha
      */
     public function setIp($ip)
     {
@@ -200,7 +200,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
+     * @return \ZendService\ReCaptcha\ReCaptcha
      */
     public function setParam($key, $value)
     {
@@ -213,8 +213,8 @@ class ReCaptcha
      * Set parameters
      *
      * @param  array|Traversable $params
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
-     * @throws \Zend\Service\ReCaptcha\Exception
+     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @throws \ZendService\ReCaptcha\Exception
      */
     public function setParams($params)
     {
@@ -263,7 +263,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
+     * @return \ZendService\ReCaptcha\ReCaptcha
      */
     public function setOption($key, $value)
     {
@@ -276,8 +276,8 @@ class ReCaptcha
      * Set options
      *
      * @param  array|Traversable $options
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
-     * @throws \Zend\Service\ReCaptcha\Exception
+     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @throws \ZendService\ReCaptcha\Exception
      */
     public function setOptions($options)
     {
@@ -333,7 +333,7 @@ class ReCaptcha
      * Set the public key
      *
      * @param string $publicKey
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
+     * @return \ZendService\ReCaptcha\ReCaptcha
      */
     public function setPublicKey($publicKey)
     {
@@ -356,7 +356,7 @@ class ReCaptcha
      * Set the private key
      *
      * @param string $privateKey
-     * @return \Zend\Service\ReCaptcha\ReCaptcha
+     * @return \ZendService\ReCaptcha\ReCaptcha
      */
     public function setPrivateKey($privateKey)
     {
@@ -372,7 +372,7 @@ class ReCaptcha
      *
      * @param null|string $name Base name for recaptcha form elements
      * @return string
-     * @throws \Zend\Service\ReCaptcha\Exception
+     * @throws \ZendService\ReCaptcha\Exception
      */
     public function getHtml($name = null)
     {
@@ -443,7 +443,7 @@ HTML;
      * @param string $challengeField
      * @param string $responseField
      * @return \Zend\Http\Response
-     * @throws \Zend\Service\ReCaptcha\Exception
+     * @throws \ZendService\ReCaptcha\Exception
      */
     protected function post($challengeField, $responseField)
     {
@@ -488,7 +488,7 @@ HTML;
      *
      * @param string $challengeField
      * @param string $responseField
-     * @return \Zend\Service\ReCaptcha\Response
+     * @return \ZendService\ReCaptcha\Response
      */
     public function verify($challengeField, $responseField)
     {

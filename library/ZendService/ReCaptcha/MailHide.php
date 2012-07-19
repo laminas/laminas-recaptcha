@@ -8,7 +8,7 @@
  * @package   Zend_Service
  */
 
-namespace Zend\Service\ReCaptcha;
+namespace ZendService\ReCaptcha;
 
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
@@ -121,7 +121,7 @@ class MailHide extends ReCaptcha
      * Set email validator
      *
      * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @return \ZendService\ReCaptcha\MailHide
      */
     public function setEmailValidator(\Zend\Validator\ValidatorInterface $validator)
     {
@@ -133,7 +133,7 @@ class MailHide extends ReCaptcha
     /**
      * See if the mcrypt extension is available
      *
-     * @throws \Zend\Service\ReCaptcha\MailHideException
+     * @throws \ZendService\ReCaptcha\MailHideException
      */
     protected function _requireMcrypt()
     {
@@ -184,7 +184,7 @@ class MailHide extends ReCaptcha
      * Override the parent method to store a binary representation of the private key as well.
      *
      * @param string $privateKey
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @return \ZendService\ReCaptcha\MailHide
      */
     public function setPrivateKey($privateKey)
     {
@@ -202,7 +202,7 @@ class MailHide extends ReCaptcha
      * This method will set the email property along with the local and domain parts
      *
      * @param string $email
-     * @return \Zend\Service\ReCaptcha\MailHide
+     * @return \ZendService\ReCaptcha\MailHide
      */
     public function setEmail($email)
     {
@@ -265,7 +265,7 @@ class MailHide extends ReCaptcha
      *
      * @param string $email
      * @return string
-     * @throws \Zend\Service\ReCaptcha\MailHideException
+     * @throws \ZendService\ReCaptcha\MailHideException
      */
     public function getHtml($email = null)
     {

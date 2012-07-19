@@ -8,10 +8,10 @@
  * @package   Zend_Service
  */
 
-namespace ZendTest\Service\ReCaptcha;
+namespace ZendServiceTest\ReCaptcha;
 
-use Zend\Service\ReCaptcha\ReCaptcha;
-use Zend\Service\ReCaptcha\Response as ReCaptchaResponse;
+use ZendService\ReCaptcha\ReCaptcha;
+use ZendService\ReCaptcha\Response as ReCaptchaResponse;
 use Zend\Config;
 
 /**

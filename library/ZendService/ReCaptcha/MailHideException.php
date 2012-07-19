@@ -8,7 +8,7 @@
  * @package   Zend_Service
  */
 
-namespace Zend\Service\ReCaptcha;
+namespace ZendService\ReCaptcha;
 
 /**
  * Zend_Service_ReCaptcha_MailHide_Exception
