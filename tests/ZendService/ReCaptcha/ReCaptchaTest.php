@@ -213,21 +213,6 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');
 
-        if (defined('TESTS_ZEND_SERVICE_RECAPTCHA_ONLINE_ENABLED') &&
-            constant('TESTS_ZEND_SERVICE_RECAPTCHA_ONLINE_ENABLED')) {
-
-            $this->_testVerifyOnline();
-        } else {
-            $this->_testVerifyOffline();
-        }
-    }
-
-    protected function _testVerifyOnline()
-    {
-    }
-
-    protected function _testVerifyOffline()
-    {
         $adapter = new \Zend\Http\Client\Adapter\Test();
         $client = new \Zend\Http\Client(null, array(
             'adapter' => $adapter
