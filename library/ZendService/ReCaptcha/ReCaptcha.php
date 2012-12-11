@@ -455,14 +455,6 @@ HTML;
             throw new Exception('Missing ip address');
         }
 
-        if (empty($challengeField)) {
-            throw new Exception('Missing challenge field');
-        }
-
-        if (empty($responseField)) {
-            throw new Exception('Missing response field');
-        }
-
         /* Fetch an instance of the http client */
         $httpClient = $this->getHttpClient();
 

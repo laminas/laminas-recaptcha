@@ -270,19 +270,17 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testVerifyWithMissingChallengeField()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
-
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');
-        $this->reCaptcha->verify('', 'response');
+        $response = $this->reCaptcha->verify('', 'response');
+        $this->assertFalse($response->getStatus());
     }
 
     public function testVerifyWithMissingResponseField()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
-
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');
-        $this->reCaptcha->verify('challenge', '');
+        $response = $this->reCaptcha->verify('challenge', '');
+        $this->assertFalse($response->getStatus());
     }
 }
