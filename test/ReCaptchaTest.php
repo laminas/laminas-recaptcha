@@ -1,31 +1,18 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\ReCaptcha;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use ZendService\ReCaptcha\ReCaptcha;
 use ZendService\ReCaptcha\Response as ReCaptchaResponse;
 use Zend\Config;
 
-/**
- * @category   Zend
- * @package    Zend_Service_ReCaptcha
- * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_ReCaptcha
- */
-class ReCaptchaTest extends \PHPUnit_Framework_TestCase
+class ReCaptchaTest extends TestCase
 {
-    protected $publicKey = TESTS_ZEND_SERVICE_RECAPTCHA_PUBLIC_KEY;
-    protected $privateKey = TESTS_ZEND_SERVICE_RECAPTCHA_PRIVATE_KEY;
-
     /**
      * @var ReCaptcha
      */
@@ -33,6 +20,17 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->publicKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_PUBLIC_KEY');
+        $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_PRIVATE_KEY');
+
+        if (empty($this->publicKey)
+            || $this->publicKey == 'public key'
+            || empty($this->privateKey)
+            || $this->privateKey == 'private key'
+        ) {
+            $this->markTestSkipped('ZendService\ReCaptcha\ReCaptcha tests skipped due to missing keys');
+        }
+
         $this->reCaptcha = new ReCaptcha();
     }
 
@@ -68,11 +66,11 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testMultipleParams()
     {
-        $params = array(
+        $params = [
             'ssl' => true,
             'error' => 'errorMsg',
             'xhtml' => true,
-        );
+        ];
 
         $this->reCaptcha->setParams($params);
         $_params = $this->reCaptcha->getParams();
@@ -98,10 +96,10 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testMultipleOptions()
     {
-        $options = array(
+        $options = [
             'theme' => 'black',
             'lang' => 'no',
-        );
+        ];
 
         $this->reCaptcha->setOptions($options);
         $_options = $this->reCaptcha->getOptions();
@@ -112,11 +110,11 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetMultipleParamsFromZendConfig()
     {
-        $params = array(
+        $params = [
             'ssl' => true,
             'error' => 'errorMsg',
             'xhtml' => true,
-        );
+        ];
 
         $config = new Config\Config($params);
 
@@ -137,10 +135,10 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetMultipleOptionsFromZendConfig()
     {
-        $options = array(
+        $options = [
             'theme' => 'black',
             'lang' => 'no',
-        );
+        ];
 
         $config = new Config\Config($options);
 
@@ -160,16 +158,16 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        $params = array(
+        $params = [
             'ssl' => true,
             'error' => 'errorMsg',
             'xhtml' => true,
-        );
+        ];
 
-        $options = array(
+        $options = [
             'theme' => 'black',
             'lang' => 'no',
-        );
+        ];
 
         $ip = '127.0.0.1';
 
@@ -214,9 +212,9 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->reCaptcha->setIp('127.0.0.1');
 
         $adapter = new \Zend\Http\Client\Adapter\Test();
-        $client = new \Zend\Http\Client(null, array(
+        $client = new \Zend\Http\Client(null, [
             'adapter' => $adapter
-        ));
+        ]);
 
         $this->reCaptcha->setHttpClient($client);
 
@@ -241,7 +239,18 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame(false, strstr($html, 'var RecaptchaOptions = {"theme":"red","lang":"en"};'));
 
         // See if the js/iframe src is correct
-        $this->assertNotSame(false, strstr($html, 'src="' . ReCaptcha::API_SECURE_SERVER . '/challenge?k=' . $this->publicKey . '&error=' . $errorMsg . '"'));
+        $this->assertNotSame(
+            false,
+            strstr(
+                $html,
+                sprintf(
+                    'src="%s/challenge?k=%s&error=%s"',
+                    ReCaptcha::API_SECURE_SERVER,
+                    $this->publicKey,
+                    $errorMsg
+                )
+            )
+        );
     }
 
     /** @group ZF-10991 */

@@ -1,27 +1,19 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\ReCaptcha;
 
+use Exception as PhpException;
 use Traversable;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Request as HttpRequest;
 use Zend\Stdlib\ArrayUtils;
 
-
 /**
- * Zend_Service_ReCaptcha
- *
- * @category   Zend
- * @package    Zend_Service
- * @subpackage ReCaptcha
+ * Render and verify ReCaptchas
  */
 class ReCaptcha
 {
@@ -72,25 +64,25 @@ class ReCaptcha
      *
      * @var array
      */
-    protected $params = array(
-        'ssl' => false, /* Use SSL or not when generating the recaptcha */
-        'error' => null, /* The error message to display in the recaptcha */
-        'xhtml' => false /* Enable XHTML output (this will not be XHTML Strict
-                            compliant since the IFRAME is necessary when
-                            Javascript is disabled) */
-    );
+    protected $params = [
+        'ssl' => false,  // Use SSL or not when generating the recaptcha
+        'error' => null, // The error message to display in the recaptcha
+        'xhtml' => false // Enable XHTML output (this will not be XHTML Strict
+                         // compliant since the IFRAME is necessary when
+                         // Javascript is disabled)
+    ];
 
     /**
      * Options for tailoring reCaptcha
      *
      * See the different options on http://recaptcha.net/apidocs/captcha/client.html
      *
-     * @var array
+     * @var string[]
      */
-    protected $options = array(
+    protected $options = [
         'theme' => 'red',
-        'lang' => 'en',
-    );
+        'lang'  => 'en',
+    ];
 
     /**
      * @var HttpClient
@@ -100,9 +92,9 @@ class ReCaptcha
     /**
      * Response from the verify server
      *
-     * @var \ZendService\ReCaptcha\Response
+     * @var Response
      */
-    protected $_response = null;
+    protected $response = null;
 
     /**
      * Class constructor
@@ -113,8 +105,14 @@ class ReCaptcha
      * @param array|Traversable $options
      * @param string $ip
      */
-    public function __construct($publicKey = null, $privateKey = null, $params = null, $options = null, $ip = null, HttpClient $httpClient = null)
-    {
+    public function __construct(
+        $publicKey = null,
+        $privateKey = null,
+        $params = null,
+        $options = null,
+        $ip = null,
+        HttpClient $httpClient = null
+    ) {
         if ($publicKey !== null) {
             $this->setPublicKey($publicKey);
         }
@@ -164,7 +162,7 @@ class ReCaptcha
     {
         try {
             $return = $this->getHtml();
-        } catch (\Exception $e) {
+        } catch (PhpException $e) {
             $return = '';
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
@@ -176,7 +174,7 @@ class ReCaptcha
      * Set the ip property
      *
      * @param string $ip
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return ReCaptcha
      */
     public function setIp($ip)
     {
@@ -200,7 +198,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return ReCaptcha
      */
     public function setParam($key, $value)
     {
@@ -213,8 +211,8 @@ class ReCaptcha
      * Set parameters
      *
      * @param  array|Traversable $params
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return ReCaptcha
+     * @throws Exception
      */
     public function setParams($params)
     {
@@ -263,7 +261,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return ReCaptcha
      */
     public function setOption($key, $value)
     {
@@ -276,8 +274,8 @@ class ReCaptcha
      * Set options
      *
      * @param  array|Traversable $options
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return ReCaptcha
+     * @throws Exception
      */
     public function setOptions($options)
     {
@@ -333,7 +331,7 @@ class ReCaptcha
      * Set the public key
      *
      * @param string $publicKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return ReCaptcha
      */
     public function setPublicKey($publicKey)
     {
@@ -356,7 +354,7 @@ class ReCaptcha
      * Set the private key
      *
      * @param string $privateKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return ReCaptcha
      */
     public function setPrivateKey($privateKey)
     {
@@ -372,7 +370,7 @@ class ReCaptcha
      *
      * @param null|string $name Base name for recaptcha form elements
      * @return string
-     * @throws \ZendService\ReCaptcha\Exception
+     * @throws Exception
      */
     public function getHtml($name = null)
     {
@@ -443,7 +441,7 @@ HTML;
      * @param string $challengeField
      * @param string $responseField
      * @return \Zend\Http\Response
-     * @throws \ZendService\ReCaptcha\Exception
+     * @throws Exception
      */
     protected function post($challengeField, $responseField)
     {
@@ -458,10 +456,10 @@ HTML;
         /* Fetch an instance of the http client */
         $httpClient = $this->getHttpClient();
 
-        $postParams = array('privatekey' => $this->privateKey,
+        $postParams = ['privatekey' => $this->privateKey,
                             'remoteip'   => $this->ip,
                             'challenge'  => $challengeField,
-                            'response'   => $responseField);
+                            'response'   => $responseField];
 
         $request = new HttpRequest;
         $request->setUri(self::VERIFY_SERVER);
@@ -480,7 +478,7 @@ HTML;
      *
      * @param string $challengeField
      * @param string $responseField
-     * @return \ZendService\ReCaptcha\Response
+     * @return Response
      */
     public function verify($challengeField, $responseField)
     {

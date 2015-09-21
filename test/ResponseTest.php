@@ -1,61 +1,51 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\ReCaptcha;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use ZendService\ReCaptcha;
 use Zend\Http\Response;
 
-/**
- * @category   Zend
- * @package    Zend_Service_ReCaptcha
- * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_ReCaptcha
- */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
-    protected $_response = null;
+    protected $response = null;
 
     public function setUp()
     {
-        $this->_response = new ReCaptcha\Response();
+        $this->response = new ReCaptcha\Response();
     }
 
     public function testSetAndGet()
     {
         /* Set and get status */
         $status = 'true';
-        $this->_response->setStatus($status);
-        $this->assertSame(true, $this->_response->getStatus());
+        $this->response->setStatus($status);
+        $this->assertSame(true, $this->response->getStatus());
 
         $status = 'false';
-        $this->_response->setStatus($status);
-        $this->assertSame(false, $this->_response->getStatus());
+        $this->response->setStatus($status);
+        $this->assertSame(false, $this->response->getStatus());
 
         /* Set and get the error code */
         $errorCode = 'foobar';
-        $this->_response->setErrorCode($errorCode);
-        $this->assertSame($errorCode, $this->_response->getErrorCode());
+        $this->response->setErrorCode($errorCode);
+        $this->assertSame($errorCode, $this->response->getErrorCode());
     }
 
     public function testIsValid()
     {
-        $this->_response->setStatus('true');
-        $this->assertSame(true, $this->_response->isValid());
+        $this->response->setStatus('true');
+        $this->assertSame(true, $this->response->isValid());
     }
 
     public function testIsInvalid()
     {
-        $this->_response->setStatus('false');
-        $this->assertSame(false, $this->_response->isValid());
+        $this->response->setStatus('false');
+        $this->assertSame(false, $this->response->isValid());
     }
 
     public function testSetFromHttpResponse()
@@ -68,10 +58,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
         $httpResponse->setContent($responseBody);
 
-        $this->_response->setFromHttpResponse($httpResponse);
+        $this->response->setFromHttpResponse($httpResponse);
 
-        $this->assertSame(false, $this->_response->getStatus());
-        $this->assertSame($errorCode, $this->_response->getErrorCode());
+        $this->assertSame(false, $this->response->getStatus());
+        $this->assertSame($errorCode, $this->response->getErrorCode());
     }
 
     public function testConstructor()
