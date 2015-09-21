@@ -1,11 +1,7 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\ReCaptcha;
@@ -13,11 +9,7 @@ namespace ZendService\ReCaptcha;
 use Zend\Http\Response as HTTPResponse;
 
 /**
- * Zend_Service_ReCaptcha_Response
- *
- * @category   Zend
- * @package    Zend_Service
- * @subpackage ReCaptcha
+ * Model responses from the ReCaptcha and Mailhide APIs.
  */
 class Response
 {
@@ -45,7 +37,7 @@ class Response
      *
      * @param string $status
      * @param string $errorCode
-     * @param \Zend\Http\Response $httpResponse If this is set the content will override $status and $errorCode
+     * @param HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
     public function __construct($status = null, $errorCode = null, HTTPResponse $httpResponse = null)
     {
@@ -66,7 +58,7 @@ class Response
      * Set the status
      *
      * @param string $status
-     * @return \ZendService\ReCaptcha\Response
+     * @return Response
      */
     public function setStatus($status)
     {
@@ -103,7 +95,7 @@ class Response
      * Set the error code
      *
      * @param string $errorCode
-     * @return \ZendService\ReCaptcha\Response
+     * @return Response
      */
     public function setErrorCode($errorCode)
     {
@@ -125,8 +117,8 @@ class Response
     /**
      * Populate this instance based on a Zend_Http_Response object
      *
-     * @param \Zend\Http\Response $response
-     * @return \ZendService\ReCaptcha\Response
+     * @param HTTPResponse $response
+     * @return Response
      */
     public function setFromHttpResponse(HTTPResponse $response)
     {
