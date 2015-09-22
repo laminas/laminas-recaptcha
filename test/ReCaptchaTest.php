@@ -225,7 +225,7 @@ class ReCaptchaTest extends TestCase
         // See if the js/iframe src is correct
         $this->assertNotSame(
             true,
-            strstr($html,'<iframe')
+            strstr($html, '<iframe')
         );
     }
 

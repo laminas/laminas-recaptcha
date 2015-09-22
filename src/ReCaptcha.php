@@ -57,9 +57,9 @@ class ReCaptcha
      *
      * @var array
      */
-    protected $params = array(
+    protected $params = [
         'noscript' => false, /* Includes the <noscript> tag */
-    );
+    ];
 
     /**
      * Options for tailoring reCaptcha
