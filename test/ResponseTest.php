@@ -22,37 +22,44 @@ class ResponseTest extends TestCase
     public function testSetAndGet()
     {
         /* Set and get status */
-        $status = 'true';
+        $status = true;
         $this->response->setStatus($status);
         $this->assertSame(true, $this->response->getStatus());
 
-        $status = 'false';
+        $status = false;
         $this->response->setStatus($status);
         $this->assertSame(false, $this->response->getStatus());
 
-        /* Set and get the error code */
-        $errorCode = 'foobar';
-        $this->response->setErrorCode($errorCode);
-        $this->assertSame($errorCode, $this->response->getErrorCode());
+        /* Set and get the error codes */
+        $errorCodes = 'foobar';
+        $this->response->setErrorCodes($errorCodes);
+        $this->assertSame([$errorCodes], $this->response->getErrorCodes());
+
+        $errorCodes = ['foo', 'bar'];
+        $this->response->setErrorCodes($errorCodes);
+        $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
     public function testIsValid()
     {
-        $this->response->setStatus('true');
+        $this->response->setStatus(true);
         $this->assertSame(true, $this->response->isValid());
     }
 
     public function testIsInvalid()
     {
-        $this->response->setStatus('false');
+        $this->response->setStatus(false);
         $this->assertSame(false, $this->response->isValid());
     }
 
     public function testSetFromHttpResponse()
     {
-        $status       = 'false';
-        $errorCode    = 'foobar';
-        $responseBody = $status . "\n" . $errorCode;
+        $status       = false;
+        $errorCodes    = ['foo', 'bar'];
+        $responseBody = json_encode([
+            'success' => $status,
+            'error-codes' => $errorCodes
+        ]);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);
         $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
@@ -61,25 +68,28 @@ class ResponseTest extends TestCase
         $this->response->setFromHttpResponse($httpResponse);
 
         $this->assertSame(false, $this->response->getStatus());
-        $this->assertSame($errorCode, $this->response->getErrorCode());
+        $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
     public function testConstructor()
     {
-        $status = 'true';
-        $errorCode = 'ok';
+        $status = true;
+        $errorCodes = ['ok'];
 
-        $response = new ReCaptcha\Response($status, $errorCode);
+        $response = new ReCaptcha\Response($status, $errorCodes);
 
         $this->assertSame(true, $response->getStatus());
-        $this->assertSame($errorCode, $response->getErrorCode());
+        $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 
     public function testConstructorWithHttpResponse()
     {
-        $status       = 'false';
-        $errorCode    = 'foobar';
-        $responseBody = $status . "\n" . $errorCode;
+        $status       = false;
+        $errorCodes   = ['foobar'];
+        $responseBody = json_encode([
+            'success' => $status,
+            'error-codes' => $errorCodes
+        ]);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);
         $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
@@ -88,6 +98,6 @@ class ResponseTest extends TestCase
         $response = new ReCaptcha\Response(null, null, $httpResponse);
 
         $this->assertSame(false, $response->getStatus());
-        $this->assertSame($errorCode, $response->getErrorCode());
+        $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 }
