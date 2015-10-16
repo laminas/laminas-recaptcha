@@ -399,7 +399,7 @@ class ReCaptcha
 
         $return = <<<HTML
 <script type="text/javascript" src="{$host}.js{$langOption}" async defer></script>
-<div id="recaptcha_widget" class="g-recaptcha" $data></div>
+<div class="g-recaptcha" $data></div>
 HTML;
 
         if ($this->params['noscript']) {
