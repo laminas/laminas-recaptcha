@@ -22,14 +22,14 @@ class ReCaptcha
      *
      * @var string
      */
-    const API_SERVER = 'http://www.google.com/recaptcha/api';
+    const API_SERVER = 'https://www.google.com/recaptcha/api';
 
     /**
      * URI to the verify server
      *
      * @var string
      */
-    const VERIFY_SERVER = 'http://www.google.com/recaptcha/api/siteverify';
+    const VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify';
 
     /**
      * Site key used when displaying the captcha
