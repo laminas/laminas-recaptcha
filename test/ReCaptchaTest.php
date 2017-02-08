@@ -6,7 +6,7 @@
 
 namespace ZendServiceTest\ReCaptcha;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use ZendService\ReCaptcha\ReCaptcha;
 use ZendService\ReCaptcha\Response as ReCaptchaResponse;
 use Zend\Config;
@@ -120,7 +120,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidParams()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('ZendService\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setParams($var);
     }
@@ -143,7 +143,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidOptions()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('ZendService\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setOptions($var);
     }
@@ -188,7 +188,7 @@ class ReCaptchaTest extends TestCase
 
     public function testGetHtmlWithNoPublicKey()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('ZendService\\ReCaptcha\\Exception');
 
         $this->reCaptcha->getHtml();
     }
@@ -250,14 +250,14 @@ class ReCaptchaTest extends TestCase
 
     public function testVerifyWithMissingSecretKey()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('ZendService\\ReCaptcha\\Exception');
 
         $this->reCaptcha->verify('challenge', 'response');
     }
 
     public function testVerifyWithMissingIp()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('ZendService\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->verify('challenge', 'response');

@@ -6,7 +6,7 @@
 
 namespace ZendServiceTest\ReCaptcha;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use ZendService\ReCaptcha;
 use Zend\Http\Response;
 
