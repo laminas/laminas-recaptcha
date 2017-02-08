@@ -1,0 +1,23 @@
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="ZendService ReCaptcha Test Suite">
+            <directory>./test</directory>
+        </testsuite>
+    </testsuites>
+
+    <groups>
+        <exclude>
+            <group>disable</group>
+        </exclude>
+    </groups>
+
+    <php>
+        <ini name="date.timezone" value="UTC"/>
+
+        <!-- ZendService\ReCaptcha online test env variables -->
+        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY" value="site key"/>
+        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY" value="secret key"/>
+        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY" value="public mailhide key"/>
+        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY" value="private mailhide key"/>
+    </php>
+</phpunit>

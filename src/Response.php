@@ -1,11 +1,7 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendService\ReCaptcha;
@@ -13,11 +9,7 @@ namespace ZendService\ReCaptcha;
 use Zend\Http\Response as HTTPResponse;
 
 /**
- * Zend_Service_ReCaptcha_Response
- *
- * @category   Zend
- * @package    Zend_Service
- * @subpackage ReCaptcha
+ * Model responses from the ReCaptcha and Mailhide APIs.
  */
 class Response
 {
@@ -31,30 +23,30 @@ class Response
     protected $status = null;
 
     /**
-     * Error code
+     * Error codes
      *
-     * The error code if the status is false. The different error codes can be found in the
+     * The error codes if the status is false. The different error codes can be found in the
      * recaptcha API docs.
      *
-     * @var string
+     * @var array
      */
-    protected $errorCode = null;
+    protected $errorCodes = [];
 
     /**
      * Class constructor used to construct a response
      *
      * @param string $status
-     * @param string $errorCode
+     * @param array $errorCodes
      * @param \Zend\Http\Response $httpResponse If this is set the content will override $status and $errorCode
      */
-    public function __construct($status = null, $errorCode = null, HTTPResponse $httpResponse = null)
+    public function __construct($status = null, $errorCodes = [], HTTPResponse $httpResponse = null)
     {
         if ($status !== null) {
             $this->setStatus($status);
         }
 
-        if ($errorCode !== null) {
-            $this->setErrorCode($errorCode);
+        if (!empty($errorCodes)) {
+            $this->setErrorCodes($errorCodes);
         }
 
         if ($httpResponse !== null) {
@@ -65,16 +57,12 @@ class Response
     /**
      * Set the status
      *
-     * @param string $status
+     * @param boolean $status
      * @return \ZendService\ReCaptcha\Response
      */
     public function setStatus($status)
     {
-        if ($status === 'true') {
-            $this->status = true;
-        } else {
-            $this->status = false;
-        }
+        $this->status = (bool) $status;
 
         return $this;
     }
@@ -100,26 +88,30 @@ class Response
     }
 
     /**
-     * Set the error code
+     * Set the error codes
      *
-     * @param string $errorCode
+     * @param array $errorCodes
      * @return \ZendService\ReCaptcha\Response
      */
-    public function setErrorCode($errorCode)
+    public function setErrorCodes($errorCodes)
     {
-        $this->errorCode = $errorCode;
+        if (is_string($errorCodes)) {
+            $errorCodes = [$errorCodes];
+        }
+
+        $this->errorCodes = $errorCodes;
 
         return $this;
     }
 
     /**
-     * Get the error code
+     * Get the error codes
      *
-     * @return string
+     * @return array
      */
-    public function getErrorCode()
+    public function getErrorCodes()
     {
-        return $this->errorCode;
+        return $this->errorCodes;
     }
 
     /**
@@ -132,17 +124,20 @@ class Response
     {
         $body = $response->getBody();
 
-        $parts = explode("\n", $body, 2);
+        $parts = json_decode($body, true);
 
-        if (count($parts) !== 2) {
-            $status = 'false';
-            $errorCode = '';
-        } else {
-            list($status, $errorCode) = $parts;
+        $status = false;
+        $errorCodes = [];
+
+        if (is_array($parts) && array_key_exists('success', $parts)) {
+            $status = $parts['success'];
+            if (array_key_exists('error-codes', $parts)) {
+                $errorCodes = $parts['error-codes'];
+            }
         }
 
         $this->setStatus($status);
-        $this->setErrorCode($errorCode);
+        $this->setErrorCodes($errorCodes);
 
         return $this;
     }

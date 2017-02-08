@@ -1,64 +1,49 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
-
 namespace ZendService\ReCaptcha;
 
+use Exception as PhpException;
 use Traversable;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Request as HttpRequest;
 use Zend\Stdlib\ArrayUtils;
 
-
 /**
- * Zend_Service_ReCaptcha
- *
- * @category   Zend
- * @package    Zend_Service
- * @subpackage ReCaptcha
+ * Render and verify ReCaptchas
  */
 class ReCaptcha
 {
-    /**
-     * URI to the regular API
-     *
-     * @var string
-     */
-    const API_SERVER = 'http://www.google.com/recaptcha/api';
 
     /**
-     * URI to the secure API
+     * URI to the API
      *
      * @var string
      */
-    const API_SECURE_SERVER = 'https://www.google.com/recaptcha/api';
+    const API_SERVER = 'https://www.google.com/recaptcha/api';
 
     /**
      * URI to the verify server
      *
      * @var string
      */
-    const VERIFY_SERVER = 'http://www.google.com/recaptcha/api/verify';
+    const VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify';
 
     /**
-     * Public key used when displaying the captcha
+     * Site key used when displaying the captcha
      *
      * @var string
      */
-    protected $publicKey = null;
+    protected $siteKey = null;
 
     /**
-     * Private key used when verifying user input
+     * Secret key used when verifying user input
      *
      * @var string
      */
-    protected $privateKey = null;
+    protected $secretKey = null;
 
     /**
      * Ip address used when verifying user input
@@ -72,55 +57,56 @@ class ReCaptcha
      *
      * @var array
      */
-    protected $params = array(
-        'ssl' => false, /* Use SSL or not when generating the recaptcha */
-        'error' => null, /* The error message to display in the recaptcha */
-        'xhtml' => false /* Enable XHTML output (this will not be XHTML Strict
-                            compliant since the IFRAME is necessary when
-                            Javascript is disabled) */
-    );
+    protected $params = [
+        'noscript' => false, /* Includes the <noscript> tag */
+    ];
 
     /**
      * Options for tailoring reCaptcha
      *
-     * See the different options on http://recaptcha.net/apidocs/captcha/client.html
+     * See the different options on https://developers.google.com/recaptcha/docs/display#config
      *
      * @var array
      */
-    protected $options = array(
-        'theme' => 'red',
-        'lang' => 'en',
-    );
+    protected $options = [
+        'theme' => 'light',
+        'type' => 'image',
+        'size' => 'normal',
+        'tabindex' => 0,
+        'callback' => null,
+        'expired-callback' => null,
+        'hl' => null // Auto-detect language
+    ];
 
     /**
+     *
      * @var HttpClient
      */
     protected $httpClient = null;
 
     /**
-     * Response from the verify server
-     *
-     * @var \ZendService\ReCaptcha\Response
-     */
-    protected $_response = null;
-
-    /**
      * Class constructor
      *
-     * @param string $publicKey
-     * @param string $privateKey
+     * @param string $siteKey
+     * @param string $secretKey
      * @param array|Traversable $params
      * @param array|Traversable $options
      * @param string $ip
      */
-    public function __construct($publicKey = null, $privateKey = null, $params = null, $options = null, $ip = null, HttpClient $httpClient = null)
-    {
-        if ($publicKey !== null) {
-            $this->setPublicKey($publicKey);
+    public function __construct(
+        $siteKey = null,
+        $secretKey = null,
+        $params = null,
+        $options = null,
+        $ip = null,
+        HttpClient $httpClient = null
+    ) {
+        if ($siteKey !== null) {
+            $this->setSiteKey($siteKey);
         }
 
-        if ($privateKey !== null) {
-            $this->setPrivateKey($privateKey);
+        if ($secretKey !== null) {
+            $this->setSecretKey($secretKey);
         }
 
         if ($ip !== null) {
@@ -137,7 +123,7 @@ class ReCaptcha
             $this->setOptions($options);
         }
 
-        $this->setHttpClient($httpClient ?: new HttpClient);
+        $this->setHttpClient($httpClient ?  : new HttpClient());
     }
 
     public function setHttpClient(HttpClient $httpClient)
@@ -164,7 +150,7 @@ class ReCaptcha
     {
         try {
             $return = $this->getHtml();
-        } catch (\Exception $e) {
+        } catch (PhpException $e) {
             $return = '';
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
@@ -212,7 +198,7 @@ class ReCaptcha
     /**
      * Set parameters
      *
-     * @param  array|Traversable $params
+     * @param array|Traversable $params
      * @return \ZendService\ReCaptcha\ReCaptcha
      * @throws \ZendService\ReCaptcha\Exception
      */
@@ -222,11 +208,11 @@ class ReCaptcha
             $params = ArrayUtils::iteratorToArray($params);
         }
 
-        if (!is_array($params)) {
+        if (! is_array($params)) {
             throw new Exception(sprintf(
                 '%s expects an array or Traversable set of params; received "%s"',
                 __METHOD__,
-                (is_object($params) ? get_class($params) : gettype($params))
+                is_object($params) ? get_class($params) : gettype($params)
             ));
         }
 
@@ -275,7 +261,7 @@ class ReCaptcha
     /**
      * Set options
      *
-     * @param  array|Traversable $options
+     * @param array|Traversable $options
      * @return \ZendService\ReCaptcha\ReCaptcha
      * @throws \ZendService\ReCaptcha\Exception
      */
@@ -290,9 +276,7 @@ class ReCaptcha
                 $this->setOption($k, $v);
             }
         } else {
-            throw new Exception(
-                'Expected array or Traversable object'
-            );
+            throw new Exception('Expected array or Traversable object');
         }
 
         return $this;
@@ -320,47 +304,47 @@ class ReCaptcha
     }
 
     /**
-     * Get the public key
+     * Get the site key
      *
      * @return string
      */
-    public function getPublicKey()
+    public function getSiteKey()
     {
-        return $this->publicKey;
+        return $this->siteKey;
     }
 
     /**
-     * Set the public key
+     * Set the site key
      *
-     * @param string $publicKey
+     * @param string $siteKey
      * @return \ZendService\ReCaptcha\ReCaptcha
      */
-    public function setPublicKey($publicKey)
+    public function setSiteKey($siteKey)
     {
-        $this->publicKey = $publicKey;
+        $this->siteKey = $siteKey;
 
         return $this;
     }
 
     /**
-     * Get the private key
+     * Get the secret key
      *
      * @return string
      */
-    public function getPrivateKey()
+    public function getSecretKey()
     {
-        return $this->privateKey;
+        return $this->secretKey;
     }
 
     /**
-     * Set the private key
+     * Set the secret key
      *
-     * @param string $privateKey
+     * @param string $secreteKey
      * @return \ZendService\ReCaptcha\ReCaptcha
      */
-    public function setPrivateKey($privateKey)
+    public function setSecretKey($secretKey)
     {
-        $this->privateKey = $privateKey;
+        $this->secretKey = $secretKey;
 
         return $this;
     }
@@ -370,85 +354,93 @@ class ReCaptcha
      *
      * This method uses the public key to fetch a recaptcha form.
      *
-     * @param null|string $name Base name for recaptcha form elements
+     * @param null|string $name
+     *            Base name for recaptcha form elements
      * @return string
      * @throws \ZendService\ReCaptcha\Exception
      */
-    public function getHtml($name = null)
+    public function getHtml()
     {
-        if ($this->publicKey === null) {
-            throw new Exception('Missing public key');
+        if ($this->siteKey === null) {
+            throw new Exception('Missing site key');
         }
 
         $host = self::API_SERVER;
 
-        if ((bool) $this->params['ssl'] === true) {
-            $host = self::API_SECURE_SERVER;
+        // Should We use a onload callback?
+        if (!empty($this->options['onload'])) {
+            return sprintf(
+                '<script type="text/javascript" src="%s.js?onload=%s&render=explicit" async defer></script>',
+                $host,
+                $this->options['onload']
+            );
         }
 
-        $htmlBreak = '<br>';
-        $htmlInputClosing = '>';
+        $langOption = '';
 
-        if ((bool) $this->params['xhtml'] === true) {
-            $htmlBreak = '<br />';
-            $htmlInputClosing = '/>';
+        if (!empty($this->options['hl'])) {
+            $langOption = "?hl={$this->options['hl']}";
         }
 
-        $errorPart = '';
+        $data = "data-sitekey=\"{$this->siteKey}\"";
 
-        if (!empty($this->params['error'])) {
-            $errorPart = '&error=' . urlencode($this->params['error']);
+        foreach ([
+            'theme',
+            'type',
+            'size',
+            'tabindex',
+            'callback',
+            'expired-callback'
+        ] as $option) {
+            if (!empty($this->options[$option])) {
+                $data .= " data-$option=\"{$this->options[$option]}\"";
+            }
         }
 
-        $reCaptchaOptions = '';
-
-        if (!empty($this->options)) {
-            $encoded = \Zend\Json\Json::encode($this->options);
-            $reCaptchaOptions = <<<SCRIPT
-<script type="text/javascript">
-    var RecaptchaOptions = {$encoded};
-</script>
-SCRIPT;
-        }
-        $challengeField = 'recaptcha_challenge_field';
-        $responseField  = 'recaptcha_response_field';
-        if (!empty($name)) {
-            $challengeField = $name . '[' . $challengeField . ']';
-            $responseField  = $name . '[' . $responseField . ']';
-        }
-
-        $return = $reCaptchaOptions;
-        $return .= <<<HTML
-<script type="text/javascript"
-   src="{$host}/challenge?k={$this->publicKey}{$errorPart}">
-</script>
+        $return = <<<HTML
+<script type="text/javascript" src="{$host}.js{$langOption}" async defer></script>
+<div class="g-recaptcha" $data></div>
 HTML;
-        $return .= <<<HTML
+
+        if ($this->params['noscript']) {
+            $return .= <<<HTML
 <noscript>
-   <iframe src="{$host}/noscript?k={$this->publicKey}{$errorPart}"
-       height="300" width="500" frameborder="0"></iframe>{$htmlBreak}
-   <textarea name="{$challengeField}" rows="3" cols="40">
-   </textarea>
-   <input type="hidden" name="{$responseField}"
-       value="manual_challenge"{$htmlInputClosing}
+  <div style="width: 302px; height: 422px;">
+    <div style="width: 302px; height: 422px; position: relative;">
+      <div style="width: 302px; height: 422px; position: absolute;">
+        <iframe src="{$host}/fallback?k={$this->siteKey}"
+                frameborder="0" scrolling="no"
+                style="width: 302px; height:422px; border-style: none;">
+        </iframe>
+      </div>
+      <div style="width: 300px; height: 60px; border-style: none;
+                  bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px;
+                  background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+        <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                  class="g-recaptcha-response"
+                  style="width: 250px; height: 40px; border: 1px solid #c1c1c1;
+                         margin: 10px 25px; padding: 0px; resize: none;" >
+        </textarea>
+      </div>
+    </div>
+  </div>
 </noscript>
 HTML;
-
+        }
         return $return;
     }
 
     /**
-     * Post a solution to the verify server
+     * Gets a solution to the verify server
      *
-     * @param string $challengeField
      * @param string $responseField
      * @return \Zend\Http\Response
      * @throws \ZendService\ReCaptcha\Exception
      */
-    protected function post($challengeField, $responseField)
+    protected function post($responseField)
     {
-        if ($this->privateKey === null) {
-            throw new Exception('Missing private key');
+        if ($this->secretKey === null) {
+            throw new Exception('Missing secret key');
         }
 
         if ($this->ip === null) {
@@ -458,14 +450,15 @@ HTML;
         /* Fetch an instance of the http client */
         $httpClient = $this->getHttpClient();
 
-        $postParams = array('privatekey' => $this->privateKey,
-                            'remoteip'   => $this->ip,
-                            'challenge'  => $challengeField,
-                            'response'   => $responseField);
+        $params = [
+            'secret' => $this->secretKey,
+            'remoteip' => $this->ip,
+            'response' => $responseField
+        ];
 
-        $request = new HttpRequest;
+        $request = new HttpRequest();
         $request->setUri(self::VERIFY_SERVER);
-        $request->getPost()->fromArray($postParams);
+        $request->getPost()->fromArray($params);
         $request->setMethod(HttpRequest::METHOD_POST);
         $httpClient->setEncType($httpClient::ENC_URLENCODED);
 
@@ -476,15 +469,14 @@ HTML;
      * Verify the user input
      *
      * This method calls up the post method and returns a
-     * Zend_Service_ReCaptcha_Response object.
+     * \ZendService\ReCaptcha\Response object.
      *
-     * @param string $challengeField
      * @param string $responseField
      * @return \ZendService\ReCaptcha\Response
      */
-    public function verify($challengeField, $responseField)
+    public function verify($responseField)
     {
-        $response = $this->post($challengeField, $responseField);
+        $response = $this->post($responseField);
         return new Response(null, null, $response);
     }
 }

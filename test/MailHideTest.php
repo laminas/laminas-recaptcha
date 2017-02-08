@@ -1,36 +1,31 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
  */
 
 namespace ZendServiceTest\ReCaptcha;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use ZendService\ReCaptcha;
 
-/**
- * @category   Zend
- * @package    Zend_Service_ReCaptcha
- * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_ReCaptcha
- */
-class MailHideTest extends \PHPUnit_Framework_TestCase
+class MailHideTest extends TestCase
 {
-    protected $publicKey  = TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY;
-    protected $privateKey = TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY;
     protected $mailHide   = null;
 
     public function setUp()
     {
+        $this->publicKey  = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
+        $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
+
         if (!extension_loaded('mcrypt')) {
             $this->markTestSkipped('ZendService\ReCaptcha tests skipped due to missing mcrypt extension');
         }
-        if ($this->publicKey == 'public mailhide key' || $this->privateKey == 'private mailhide key') {
+        if (empty($this->publicKey)
+            || $this->publicKey == 'public mailhide key'
+            || empty($this->privateKey)
+            || $this->privateKey == 'private mailhide key'
+        ) {
             $this->markTestSkipped('ZendService\ReCaptcha\MailHide tests skipped due to missing keys');
         }
         $this->mailHide = new ReCaptcha\MailHide();
@@ -67,10 +62,10 @@ class MailHideTest extends \PHPUnit_Framework_TestCase
     {
         $mail = 'mail@example.com';
 
-        $options = array(
+        $options = [
             'theme' => 'black',
             'lang' => 'no',
-        );
+        ];
 
         $config = new \Zend\Config\Config($options);
 
@@ -84,7 +79,7 @@ class MailHideTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($options['lang'], $_options['lang']);
     }
 
-    protected function _checkHtml($html)
+    protected function checkHtml($html)
     {
         $server = ReCaptcha\MailHide::MAILHIDE_SERVER;
         $pubKey = $this->publicKey;
@@ -104,7 +99,7 @@ class MailHideTest extends \PHPUnit_Framework_TestCase
 
         $html = $this->mailHide->getHtml();
 
-        $this->_checkHtml($html);
+        $this->checkHtml($html);
     }
 
     public function testGetHtmlWithNoEmail()
@@ -146,6 +141,6 @@ class MailHideTest extends \PHPUnit_Framework_TestCase
 
         $html = $this->mailHide->getHtml($mail);
 
-        $this->_checkHtml($html);
+        $this->checkHtml($html);
     }
 }
