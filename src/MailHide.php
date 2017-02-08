@@ -177,7 +177,7 @@ class MailHide extends ReCaptcha
     }
 
     /**
-     * Override the setPrivateKey method
+     * Set the private key property
      *
      * Override the parent method to store a binary representation of the private key as well.
      *
@@ -186,12 +186,42 @@ class MailHide extends ReCaptcha
      */
     public function setPrivateKey($privateKey)
     {
-        parent::setPrivateKey($privateKey);
+        parent::setSecretKey($privateKey);
 
         /* Pack the private key into a binary string */
-        $this->privateKeyPacked = pack('H*', $this->privateKey);
+        $this->privateKeyPacked = pack('H*', $this->getSecretKey());
 
         return $this;
+    }
+
+    /**
+     * get the private key property
+     *
+     * @return string
+     */
+    public function getPrivateKey()
+    {
+        return parent::getSecretKey();
+    }
+
+    /**
+     * set the public key property
+     *
+     * @param string $publicKey
+     */
+    public function setPublicKey($publicKey)
+    {
+        return parent::setSiteKey($publicKey);
+    }
+
+    /**
+     * Get the public key property
+     *
+     * @return string
+     */
+    public function getPublicKey()
+    {
+        return parent::getSiteKey();
     }
 
     /**
@@ -273,11 +303,11 @@ class MailHide extends ReCaptcha
             throw new MailHideException('Missing email address');
         }
 
-        if ($this->publicKey === null) {
+        if ($this->getPublicKey() === null) {
             throw new MailHideException('Missing public key');
         }
 
-        if ($this->privateKey === null) {
+        if ($this->getPrivateKey() === null) {
             throw new MailHideException('Missing private key');
         }
 
@@ -330,7 +360,7 @@ class MailHide extends ReCaptcha
         return sprintf(
             '%s?k=%s&c=%s',
             self::MAILHIDE_SERVER,
-            $this->publicKey,
+            $this->getSiteKey(),
             strtr(base64_encode($emailEncrypted), '+/', '-_')
         );
     }
