@@ -367,7 +367,7 @@ class ReCaptcha
 
         $host = self::API_SERVER;
 
-        // Should We use a onload callback?
+        // Should we use an onload callback?
         if (! empty($this->options['onload'])) {
             return sprintf(
                 '<script type="text/javascript" src="%s.js?onload=%s&render=explicit" async defer></script>',
