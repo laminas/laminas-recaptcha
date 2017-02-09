@@ -37,7 +37,7 @@ class Response
      *
      * @param string $status
      * @param array $errorCodes
-     * @param \Zend\Http\Response $httpResponse If this is set the content will override $status and $errorCode
+     * @param HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
     public function __construct($status = null, $errorCodes = [], HTTPResponse $httpResponse = null)
     {
@@ -57,8 +57,8 @@ class Response
     /**
      * Set the status
      *
-     * @param boolean $status
-     * @return \ZendService\ReCaptcha\Response
+     * @param bool $status
+     * @return self
      */
     public function setStatus($status)
     {
@@ -70,7 +70,7 @@ class Response
     /**
      * Get the status
      *
-     * @return boolean
+     * @return bool
      */
     public function getStatus()
     {
@@ -80,7 +80,7 @@ class Response
     /**
      * Alias for getStatus()
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid()
     {
@@ -91,7 +91,7 @@ class Response
      * Set the error codes
      *
      * @param array $errorCodes
-     * @return \ZendService\ReCaptcha\Response
+     * @return self
      */
     public function setErrorCodes($errorCodes)
     {
@@ -117,8 +117,8 @@ class Response
     /**
      * Populate this instance based on a Zend_Http_Response object
      *
-     * @param \Zend\Http\Response $response
-     * @return \ZendService\ReCaptcha\Response
+     * @param HTTPResponse $response
+     * @return self
      */
     public function setFromHttpResponse(HTTPResponse $response)
     {

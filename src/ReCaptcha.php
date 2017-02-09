@@ -162,7 +162,7 @@ class ReCaptcha
      * Set the ip property
      *
      * @param string $ip
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return self
      */
     public function setIp($ip)
     {
@@ -186,7 +186,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return self
      */
     public function setParam($key, $value)
     {
@@ -199,8 +199,8 @@ class ReCaptcha
      * Set parameters
      *
      * @param array|Traversable $params
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return self
+     * @throws Exception
      */
     public function setParams($params)
     {
@@ -249,7 +249,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return self
      */
     public function setOption($key, $value)
     {
@@ -262,8 +262,8 @@ class ReCaptcha
      * Set options
      *
      * @param array|Traversable $options
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return self
+     * @throws Exception
      */
     public function setOptions($options)
     {
@@ -317,7 +317,7 @@ class ReCaptcha
      * Set the site key
      *
      * @param string $siteKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return self
      */
     public function setSiteKey($siteKey)
     {
@@ -340,7 +340,7 @@ class ReCaptcha
      * Set the secret key
      *
      * @param string $secreteKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return self
      */
     public function setSecretKey($secretKey)
     {
@@ -357,7 +357,7 @@ class ReCaptcha
      * @param null|string $name
      *            Base name for recaptcha form elements
      * @return string
-     * @throws \ZendService\ReCaptcha\Exception
+     * @throws Exception
      */
     public function getHtml()
     {
@@ -435,7 +435,7 @@ HTML;
      *
      * @param string $responseField
      * @return \Zend\Http\Response
-     * @throws \ZendService\ReCaptcha\Exception
+     * @throws Exception
      */
     protected function post($responseField)
     {
