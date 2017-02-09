@@ -23,13 +23,13 @@ class ReCaptchaTest extends TestCase
         $this->siteKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY');
 
-        if (empty($this->siteKey)
-            || $this->siteKey == 'site key'
-            || empty($this->secretKey)
-            || $this->secretKey == 'secret key'
-        ) {
-            $this->markTestSkipped('ZendService\ReCaptcha\ReCaptcha tests skipped due to missing keys');
+        if (empty($this->siteKey)) {
+            $this->siteKey = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
         }
+        if (empty($this->siteKey)) {
+            $this->siteKey = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
+        }
+
 
         $this->reCaptcha = new ReCaptcha();
     }
