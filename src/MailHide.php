@@ -181,6 +181,9 @@ class MailHide extends ReCaptcha
      *
      * Override the parent method to store a binary representation of the private key as well.
      *
+     * Note that we use the nomenclature "private key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "secret key"
+     *
      * @param string $privateKey
      * @return MailHide
      */
@@ -197,6 +200,9 @@ class MailHide extends ReCaptcha
     /**
      * get the private key property
      *
+     * Note that we use the nomenclature "private key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "secret key"
+     *
      * @return string
      */
     public function getPrivateKey()
@@ -207,6 +213,9 @@ class MailHide extends ReCaptcha
     /**
      * set the public key property
      *
+     * Note that we use the nomenclature "public key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "site key"
+     *
      * @param string $publicKey
      */
     public function setPublicKey($publicKey)
@@ -216,6 +225,9 @@ class MailHide extends ReCaptcha
 
     /**
      * Get the public key property
+     *
+     * Note that we use the nomenclature "public key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "site key"
      *
      * @return string
      */
