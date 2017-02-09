@@ -18,7 +18,7 @@ class MailHideTest extends TestCase
         $this->publicKey  = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
         $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
 
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('ZendService\ReCaptcha tests skipped due to missing mcrypt extension');
         }
         if (empty($this->publicKey)

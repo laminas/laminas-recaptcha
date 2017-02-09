@@ -132,7 +132,7 @@ class MailHide extends ReCaptcha
      */
     protected function requireMcrypt()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             throw new MailHideException(sprintf(
                 'Use of the %s component requires the mcrypt extension to be enabled in PHP',
                 __CLASS__
@@ -237,7 +237,7 @@ class MailHide extends ReCaptcha
         $this->email = $email;
 
         $validator = $this->getEmailValidator();
-        if (!$validator->isValid($email)) {
+        if (! $validator->isValid($email)) {
             throw new MailHideException('Invalid email address provided');
         }
 

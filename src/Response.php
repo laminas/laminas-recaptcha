@@ -45,7 +45,7 @@ class Response
             $this->setStatus($status);
         }
 
-        if (!empty($errorCodes)) {
+        if (! empty($errorCodes)) {
             $this->setErrorCodes($errorCodes);
         }
 

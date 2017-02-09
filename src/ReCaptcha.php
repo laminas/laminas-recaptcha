@@ -123,7 +123,7 @@ class ReCaptcha
             $this->setOptions($options);
         }
 
-        $this->setHttpClient($httpClient ?  : new HttpClient());
+        $this->setHttpClient($httpClient ?: new HttpClient());
     }
 
     public function setHttpClient(HttpClient $httpClient)
@@ -368,7 +368,7 @@ class ReCaptcha
         $host = self::API_SERVER;
 
         // Should We use a onload callback?
-        if (!empty($this->options['onload'])) {
+        if (! empty($this->options['onload'])) {
             return sprintf(
                 '<script type="text/javascript" src="%s.js?onload=%s&render=explicit" async defer></script>',
                 $host,
@@ -378,7 +378,7 @@ class ReCaptcha
 
         $langOption = '';
 
-        if (!empty($this->options['hl'])) {
+        if (! empty($this->options['hl'])) {
             $langOption = "?hl={$this->options['hl']}";
         }
 
@@ -392,7 +392,7 @@ class ReCaptcha
             'callback',
             'expired-callback'
         ] as $option) {
-            if (!empty($this->options[$option])) {
+            if (! empty($this->options[$option])) {
                 $data .= " data-$option=\"{$this->options[$option]}\"";
             }
         }
