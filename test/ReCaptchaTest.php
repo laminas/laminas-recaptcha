@@ -7,9 +7,10 @@
 namespace ZendServiceTest\ReCaptcha;
 
 use PHPUnit\Framework\TestCase;
+use Zend\Config;
+use Zend\Http\Client as HttpClient;
 use ZendService\ReCaptcha\ReCaptcha;
 use ZendService\ReCaptcha\Response as ReCaptchaResponse;
-use Zend\Config;
 
 class ReCaptchaTest extends TestCase
 {
@@ -31,7 +32,14 @@ class ReCaptchaTest extends TestCase
         }
 
 
-        $this->reCaptcha = new ReCaptcha();
+        $httpClient = new HttpClient(
+            null,
+            [
+                'adapter' => 'Zend\Http\Client\Adapter\Curl',
+            ]
+        );
+
+        $this->reCaptcha = new ReCaptcha(null, null, null, null, null, $httpClient);
     }
 
     public function testSetAndGet()
