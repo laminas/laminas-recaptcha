@@ -6,7 +6,7 @@
 
 namespace ZendServiceTest\ReCaptcha;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use ZendService\ReCaptcha;
 
 class MailHideTest extends TestCase
@@ -18,7 +18,7 @@ class MailHideTest extends TestCase
         $this->publicKey  = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
         $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
 
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('ZendService\ReCaptcha tests skipped due to missing mcrypt extension');
         }
         if (empty($this->publicKey)
@@ -104,7 +104,7 @@ class MailHideTest extends TestCase
 
     public function testGetHtmlWithNoEmail()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
 
         $html = $this->mailHide->getHtml();
     }
@@ -116,13 +116,13 @@ class MailHideTest extends TestCase
         $this->mailHide->setEmail($mail);
         $this->mailHide->setPrivateKey($this->privateKey);
 
-        $this->setExpectedException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
         $html = $this->mailHide->getHtml();
     }
 
     public function testGetHtmlWithMissingPrivateKey()
     {
-        $this->setExpectedException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
 
         $mail = 'mail@example.com';
 

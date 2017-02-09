@@ -132,7 +132,7 @@ class MailHide extends ReCaptcha
      */
     protected function requireMcrypt()
     {
-        if (!extension_loaded('mcrypt')) {
+        if (! extension_loaded('mcrypt')) {
             throw new MailHideException(sprintf(
                 'Use of the %s component requires the mcrypt extension to be enabled in PHP',
                 __CLASS__
@@ -177,21 +177,63 @@ class MailHide extends ReCaptcha
     }
 
     /**
-     * Override the setPrivateKey method
+     * Set the private key property
      *
      * Override the parent method to store a binary representation of the private key as well.
+     *
+     * Note that we use the nomenclature "private key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "secret key"
      *
      * @param string $privateKey
      * @return MailHide
      */
     public function setPrivateKey($privateKey)
     {
-        parent::setPrivateKey($privateKey);
+        parent::setSecretKey($privateKey);
 
         /* Pack the private key into a binary string */
-        $this->privateKeyPacked = pack('H*', $this->privateKey);
+        $this->privateKeyPacked = pack('H*', $this->getSecretKey());
 
         return $this;
+    }
+
+    /**
+     * get the private key property
+     *
+     * Note that we use the nomenclature "private key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "secret key"
+     *
+     * @return string
+     */
+    public function getPrivateKey()
+    {
+        return parent::getSecretKey();
+    }
+
+    /**
+     * set the public key property
+     *
+     * Note that we use the nomenclature "public key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "site key"
+     *
+     * @param string $publicKey
+     */
+    public function setPublicKey($publicKey)
+    {
+        return parent::setSiteKey($publicKey);
+    }
+
+    /**
+     * Get the public key property
+     *
+     * Note that we use the nomenclature "public key" as this is what MailHide's API
+     * uses, even though the parent ReCaptcha API uses "site key"
+     *
+     * @return string
+     */
+    public function getPublicKey()
+    {
+        return parent::getSiteKey();
     }
 
     /**
@@ -207,7 +249,7 @@ class MailHide extends ReCaptcha
         $this->email = $email;
 
         $validator = $this->getEmailValidator();
-        if (!$validator->isValid($email)) {
+        if (! $validator->isValid($email)) {
             throw new MailHideException('Invalid email address provided');
         }
 
@@ -273,11 +315,11 @@ class MailHide extends ReCaptcha
             throw new MailHideException('Missing email address');
         }
 
-        if ($this->publicKey === null) {
+        if ($this->getPublicKey() === null) {
             throw new MailHideException('Missing public key');
         }
 
-        if ($this->privateKey === null) {
+        if ($this->getPrivateKey() === null) {
             throw new MailHideException('Missing private key');
         }
 
@@ -330,7 +372,7 @@ class MailHide extends ReCaptcha
         return sprintf(
             '%s?k=%s&c=%s',
             self::MAILHIDE_SERVER,
-            $this->publicKey,
+            $this->getSiteKey(),
             strtr(base64_encode($emailEncrypted), '+/', '-_')
         );
     }
