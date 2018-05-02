@@ -1,22 +1,18 @@
 {
     "name": "zendframework/zendservice-recaptcha",
     "description": "OOP wrapper for the ReCaptcha web service",
-    "type": "library",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "zf",
+        "zendframework",
         "recaptcha"
     ],
-    "homepage": "http://packages.zendframework.com/",
-    "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-4": {
-            "ZendService\\ReCaptcha\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendServiceTest\\ReCaptcha\\": "test/"
-        }
+    "support": {
+        "issues": "https://github.com/zendframework/zendservice-recaptcha/issues",
+        "source": "https://github.com/zendframework/zendservice-recaptcha",
+        "rss": "https://github.com/zendframework/zendservice-recaptcha/releases.atom",
+        "chat": "https://zendframework-slack.herokuapp.com",
+        "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
         "php": "^5.6 || ^7.0",
@@ -32,10 +28,23 @@
     "suggest": {
         "zendframework/zend-validator": "~2.0, if using ReCaptcha's Mailhide API"
     },
+    "autoload": {
+        "psr-4": {
+            "ZendService\\ReCaptcha\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZendServiceTest\\ReCaptcha\\": "test/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0-dev",
-            "dev-develop": "3.1-dev"
+            "dev-master": "3.0.x-dev",
+            "dev-develop": "3.1.x-dev"
         }
     },
     "scripts": {
