@@ -13,7 +13,7 @@ class MailHideTest extends TestCase
 {
     protected $mailHide   = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->publicKey  = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
         $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');

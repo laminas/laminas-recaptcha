@@ -19,7 +19,7 @@ class ReCaptchaTest extends TestCase
      */
     protected $reCaptcha = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->siteKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY');

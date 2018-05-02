@@ -14,7 +14,7 @@ class ResponseTest extends TestCase
 {
     protected $response = null;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->response = new ReCaptcha\Response();
     }
