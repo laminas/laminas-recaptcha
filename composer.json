@@ -8,9 +8,9 @@
         "recaptcha"
     ],
     "support": {
-        "issues": "https://github.com/zendframework/zendservice-recaptcha/issues",
-        "source": "https://github.com/zendframework/zendservice-recaptcha",
-        "rss": "https://github.com/zendframework/zendservice-recaptcha/releases.atom",
+        "issues": "https://github.com/zendframework/ZendService_ReCaptcha/issues",
+        "source": "https://github.com/zendframework/ZendService_ReCaptcha",
+        "rss": "https://github.com/zendframework/ZendService_ReCaptcha/releases.atom",
         "chat": "https://zendframework-slack.herokuapp.com",
         "forum": "https://discourse.zendframework.com/c/questions/components"
     },
