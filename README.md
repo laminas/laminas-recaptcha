@@ -9,7 +9,7 @@ Missing Coverage badge in README.md; please add:
 You can install using [Composer][1]:
 
 ```
-composer require zendframework/ZendService_ReCaptcha
+composer require zendframework/zendservice-recaptcha
 ```
 
 At that point, follow the instructions in the documentation folder for actual
