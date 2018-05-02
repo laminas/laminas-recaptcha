@@ -64,7 +64,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getParam($key));
     }
 
-    public function tetsGetNonExistingParam()
+    public function testGetNonExistingParam()
     {
         $this->assertNull($this->reCaptcha->getParam('foobar'));
     }
@@ -90,7 +90,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getOption($key));
     }
 
-    public function tetsGetNonExistingOption()
+    public function testGetNonExistingOption()
     {
         $this->assertNull($this->reCaptcha->getOption('foobar'));
     }
