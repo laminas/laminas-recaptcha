@@ -13,7 +13,10 @@ use Zend\Http\Response;
 
 class ResponseTest extends TestCase
 {
-    protected $response = null;
+    /**
+     * @var ReCaptcha\Response
+     */
+    protected $response;
 
     protected function setUp()
     {

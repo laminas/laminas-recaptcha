@@ -12,7 +12,20 @@ use ZendService\ReCaptcha;
 
 class MailHideTest extends TestCase
 {
-    protected $mailHide   = null;
+    /**
+     * @var string
+     */
+    private $publicKey;
+
+    /**
+     * @var string
+     */
+    private $privateKey;
+
+    /**
+     * @var ReCaptcha\MailHide
+     */
+    private $mailHide;
 
     protected function setUp()
     {
