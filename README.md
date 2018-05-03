@@ -12,9 +12,6 @@ You can install using [Composer][1]:
 composer require zendframework/zendservice-recaptcha
 ```
 
-At that point, follow the instructions in the documentation folder for actual
-usage of the component.
-
 ## Documentation
 
 Documentation is on the Zend Framework website:
