@@ -24,11 +24,11 @@ class ResponseTest extends TestCase
         /* Set and get status */
         $status = true;
         $this->response->setStatus($status);
-        $this->assertSame(true, $this->response->getStatus());
+        $this->assertTrue($this->response->getStatus());
 
         $status = false;
         $this->response->setStatus($status);
-        $this->assertSame(false, $this->response->getStatus());
+        $this->assertFalse($this->response->getStatus());
 
         /* Set and get the error codes */
         $errorCodes = 'foobar';
@@ -43,13 +43,13 @@ class ResponseTest extends TestCase
     public function testIsValid()
     {
         $this->response->setStatus(true);
-        $this->assertSame(true, $this->response->isValid());
+        $this->assertTrue($this->response->isValid());
     }
 
     public function testIsInvalid()
     {
         $this->response->setStatus(false);
-        $this->assertSame(false, $this->response->isValid());
+        $this->assertFalse($this->response->isValid());
     }
 
     public function testSetFromHttpResponse()
@@ -67,7 +67,7 @@ class ResponseTest extends TestCase
 
         $this->response->setFromHttpResponse($httpResponse);
 
-        $this->assertSame(false, $this->response->getStatus());
+        $this->assertFalse($this->response->getStatus());
         $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
@@ -78,7 +78,7 @@ class ResponseTest extends TestCase
 
         $response = new ReCaptcha\Response($status, $errorCodes);
 
-        $this->assertSame(true, $response->getStatus());
+        $this->assertTrue($response->getStatus());
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 
@@ -97,7 +97,7 @@ class ResponseTest extends TestCase
 
         $response = new ReCaptcha\Response(null, null, $httpResponse);
 
-        $this->assertSame(false, $response->getStatus());
+        $this->assertFalse($response->getStatus());
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 }

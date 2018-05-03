@@ -214,7 +214,7 @@ class ReCaptchaTest extends TestCase
         $resp = $this->reCaptcha->verify('responseField');
 
         // See if we have a valid object and that the status is false
-        $this->assertTrue($resp instanceof ReCaptchaResponse);
+        $this->assertInstanceOf(ReCaptchaResponse::class, $resp);
         $this->assertFalse($resp->getStatus());
     }
 
@@ -225,13 +225,10 @@ class ReCaptchaTest extends TestCase
         $html = $this->reCaptcha->getHtml();
 
         // See if the options for the captcha exist in the string
-        $this->assertNotSame(false, strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
+        $this->assertNotFalse(strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
 
         // See if the js/iframe src is correct
-        $this->assertNotSame(
-            true,
-            strstr($html, '<iframe')
-        );
+        $this->assertNotTrue(strstr($html, '<iframe'));
     }
 
     public function testGetHtmlWithLanguage()
