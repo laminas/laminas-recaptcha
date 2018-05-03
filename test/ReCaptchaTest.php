@@ -211,7 +211,7 @@ class ReCaptchaTest extends TestCase
 
         $this->reCaptcha->setHttpClient($client);
 
-        $resp = $this->reCaptcha->verify('challengeField', 'responseField');
+        $resp = $this->reCaptcha->verify('responseField');
 
         // See if we have a valid object and that the status is false
         $this->assertTrue($resp instanceof ReCaptchaResponse);
@@ -257,7 +257,7 @@ class ReCaptchaTest extends TestCase
     {
         $this->expectException('ZendService\\ReCaptcha\\Exception');
 
-        $this->reCaptcha->verify('challenge', 'response');
+        $this->reCaptcha->verify('response');
     }
 
     public function testVerifyWithMissingIp()
@@ -265,22 +265,14 @@ class ReCaptchaTest extends TestCase
         $this->expectException('ZendService\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->verify('challenge', 'response');
-    }
-
-    public function testVerifyWithMissingChallengeField()
-    {
-        $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->setIp('127.0.0.1');
-        $response = $this->reCaptcha->verify('', 'response');
-        $this->assertFalse($response->getStatus());
+        $this->reCaptcha->verify('response');
     }
 
     public function testVerifyWithMissingResponseField()
     {
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->setIp('127.0.0.1');
-        $response = $this->reCaptcha->verify('challenge', '');
+        $response = $this->reCaptcha->verify(null);
         $this->assertFalse($response->getStatus());
     }
 }
