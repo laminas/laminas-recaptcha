@@ -59,7 +59,7 @@ class ResponseTest extends TestCase
     public function testSetFromHttpResponse()
     {
         $status       = false;
-        $errorCodes    = ['foo', 'bar'];
+        $errorCodes   = ['foo', 'bar'];
         $responseBody = json_encode([
             'success' => $status,
             'error-codes' => $errorCodes

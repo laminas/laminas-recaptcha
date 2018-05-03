@@ -9,6 +9,7 @@ namespace ZendServiceTest\ReCaptcha;
 
 use PHPUnit\Framework\TestCase;
 use ZendService\ReCaptcha;
+use ZendService\ReCaptcha\MailHideException;
 
 class MailHideTest extends TestCase
 {
@@ -99,8 +100,8 @@ class MailHideTest extends TestCase
         $pubKey = $this->publicKey;
 
         $this->assertEquals(2, substr_count($html, 'k=' . $pubKey));
-        $this->assertRegexp('/c\=[a-zA-Z0-9_=-]+"/', $html);
-        $this->assertRegexp('/c\=[a-zA-Z0-9_=-]+\\\'/', $html);
+        $this->assertRegExp('/c\=[a-zA-Z0-9_=-]+"/', $html);
+        $this->assertRegExp('/c\=[a-zA-Z0-9_=-]+\\\'/', $html);
     }
 
     public function testGetHtml()
@@ -118,7 +119,7 @@ class MailHideTest extends TestCase
 
     public function testGetHtmlWithNoEmail()
     {
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException(MailHideException::class);
 
         $html = $this->mailHide->getHtml();
     }
@@ -130,13 +131,13 @@ class MailHideTest extends TestCase
         $this->mailHide->setEmail($mail);
         $this->mailHide->setPrivateKey($this->privateKey);
 
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException(MailHideException::class);
         $html = $this->mailHide->getHtml();
     }
 
     public function testGetHtmlWithMissingPrivateKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException(MailHideException::class);
 
         $mail = 'mail@example.com';
 
