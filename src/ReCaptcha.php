@@ -241,6 +241,10 @@ class ReCaptcha
      */
     public function getParam($key)
     {
+        if (! isset($this->params[$key])) {
+            return null;
+        }
+
         return $this->params[$key];
     }
 
@@ -300,6 +304,10 @@ class ReCaptcha
      */
     public function getOption($key)
     {
+        if (! isset($this->options[$key])) {
+            return null;
+        }
+
         return $this->options[$key];
     }
 
