@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
  */
 namespace ZendService\ReCaptcha;
 
@@ -241,6 +242,10 @@ class ReCaptcha
      */
     public function getParam($key)
     {
+        if (! isset($this->params[$key])) {
+            return null;
+        }
+
         return $this->params[$key];
     }
 
@@ -300,6 +305,10 @@ class ReCaptcha
      */
     public function getOption($key)
     {
+        if (! isset($this->options[$key])) {
+            return null;
+        }
+
         return $this->options[$key];
     }
 
