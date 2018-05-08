@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendServiceTest\ReCaptcha;
@@ -9,17 +10,30 @@ namespace ZendServiceTest\ReCaptcha;
 use PHPUnit\Framework\TestCase;
 use Zend\Config;
 use Zend\Http\Client as HttpClient;
+use Zend\Http\Client\Adapter\Test;
 use ZendService\ReCaptcha\ReCaptcha;
 use ZendService\ReCaptcha\Response as ReCaptchaResponse;
+use ZendService\ReCaptcha\Exception;
+use Zend\Http\Client\Adapter\Curl;
 
 class ReCaptchaTest extends TestCase
 {
     /**
+     * @var string
+     */
+    private $siteKey;
+
+    /**
+     * @var string
+     */
+    private $secretKey;
+
+    /**
      * @var ReCaptcha
      */
-    protected $reCaptcha = null;
+    private $reCaptcha;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->siteKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY');
@@ -28,11 +42,10 @@ class ReCaptchaTest extends TestCase
             $this->markTestSkipped('ZendService\ReCaptcha\ReCaptcha tests skipped due to missing keys');
         }
 
-
         $httpClient = new HttpClient(
             null,
             [
-                'adapter' => 'Zend\Http\Client\Adapter\Curl',
+                'adapter' => Curl::class,
             ]
         );
 
@@ -64,7 +77,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getParam($key));
     }
 
-    public function tetsGetNonExistingParam()
+    public function testGetNonExistingParam()
     {
         $this->assertNull($this->reCaptcha->getParam('foobar'));
     }
@@ -90,7 +103,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getOption($key));
     }
 
-    public function tetsGetNonExistingOption()
+    public function testGetNonExistingOption()
     {
         $this->assertNull($this->reCaptcha->getOption('foobar'));
     }
@@ -125,7 +138,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidParams()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException(Exception::class);
         $var = 'string';
         $this->reCaptcha->setParams($var);
     }
@@ -148,7 +161,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidOptions()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException(Exception::class);
         $var = 'string';
         $this->reCaptcha->setOptions($var);
     }
@@ -193,7 +206,7 @@ class ReCaptchaTest extends TestCase
 
     public function testGetHtmlWithNoPublicKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException(Exception::class);
 
         $this->reCaptcha->getHtml();
     }
@@ -204,17 +217,17 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->setIp('127.0.0.1');
 
-        $adapter = new \Zend\Http\Client\Adapter\Test();
-        $client = new \Zend\Http\Client(null, [
+        $adapter = new Test();
+        $client = new HttpClient(null, [
             'adapter' => $adapter
         ]);
 
         $this->reCaptcha->setHttpClient($client);
 
-        $resp = $this->reCaptcha->verify('challengeField', 'responseField');
+        $resp = $this->reCaptcha->verify('responseField');
 
         // See if we have a valid object and that the status is false
-        $this->assertTrue($resp instanceof ReCaptchaResponse);
+        $this->assertInstanceOf(ReCaptchaResponse::class, $resp);
         $this->assertFalse($resp->getStatus());
     }
 
@@ -225,13 +238,10 @@ class ReCaptchaTest extends TestCase
         $html = $this->reCaptcha->getHtml();
 
         // See if the options for the captcha exist in the string
-        $this->assertNotSame(false, strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
+        $this->assertNotFalse(strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
 
         // See if the js/iframe src is correct
-        $this->assertNotSame(
-            true,
-            strstr($html, '<iframe')
-        );
+        $this->assertNotTrue(strstr($html, '<iframe'));
     }
 
     public function testGetHtmlWithLanguage()
@@ -255,38 +265,16 @@ class ReCaptchaTest extends TestCase
 
     public function testVerifyWithMissingSecretKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException(Exception::class);
 
-        $this->reCaptcha->verify('challenge', 'response');
+        $this->reCaptcha->verify('response');
     }
 
     public function testVerifyWithMissingIp()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException(Exception::class);
 
         $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->verify('challenge', 'response');
-    }
-
-    /**
-     * @group online
-     */
-    public function testVerifyWithMissingChallengeField()
-    {
-        $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->setIp('127.0.0.1');
-        $response = $this->reCaptcha->verify('', 'response');
-        $this->assertFalse($response->getStatus());
-    }
-
-    /**
-     * @group online
-     */
-    public function testVerifyWithMissingResponseField()
-    {
-        $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->setIp('127.0.0.1');
-        $response = $this->reCaptcha->verify('challenge', '');
-        $this->assertFalse($response->getStatus());
+        $this->reCaptcha->verify('response');
     }
 }

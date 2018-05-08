@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendServiceTest\ReCaptcha;
@@ -12,9 +13,12 @@ use Zend\Http\Response;
 
 class ResponseTest extends TestCase
 {
-    protected $response = null;
+    /**
+     * @var ReCaptcha\Response
+     */
+    protected $response;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->response = new ReCaptcha\Response();
     }
@@ -24,11 +28,11 @@ class ResponseTest extends TestCase
         /* Set and get status */
         $status = true;
         $this->response->setStatus($status);
-        $this->assertSame(true, $this->response->getStatus());
+        $this->assertTrue($this->response->getStatus());
 
         $status = false;
         $this->response->setStatus($status);
-        $this->assertSame(false, $this->response->getStatus());
+        $this->assertFalse($this->response->getStatus());
 
         /* Set and get the error codes */
         $errorCodes = 'foobar';
@@ -43,19 +47,19 @@ class ResponseTest extends TestCase
     public function testIsValid()
     {
         $this->response->setStatus(true);
-        $this->assertSame(true, $this->response->isValid());
+        $this->assertTrue($this->response->isValid());
     }
 
     public function testIsInvalid()
     {
         $this->response->setStatus(false);
-        $this->assertSame(false, $this->response->isValid());
+        $this->assertFalse($this->response->isValid());
     }
 
     public function testSetFromHttpResponse()
     {
         $status       = false;
-        $errorCodes    = ['foo', 'bar'];
+        $errorCodes   = ['foo', 'bar'];
         $responseBody = json_encode([
             'success' => $status,
             'error-codes' => $errorCodes
@@ -67,7 +71,7 @@ class ResponseTest extends TestCase
 
         $this->response->setFromHttpResponse($httpResponse);
 
-        $this->assertSame(false, $this->response->getStatus());
+        $this->assertFalse($this->response->getStatus());
         $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
@@ -78,7 +82,7 @@ class ResponseTest extends TestCase
 
         $response = new ReCaptcha\Response($status, $errorCodes);
 
-        $this->assertSame(true, $response->getStatus());
+        $this->assertTrue($response->getStatus());
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 
@@ -97,7 +101,7 @@ class ResponseTest extends TestCase
 
         $response = new ReCaptcha\Response(null, null, $httpResponse);
 
-        $this->assertSame(false, $response->getStatus());
+        $this->assertFalse($response->getStatus());
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 }
