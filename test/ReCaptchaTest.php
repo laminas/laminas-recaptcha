@@ -268,6 +268,9 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->verify('challenge', 'response');
     }
 
+    /**
+     * @group online
+     */
     public function testVerifyWithMissingChallengeField()
     {
         $this->reCaptcha->setSecretKey($this->secretKey);
@@ -276,6 +279,9 @@ class ReCaptchaTest extends TestCase
         $this->assertFalse($response->getStatus());
     }
 
+    /**
+     * @group online
+     */
     public function testVerifyWithMissingResponseField()
     {
         $this->reCaptcha->setSecretKey($this->secretKey);
