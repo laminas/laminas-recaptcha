@@ -277,15 +277,4 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->verify('response');
     }
-
-    /**
-     * @group online
-     */
-    public function testVerifyWithMissingResponseField()
-    {
-        $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->reCaptcha->setIp('127.0.0.1');
-        $response = $this->reCaptcha->verify(null);
-        $this->assertFalse($response->getStatus());
-    }
 }
