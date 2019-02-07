@@ -8,9 +8,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) adds support for PHP 7.3.
 
-- [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) adds explicit zend-stdlib v3 requirements.
-  Before it was implicit dependency and also version 2 was supported.
-
 ### Changed
 
 - Nothing.
@@ -21,7 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) removes support for zend-stdlib v2, by explicitly requiring v3 releases.
+  (zend-stdlib v2 was an implicit dependency previously.)
 
 ### Fixed
 
