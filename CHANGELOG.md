@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 3.2.0 - TBD
+## 3.2.0 - 2019-02-07
 
 ### Added
 
@@ -20,28 +20,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) removes support for zend-stdlib v2, by explicitly requiring v3 releases.
   (zend-stdlib v2 was an implicit dependency previously.)
-
-### Fixed
-
-- Nothing.
-
-## 3.1.1 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
 
 ### Fixed
 
