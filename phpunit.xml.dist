@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="ZendService ReCaptcha Test Suite">
+        <testsuite name="Laminas ReCaptcha Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
@@ -18,11 +18,11 @@
     <php>
         <ini name="date.timezone" value="UTC"/>
 
-        <!-- ZendService\ReCaptcha online test env variables -->
+        <!-- Laminas\ReCaptcha online test env variables -->
         <!-- Change these if you want to use your own keys -->
-        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY" value="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"/>
-        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY" value="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"/>
-        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY" value="public mailhide key"/>
-        <env name="TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY" value="private mailhide key"/>
+        <env name="TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY" value="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"/>
+        <env name="TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY" value="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"/>
+        <env name="TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY" value="public mailhide key"/>
+        <env name="TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY" value="private mailhide key"/>
     </php>
 </phpunit>

@@ -1,22 +1,22 @@
-# ZendService\ReCaptcha component
+# Laminas\ReCaptcha component
 
-[![Build Status](https://secure.travis-ci.org/zendframework/ZendService_ReCaptcha.svg?branch=master)](https://secure.travis-ci.org/zendframework/ZendService_ReCaptcha)
-[![Coverage Status](https://coveralls.io/repos/github/zendframework/ZendService_ReCaptcha/badge.svg?branch=master)](https://coveralls.io/github/zendframework/ZendService_ReCaptcha?branch=master)
+[![Build Status](https://travis-ci.org/laminas/laminas-recaptcha.svg?branch=master)](https://travis-ci.org/laminas/laminas-recaptcha)
+[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-recaptcha/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-recaptcha?branch=master)
 
 ## Install
 
 You can install using [Composer][1]:
 
 ```
-composer require zendframework/zendservice-recaptcha
+composer require laminas/laminas-recaptcha
 ```
 
 ## Documentation
 
-Documentation is on the Zend Framework website:
+Documentation is on the Laminas website:
 
-- [http://framework.zend.com/manual/current/en/modules/zendservice.re-captcha.html][2]
+- [https://docs.laminas.dev/laminas-recaptcha][2]
 
 
 [1]: https://getcomposer.org/download/
-[2]: http://framework.zend.com/manual/current/en/modules/zendservice.re-captcha.html
+[2]: https://docs.laminas.dev/laminas-recaptcha

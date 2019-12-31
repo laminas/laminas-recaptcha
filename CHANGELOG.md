@@ -28,7 +28,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) adds support for PHP 7.3.
+- [zendframework/zendservice-recaptcha#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) adds support for PHP 7.3.
 
 ### Changed
 
@@ -40,8 +40,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) removes support for zend-stdlib v2, by explicitly requiring v3 releases.
-  (zend-stdlib v2 was an implicit dependency previously.)
+- [zendframework/zendservice-recaptcha#14](https://github.com/zendframework/ZendService_ReCaptcha/pull/14) removes support for laminas-stdlib v2, by explicitly requiring v3 releases.
+  (laminas-stdlib v2 was an implicit dependency previously.)
 
 ### Fixed
 
@@ -51,7 +51,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#13](https://github.com/zendframework/ZendService_ReCaptcha/pull/13) adds support for PHP 7.1 and 7.2.
+- [zendframework/zendservice-recaptcha#13](https://github.com/zendframework/ZendService_ReCaptcha/pull/13) adds support for PHP 7.1 and 7.2.
 
 ### Changed
 
@@ -63,7 +63,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#13](https://github.com/zendframework/ZendService_ReCaptcha/pull/13) removes support for HHVM.
+- [zendframework/zendservice-recaptcha#13](https://github.com/zendframework/ZendService_ReCaptcha/pull/13) removes support for HHVM.
 
 ### Fixed
 
@@ -73,7 +73,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#11](https://github.com/zendframework/ZendService_ReCaptcha/pull/11) migrates to
+- [zendframework/zendservice-recaptcha#11](https://github.com/zendframework/ZendService_ReCaptcha/pull/11) migrates to
   version 2 of the ReCaptcha API.
 
 ### Deprecated
