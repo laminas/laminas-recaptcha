@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
 use Exception as PhpException;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Request as HttpRequest;
-use Zend\Stdlib\ArrayUtils;
 
 /**
  * Render and verify ReCaptchas
@@ -443,7 +444,7 @@ HTML;
      * Gets a solution to the verify server
      *
      * @param string $responseField
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      * @throws Exception
      */
     protected function post($responseField)
@@ -478,10 +479,10 @@ HTML;
      * Verify the user input
      *
      * This method calls up the post method and returns a
-     * \ZendService\ReCaptcha\Response object.
+     * \Laminas\ReCaptcha\Response object.
      *
      * @param string $responseField
-     * @return \ZendService\ReCaptcha\Response
+     * @return \Laminas\ReCaptcha\Response
      */
     public function verify($responseField)
     {
