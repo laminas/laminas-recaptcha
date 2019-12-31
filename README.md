@@ -1,4 +1,4 @@
-ZendService\ReCaptcha component
+Laminas\ReCaptcha component
 
 You can install using:
 

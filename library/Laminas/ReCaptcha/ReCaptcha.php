@@ -1,26 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Request as HttpRequest;
-use Zend\Stdlib\ArrayUtils;
-
 
 /**
- * Zend_Service_ReCaptcha
+ * Laminas_Service_ReCaptcha
  *
- * @category   Zend
- * @package    Zend_Service
+ * @category   Laminas
+ * @package    Laminas_Service
  * @subpackage ReCaptcha
  */
 class ReCaptcha
@@ -100,7 +97,7 @@ class ReCaptcha
     /**
      * Response from the verify server
      *
-     * @var \ZendService\ReCaptcha\Response
+     * @var \Laminas\ReCaptcha\Response
      */
     protected $_response = null;
 
@@ -176,7 +173,7 @@ class ReCaptcha
      * Set the ip property
      *
      * @param string $ip
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return \Laminas\ReCaptcha\ReCaptcha
      */
     public function setIp($ip)
     {
@@ -200,7 +197,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return \Laminas\ReCaptcha\ReCaptcha
      */
     public function setParam($key, $value)
     {
@@ -213,8 +210,8 @@ class ReCaptcha
      * Set parameters
      *
      * @param  array|Traversable $params
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return \Laminas\ReCaptcha\ReCaptcha
+     * @throws \Laminas\ReCaptcha\Exception
      */
     public function setParams($params)
     {
@@ -263,7 +260,7 @@ class ReCaptcha
      *
      * @param string $key
      * @param string $value
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return \Laminas\ReCaptcha\ReCaptcha
      */
     public function setOption($key, $value)
     {
@@ -276,8 +273,8 @@ class ReCaptcha
      * Set options
      *
      * @param  array|Traversable $options
-     * @return \ZendService\ReCaptcha\ReCaptcha
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return \Laminas\ReCaptcha\ReCaptcha
+     * @throws \Laminas\ReCaptcha\Exception
      */
     public function setOptions($options)
     {
@@ -333,7 +330,7 @@ class ReCaptcha
      * Set the public key
      *
      * @param string $publicKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return \Laminas\ReCaptcha\ReCaptcha
      */
     public function setPublicKey($publicKey)
     {
@@ -356,7 +353,7 @@ class ReCaptcha
      * Set the private key
      *
      * @param string $privateKey
-     * @return \ZendService\ReCaptcha\ReCaptcha
+     * @return \Laminas\ReCaptcha\ReCaptcha
      */
     public function setPrivateKey($privateKey)
     {
@@ -372,7 +369,7 @@ class ReCaptcha
      *
      * @param null|string $name Base name for recaptcha form elements
      * @return string
-     * @throws \ZendService\ReCaptcha\Exception
+     * @throws \Laminas\ReCaptcha\Exception
      */
     public function getHtml($name = null)
     {
@@ -403,7 +400,7 @@ class ReCaptcha
         $reCaptchaOptions = '';
 
         if (!empty($this->options)) {
-            $encoded = \Zend\Json\Json::encode($this->options);
+            $encoded = \Laminas\Json\Json::encode($this->options);
             $reCaptchaOptions = <<<SCRIPT
 <script type="text/javascript">
     var RecaptchaOptions = {$encoded};
@@ -442,8 +439,8 @@ HTML;
      *
      * @param string $challengeField
      * @param string $responseField
-     * @return \Zend\Http\Response
-     * @throws \ZendService\ReCaptcha\Exception
+     * @return \Laminas\Http\Response
+     * @throws \Laminas\ReCaptcha\Exception
      */
     protected function post($challengeField, $responseField)
     {
@@ -484,11 +481,11 @@ HTML;
      * Verify the user input
      *
      * This method calls up the post method and returns a
-     * Zend_Service_ReCaptcha_Response object.
+     * Laminas_Service_ReCaptcha_Response object.
      *
      * @param string $challengeField
      * @param string $responseField
-     * @return \ZendService\ReCaptcha\Response
+     * @return \Laminas\ReCaptcha\Response
      */
     public function verify($challengeField, $responseField)
     {
