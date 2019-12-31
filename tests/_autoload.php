@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Setup autoloading
  */
-if ($zf2Path = getenv('ZF2_PATH')) {
-    require_once $zf2Path . '/library/Zend/Loader/StandardAutoloader.php';
+if ($laminasPath = getenv('LAMINAS_PATH')) {
+    require_once $laminasPath . '/library/Laminas/Loader/StandardAutoloader.php';
 
-    $loader = new Zend\Loader\StandardAutoloader(array(
-        Zend\Loader\StandardAutoloader::AUTOREGISTER_ZF => true,
-        Zend\Loader\StandardAutoloader::LOAD_NS => array(
-            'ZendService' => __DIR__ . '/../library/ZendService'
+    $loader = new Laminas\Loader\StandardAutoloader(array(
+        Laminas\Loader\StandardAutoloader::AUTOREGISTER_LAMINAS => true,
+        Laminas\Loader\StandardAutoloader::LOAD_NS => array(
+            'Laminas' => __DIR__ . '/../library/Laminas'
         )
     ));
     $loader->register();
@@ -28,11 +29,11 @@ After that, you should be able to run tests.');
 
 
 spl_autoload_register(function ($class) {
-    if (0 !== strpos($class, 'ZendServiceTest\\')) {
+    if (0 !== strpos($class, 'LaminasTest\\')) {
         return false;
     }
-    $normalized = str_replace('ZendServiceTest\\', '', $class);
-    $filename   = __DIR__ . '/ZendService/' . str_replace(array('\\', '_'), '/', $normalized) . '.php';
+    $normalized = str_replace('LaminasTest\\', '', $class);
+    $filename   = __DIR__ . '/Laminas/' . str_replace(array('\\', '_'), '/', $normalized) . '.php';
     if (!file_exists($filename)) {
         return false;
     }

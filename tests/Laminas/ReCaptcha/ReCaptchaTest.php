@@ -1,30 +1,28 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
-use ZendService\ReCaptcha\ReCaptcha;
-use ZendService\ReCaptcha\Response as ReCaptchaResponse;
-use Zend\Config;
+use Laminas\Config;
+use Laminas\ReCaptcha\ReCaptcha;
+use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 
 /**
- * @category   Zend
- * @package    Zend_Service_ReCaptcha
+ * @category   Laminas
+ * @package    Laminas_Service_ReCaptcha
  * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_ReCaptcha
+ * @group      Laminas_Service
+ * @group      Laminas_Service_ReCaptcha
  */
 class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 {
-    protected $publicKey = TESTS_ZEND_SERVICE_RECAPTCHA_PUBLIC_KEY;
-    protected $privateKey = TESTS_ZEND_SERVICE_RECAPTCHA_PRIVATE_KEY;
+    protected $publicKey = TESTS_LAMINAS_SERVICE_RECAPTCHA_PUBLIC_KEY;
+    protected $privateKey = TESTS_LAMINAS_SERVICE_RECAPTCHA_PRIVATE_KEY;
 
     /**
      * @var ReCaptcha
@@ -110,7 +108,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($options['lang'], $_options['lang']);
     }
 
-    public function testSetMultipleParamsFromZendConfig()
+    public function testSetMultipleParamsFromLaminasConfig()
     {
         $params = array(
             'ssl' => true,
@@ -130,12 +128,12 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetInvalidParams()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setParams($var);
     }
 
-    public function testSetMultipleOptionsFromZendConfig()
+    public function testSetMultipleOptionsFromLaminasConfig()
     {
         $options = array(
             'theme' => 'black',
@@ -153,7 +151,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testSetInvalidOptions()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setOptions($var);
     }
@@ -202,7 +200,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testGetHtmlWithNoPublicKey()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
 
         $html = $this->reCaptcha->getHtml();
     }
@@ -213,8 +211,8 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');
 
-        if (defined('TESTS_ZEND_SERVICE_RECAPTCHA_ONLINE_ENABLED') &&
-            constant('TESTS_ZEND_SERVICE_RECAPTCHA_ONLINE_ENABLED')) {
+        if (defined('TESTS_LAMINAS_SERVICE_RECAPTCHA_ONLINE_ENABLED') &&
+            constant('TESTS_LAMINAS_SERVICE_RECAPTCHA_ONLINE_ENABLED')) {
 
             $this->_testVerifyOnline();
         } else {
@@ -228,8 +226,8 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     protected function _testVerifyOffline()
     {
-        $adapter = new \Zend\Http\Client\Adapter\Test();
-        $client = new \Zend\Http\Client(null, array(
+        $adapter = new \Laminas\Http\Client\Adapter\Test();
+        $client = new \Laminas\Http\Client(null, array(
             'adapter' => $adapter
         ));
 
@@ -259,7 +257,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame(false, strstr($html, 'src="' . ReCaptcha::API_SECURE_SERVER . '/challenge?k=' . $this->publicKey . '&error=' . $errorMsg . '"'));
     }
 
-    /** @group ZF-10991 */
+    /** @group Laminas-10991 */
     public function testHtmlGenerationWillUseSuppliedNameForNoScriptElements()
     {
         $this->reCaptcha->setPublicKey($this->publicKey);
@@ -270,14 +268,14 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testVerifyWithMissingPrivateKey()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
 
         $this->reCaptcha->verify('challenge', 'response');
     }
 
     public function testVerifyWithMissingIp()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->verify('challenge', 'response');
@@ -285,7 +283,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testVerifyWithMissingChallengeField()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');
@@ -294,7 +292,7 @@ class ReCaptchaTest extends \PHPUnit_Framework_TestCase
 
     public function testVerifyWithMissingResponseField()
     {
-        $this->setExpectedException('Zend\\Service\\ReCaptcha\\Exception');
+        $this->setExpectedException('Laminas\\Service\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setPrivateKey($this->privateKey);
         $this->reCaptcha->setIp('127.0.0.1');

@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
 
 /**
- * Zend_Service_ReCaptcha_MailHide
+ * Laminas_Service_ReCaptcha_MailHide
  *
- * @category   Zend
- * @package    Zend_Service
+ * @category   Laminas
+ * @package    Laminas_Service
  * @subpackage ReCaptcha
  */
 class MailHide extends ReCaptcha
@@ -46,7 +44,7 @@ class MailHide extends ReCaptcha
     protected $email = null;
 
     /**
-     * @var \Zend\Validator\ValidatorInterface
+     * @var \Laminas\Validator\ValidatorInterface
      */
     protected $emailValidator;
 
@@ -84,7 +82,7 @@ class MailHide extends ReCaptcha
         /* Require the mcrypt extension to be loaded */
         $this->_requireMcrypt();
 
-        /* If options is a Zend_Config object we want to convert it to an array so we can merge it with the default options */
+        /* If options is a Laminas_Config object we want to convert it to an array so we can merge it with the default options */
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
@@ -107,12 +105,12 @@ class MailHide extends ReCaptcha
     /**
      * Get emailValidator
      *
-     * @return \Zend\Validator\ValidatorInterface
+     * @return \Laminas\Validator\ValidatorInterface
      */
     public function getEmailValidator()
     {
         if (null === $this->emailValidator) {
-            $this->setEmailValidator(new \Zend\Validator\EmailAddress());
+            $this->setEmailValidator(new \Laminas\Validator\EmailAddress());
         }
         return $this->emailValidator;
     }
@@ -120,10 +118,10 @@ class MailHide extends ReCaptcha
     /**
      * Set email validator
      *
-     * @param  \Zend\Validator\ValidatorInterface $validator
-     * @return \ZendService\ReCaptcha\MailHide
+     * @param  \Laminas\Validator\ValidatorInterface $validator
+     * @return \Laminas\ReCaptcha\MailHide
      */
-    public function setEmailValidator(\Zend\Validator\ValidatorInterface $validator)
+    public function setEmailValidator(\Laminas\Validator\ValidatorInterface $validator)
     {
         $this->emailValidator = $validator;
         return $this;
@@ -133,12 +131,12 @@ class MailHide extends ReCaptcha
     /**
      * See if the mcrypt extension is available
      *
-     * @throws \ZendService\ReCaptcha\MailHideException
+     * @throws \Laminas\ReCaptcha\MailHideException
      */
     protected function _requireMcrypt()
     {
         if (!extension_loaded('mcrypt')) {
-            throw new MailHideException('Use of the Zend\\Service\\ReCaptcha\\MailHide component requires the mcrypt extension to be enabled in PHP');
+            throw new MailHideException('Use of the Laminas\\Service\\ReCaptcha\\MailHide component requires the mcrypt extension to be enabled in PHP');
         }
     }
 
@@ -184,7 +182,7 @@ class MailHide extends ReCaptcha
      * Override the parent method to store a binary representation of the private key as well.
      *
      * @param string $privateKey
-     * @return \ZendService\ReCaptcha\MailHide
+     * @return \Laminas\ReCaptcha\MailHide
      */
     public function setPrivateKey($privateKey)
     {
@@ -202,7 +200,7 @@ class MailHide extends ReCaptcha
      * This method will set the email property along with the local and domain parts
      *
      * @param string $email
-     * @return \ZendService\ReCaptcha\MailHide
+     * @return \Laminas\ReCaptcha\MailHide
      */
     public function setEmail($email)
     {
@@ -265,7 +263,7 @@ class MailHide extends ReCaptcha
      *
      * @param string $email
      * @return string
-     * @throws \ZendService\ReCaptcha\MailHideException
+     * @throws \Laminas\ReCaptcha\MailHideException
      */
     public function getHtml($email = null)
     {
