@@ -1,33 +1,41 @@
 {
-    "name": "zendframework/zendservice-recaptcha",
+    "name": "laminas/laminas-recaptcha",
     "description": "OOP wrapper for the ReCaptcha web service",
-    "type": "library",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "recaptcha"
     ],
-    "homepage": "http://packages.zendframework.com/",
-    "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-0": {
-            "ZendService": "library/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
+        "issues": "https://github.com/laminas/laminas-recaptcha/issues",
+        "source": "https://github.com/laminas/laminas-recaptcha",
+        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
-        }
-    ],
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-http": ">=2.0.0rc4",
-        "zendframework/zend-uri": ">=2.0.0rc4",
-        "zendframework/zend-version": ">=2.0.0rc4"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"
         }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-http": ">=2.0.0rc4",
+        "laminas/laminas-uri": ">=2.0.0rc4",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "zendframework/zend-version": ">=2.0.0rc4"
+    },
+    "autoload": {
+        "psr-0": {
+            "Laminas\\": "library/"
+        }
+    },
+    "replace": {
+        "zendframework/zendservice-recaptcha": "self.version"
     }
 }
