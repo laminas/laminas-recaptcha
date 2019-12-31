@@ -1,3 +1,6 @@
-vendor/
-composer.lock
-phpunit.xml
+/composer.lock
+/docs/html/
+/laminas-mkdoc-theme.tgz
+/laminas-mkdoc-theme/
+/phpunit.xml
+/vendor/

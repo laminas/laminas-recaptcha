@@ -42,7 +42,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#11](https://github.com/zendframework/ZendService_ReCaptcha/pull/11) migrates to
+- [zendframework/zendservice-recaptcha#11](https://github.com/zendframework/ZendService_ReCaptcha/pull/11) migrates to
   version 2 of the ReCaptcha API.
 
 ### Deprecated

@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
+use Laminas\Http\Response;
+use Laminas\ReCaptcha;
 use PHPUnit\Framework\TestCase;
-use ZendService\ReCaptcha;
-use Zend\Http\Response;
 
 class ResponseTest extends TestCase
 {

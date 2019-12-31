@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
+use Laminas\ReCaptcha;
 use PHPUnit\Framework\TestCase;
-use ZendService\ReCaptcha;
 
 class MailHideTest extends TestCase
 {
@@ -15,18 +17,18 @@ class MailHideTest extends TestCase
 
     public function setUp()
     {
-        $this->publicKey  = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
-        $this->privateKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
+        $this->publicKey  = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
+        $this->privateKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
 
         if (! extension_loaded('mcrypt')) {
-            $this->markTestSkipped('ZendService\ReCaptcha tests skipped due to missing mcrypt extension');
+            $this->markTestSkipped('Laminas\ReCaptcha tests skipped due to missing mcrypt extension');
         }
         if (empty($this->publicKey)
             || $this->publicKey == 'public mailhide key'
             || empty($this->privateKey)
             || $this->privateKey == 'private mailhide key'
         ) {
-            $this->markTestSkipped('ZendService\ReCaptcha\MailHide tests skipped due to missing keys');
+            $this->markTestSkipped('Laminas\ReCaptcha\MailHide tests skipped due to missing keys');
         }
         $this->mailHide = new ReCaptcha\MailHide();
     }
@@ -67,7 +69,7 @@ class MailHideTest extends TestCase
             'lang' => 'no',
         ];
 
-        $config = new \Zend\Config\Config($options);
+        $config = new \Laminas\Config\Config($options);
 
         $mailHide = new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config);
         $_options = $mailHide->getOptions();
@@ -104,7 +106,7 @@ class MailHideTest extends TestCase
 
     public function testGetHtmlWithNoEmail()
     {
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('Laminas\\ReCaptcha\\MailHideException');
 
         $html = $this->mailHide->getHtml();
     }
@@ -116,13 +118,13 @@ class MailHideTest extends TestCase
         $this->mailHide->setEmail($mail);
         $this->mailHide->setPrivateKey($this->privateKey);
 
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('Laminas\\ReCaptcha\\MailHideException');
         $html = $this->mailHide->getHtml();
     }
 
     public function testGetHtmlWithMissingPrivateKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\MailHideException');
+        $this->expectException('Laminas\\ReCaptcha\\MailHideException');
 
         $mail = 'mail@example.com';
 

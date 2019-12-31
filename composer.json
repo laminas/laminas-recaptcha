@@ -1,41 +1,55 @@
 {
-    "name": "zendframework/zendservice-recaptcha",
+    "name": "laminas/laminas-recaptcha",
     "description": "OOP wrapper for the ReCaptcha web service",
-    "type": "library",
+    "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "recaptcha"
     ],
-    "homepage": "http://packages.zendframework.com/",
-    "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-4": {
-            "ZendService\\ReCaptcha\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
+        "issues": "https://github.com/laminas/laminas-recaptcha/issues",
+        "source": "https://github.com/laminas/laminas-recaptcha",
+        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendServiceTest\\ReCaptcha\\": "test/"
-        }
-    },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zendframework/zend-http": "^2.5.4",
-        "zendframework/zend-json": "^2.6.1 || ^3.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.7 || ^6.0",
-        "zendframework/zend-coding-standard": "~1.0.0",
-        "zendframework/zend-config": "^2.0",
-        "zendframework/zend-validator": "^2.8.2"
-    },
-    "suggest": {
-        "zendframework/zend-validator": "~2.0, if using ReCaptcha's Mailhide API"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0-dev",
             "dev-develop": "3.1-dev"
         }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-http": "^2.5.4",
+        "laminas/laminas-json": "^2.6.1 || ^3.0",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-config": "^2.0",
+        "laminas/laminas-validator": "^2.8.2",
+        "phpunit/phpunit": "^5.7 || ^6.0"
+    },
+    "suggest": {
+        "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\ReCaptcha\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\ReCaptcha\\": "test/"
+        }
+    },
+    "replace": {
+        "zendframework/zendservice-recaptcha": "self.version"
     }
 }

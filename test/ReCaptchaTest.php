@@ -1,16 +1,18 @@
 <?php
+
 /**
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
+use Laminas\Config;
+use Laminas\Http\Client as HttpClient;
+use Laminas\ReCaptcha\ReCaptcha;
+use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 use PHPUnit\Framework\TestCase;
-use Zend\Config;
-use Zend\Http\Client as HttpClient;
-use ZendService\ReCaptcha\ReCaptcha;
-use ZendService\ReCaptcha\Response as ReCaptchaResponse;
 
 class ReCaptchaTest extends TestCase
 {
@@ -21,18 +23,18 @@ class ReCaptchaTest extends TestCase
 
     public function setUp()
     {
-        $this->siteKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY');
-        $this->secretKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY');
+        $this->siteKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
+        $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
         if (empty($this->siteKey) || empty($this->siteKey)) {
-            $this->markTestSkipped('ZendService\ReCaptcha\ReCaptcha tests skipped due to missing keys');
+            $this->markTestSkipped('Laminas\ReCaptcha\ReCaptcha tests skipped due to missing keys');
         }
 
 
         $httpClient = new HttpClient(
             null,
             [
-                'adapter' => 'Zend\Http\Client\Adapter\Curl',
+                'adapter' => 'Laminas\Http\Client\Adapter\Curl',
             ]
         );
 
@@ -109,7 +111,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($options['hl'], $_options['hl']);
     }
 
-    public function testSetMultipleParamsFromZendConfig()
+    public function testSetMultipleParamsFromLaminasConfig()
     {
         $params = [
             'ssl' => true,
@@ -125,12 +127,12 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidParams()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('Laminas\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setParams($var);
     }
 
-    public function testSetMultipleOptionsFromZendConfig()
+    public function testSetMultipleOptionsFromLaminasConfig()
     {
         $options = [
             'theme' => 'dark',
@@ -148,7 +150,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSetInvalidOptions()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('Laminas\\ReCaptcha\\Exception');
         $var = 'string';
         $this->reCaptcha->setOptions($var);
     }
@@ -193,7 +195,7 @@ class ReCaptchaTest extends TestCase
 
     public function testGetHtmlWithNoPublicKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('Laminas\\ReCaptcha\\Exception');
 
         $this->reCaptcha->getHtml();
     }
@@ -204,8 +206,8 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->setIp('127.0.0.1');
 
-        $adapter = new \Zend\Http\Client\Adapter\Test();
-        $client = new \Zend\Http\Client(null, [
+        $adapter = new \Laminas\Http\Client\Adapter\Test();
+        $client = new \Laminas\Http\Client(null, [
             'adapter' => $adapter
         ]);
 
@@ -244,7 +246,7 @@ class ReCaptchaTest extends TestCase
         $this->assertContains('?hl=en', $html);
     }
 
-    /** @group ZF-10991 */
+    /** @group Laminas-10991 */
     public function testHtmlGenerationWithNoScriptElements()
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
@@ -255,14 +257,14 @@ class ReCaptchaTest extends TestCase
 
     public function testVerifyWithMissingSecretKey()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('Laminas\\ReCaptcha\\Exception');
 
         $this->reCaptcha->verify('challenge', 'response');
     }
 
     public function testVerifyWithMissingIp()
     {
-        $this->expectException('ZendService\\ReCaptcha\\Exception');
+        $this->expectException('Laminas\\ReCaptcha\\Exception');
 
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->verify('challenge', 'response');
