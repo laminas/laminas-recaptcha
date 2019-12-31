@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
-use Zend\Http\Response as HTTPResponse;
+use Laminas\Http\Response as HTTPResponse;
 
 /**
- * Zend_Service_ReCaptcha_Response
+ * Laminas_Service_ReCaptcha_Response
  *
- * @category   Zend
- * @package    Zend_Service
+ * @category   Laminas
+ * @package    Laminas_Service
  * @subpackage ReCaptcha
  */
 class Response
@@ -45,7 +43,7 @@ class Response
      *
      * @param string $status
      * @param string $errorCode
-     * @param \Zend\Http\Response $httpResponse If this is set the content will override $status and $errorCode
+     * @param \Laminas\Http\Response $httpResponse If this is set the content will override $status and $errorCode
      */
     public function __construct($status = null, $errorCode = null, HTTPResponse $httpResponse = null)
     {
@@ -66,7 +64,7 @@ class Response
      * Set the status
      *
      * @param string $status
-     * @return \ZendService\ReCaptcha\Response
+     * @return \Laminas\ReCaptcha\Response
      */
     public function setStatus($status)
     {
@@ -103,7 +101,7 @@ class Response
      * Set the error code
      *
      * @param string $errorCode
-     * @return \ZendService\ReCaptcha\Response
+     * @return \Laminas\ReCaptcha\Response
      */
     public function setErrorCode($errorCode)
     {
@@ -123,10 +121,10 @@ class Response
     }
 
     /**
-     * Populate this instance based on a Zend_Http_Response object
+     * Populate this instance based on a Laminas_Http_Response object
      *
-     * @param \Zend\Http\Response $response
-     * @return \ZendService\ReCaptcha\Response
+     * @param \Laminas\Http\Response $response
+     * @return \Laminas\ReCaptcha\Response
      */
     public function setFromHttpResponse(HTTPResponse $response)
     {

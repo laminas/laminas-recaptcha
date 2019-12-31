@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Service
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
-use ZendService\ReCaptcha;
-use Zend\Http\Response;
+use Laminas\Http\Response;
+use Laminas\ReCaptcha;
 
 /**
- * @category   Zend
- * @package    Zend_Service_ReCaptcha
+ * @category   Laminas
+ * @package    Laminas_Service_ReCaptcha
  * @subpackage UnitTests
- * @group      Zend_Service
- * @group      Zend_Service_ReCaptcha
+ * @group      Laminas_Service
+ * @group      Laminas_Service_ReCaptcha
  */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
