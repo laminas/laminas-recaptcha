@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\EmailAddress as EmailAddressValidator;
+use Laminas\Validator\ValidatorInterface;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\EmailAddress as EmailAddressValidator;
-use Zend\Validator\ValidatorInterface;
 
 /**
  * Render and validate MailHide reCaptchas.

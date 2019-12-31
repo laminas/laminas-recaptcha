@@ -1,13 +1,14 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendService\ReCaptcha;
+namespace Laminas\ReCaptcha;
 
-use Zend\Http\Response as HTTPResponse;
+use Laminas\Http\Response as HTTPResponse;
 
 /**
  * Model responses from the ReCaptcha and Mailhide APIs.
@@ -116,7 +117,7 @@ class Response
     }
 
     /**
-     * Populate this instance based on a Zend_Http_Response object
+     * Populate this instance based on a Laminas_Http_Response object
      *
      * @param HTTPResponse $response
      * @return self

@@ -1,20 +1,21 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/ZendService_ReCaptcha for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/ZendService_ReCaptcha/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-recaptcha for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendServiceTest\ReCaptcha;
+namespace LaminasTest\ReCaptcha;
 
+use Laminas\Config;
+use Laminas\Http\Client\Adapter\Curl;
+use Laminas\Http\Client\Adapter\Test;
+use Laminas\Http\Client as HttpClient;
+use Laminas\ReCaptcha\Exception;
+use Laminas\ReCaptcha\ReCaptcha;
+use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 use PHPUnit\Framework\TestCase;
-use Zend\Config;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Client\Adapter\Test;
-use ZendService\ReCaptcha\ReCaptcha;
-use ZendService\ReCaptcha\Response as ReCaptchaResponse;
-use ZendService\ReCaptcha\Exception;
-use Zend\Http\Client\Adapter\Curl;
 
 class ReCaptchaTest extends TestCase
 {
@@ -35,11 +36,11 @@ class ReCaptchaTest extends TestCase
 
     protected function setUp()
     {
-        $this->siteKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SITE_KEY');
-        $this->secretKey = getenv('TESTS_ZEND_SERVICE_RECAPTCHA_SECRET_KEY');
+        $this->siteKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
+        $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
         if (empty($this->siteKey) || empty($this->siteKey)) {
-            $this->markTestSkipped('ZendService\ReCaptcha\ReCaptcha tests skipped due to missing keys');
+            $this->markTestSkipped('Laminas\ReCaptcha\ReCaptcha tests skipped due to missing keys');
         }
 
         $httpClient = new HttpClient(
@@ -122,7 +123,7 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($options['hl'], $_options['hl']);
     }
 
-    public function testSetMultipleParamsFromZendConfig()
+    public function testSetMultipleParamsFromLaminasConfig()
     {
         $params = [
             'ssl' => true,
@@ -143,7 +144,7 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setParams($var);
     }
 
-    public function testSetMultipleOptionsFromZendConfig()
+    public function testSetMultipleOptionsFromLaminasConfig()
     {
         $options = [
             'theme' => 'dark',
@@ -254,7 +255,7 @@ class ReCaptchaTest extends TestCase
         $this->assertContains('?hl=en', $html);
     }
 
-    /** @group ZF-10991 */
+    /** @group Laminas-10991 */
     public function testHtmlGenerationWithNoScriptElements()
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
