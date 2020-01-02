@@ -6,3 +6,6 @@ pages:
 site_name: laminas-recaptcha
 site_description: 'PHP OOP wrapper for the ReCaptcha web service'
 repo_url: 'https://github.com/laminas/laminas-recaptcha'
+extra:
+  project: Components
+  project_url: 'https://docs.laminas.dev'
