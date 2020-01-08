@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PHP OOP wrapper for the ReCaptcha web service">  
-    <link rel="canonical" href="https://docs.laminas.dev/intro/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Introduction - laminas-recaptcha - Laminas Docs</title>
+    <title>laminas-recaptcha - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -59,7 +58,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-recaptcha</a>
+            <a href="../.">laminas-recaptcha</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -73,8 +72,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -139,95 +138,21 @@
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#simplest-use" class="toc__link">Simplest use</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
             </div>
             <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
                 
-                    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        
-            <li class="breadcrumb-item"><a href="">Overview</a></li>
 
-            
-                <li class="breadcrumb-item"><a href="..">laminas-recaptcha</a></li>
+<h1 class="content__title">404</h1>
+<blockquote>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
+</blockquote>
 
-                
-
-                <li class="breadcrumb-item active" aria-current="page">Introduction</li>
-            
-        
-    </ol>
-</nav>
+<a href="../." class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-
-
-
-    
-    
-
-    <h1 id="laminas-recaptcha">laminas-recaptcha</h1>
-<p><code>Laminas\ReCaptcha\ReCaptcha</code> provides a client for the <a href="https://www.google.com/recaptcha/">reCAPTCHA Web Service</a>.
-Per the reCAPTCHA site, "reCAPTCHA is a free CAPTCHA service that helps to digitize books". Each reCAPTCHA requires
-the user to input two words, the first of which is the actual CAPTCHA, and the second of which is a word from some
-scanned text that Optical Character Recognition (OCR) software has been unable to identify. The assumption is that
-if a user correctly provides the first word, the second is likely correctly entered as well, and can be used to
-improve OCR software for digitizing books.</p>
-<p>In order to use the reCAPTCHA service, you will need to <a href="https://www.google.com/recaptcha/admin">sign up for an account</a>
-and register one or more domains with the service in order to generate public and private keys.</p>
-<h2 id="simplest-use">Simplest use</h2>
-<p>Instantiate a <code>Laminas\ReCaptcha\ReCaptcha</code> object, passing it your public and private keys:</p>
-<h3>Creating an instance of the reCAPTCHA service</h3>
-<pre class=codehilite><code class=language-php>$recaptcha = new Laminas\ReCaptcha\ReCaptcha($pubKey, $privKey);</code></pre>
-<h3>Displaying the reCAPTCHA</h3>
-<p>To render the reCAPTCHA, simply call the <code>getHTML()</code> method:</p>
-<pre class=codehilite><code class=language-php>echo $recaptcha-&gt;getHTML();</code></pre>
-<h3>Verifying the form fields</h3>
-<p>When the form is submitted, you should receive one field: <code>g-recaptcha-response</code>.
-Pass these to the reCAPTCHA object's <code>verify()</code> method:</p>
-<pre class=codehilite><code class=language-php>$result = $recaptcha-&gt;verify($_POST['g-recaptcha-response']);</code></pre>
-<p>Once you have the result, test against it to see if it is valid. The result is a
-<code>Laminas\ReCaptcha\Response</code> object, which provides an <code>isValid()</code> method.</p>
-<h3>Validating the reCAPTCHA</h3>
-<pre class=codehilite><code class=language-php>if (!$result-&gt;isValid()) {
-   // Failed validation
-}</code></pre>
-<p>It is even simpler to use <a href="https://docs.laminas.dev/laminas-captcha"><code>Laminas\Captcha</code></a> adapter, or to use
-that adapter as a backend for the <a href="https://docs.laminas.dev/laminas-form/element/captcha/">CAPTCHA form element</a>.
-In each case, the details of rendering and validating the reCAPTCHA are automated for you.</p>
-
-
-
-
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-recaptcha/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 
@@ -242,7 +167,7 @@ In each case, the details of rendering and validating the reCAPTCHA are automate
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-recaptcha</a>
+            <a href="../.">laminas-recaptcha</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -256,8 +181,8 @@ In each case, the details of rendering and validating the reCAPTCHA are automate
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
