@@ -61,6 +61,6 @@
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "replace": {
-        "zendframework/zendservice-recaptcha": "self.version"
+        "zendframework/zendservice-recaptcha": "^3.2.0"
     }
 }
