@@ -18,24 +18,25 @@ echo $recaptcha->getHTML();
 
 ## Verifying the form fields
 
-When the form is submitted, you should receive one field: `g-recaptcha-response`.
-Pass these to the reCAPTCHA object's `verify()` method:
+When the form is submitted, you should receive the field `g-recaptcha-response`
+in your submission.  Pass that value to the reCAPTCHA object's `verify()`
+method:
 
 ```php
+// Assuming a POST request was made:
 $result = $recaptcha->verify($_POST['g-recaptcha-response']);
 ```
 
 Once you have the result, test against it to see if it is valid. The result is a
-`Laminas\ReCaptcha\Response` object, which provides an `isValid()` method.
-
-## Validating the reCAPTCHA
+`Laminas\ReCaptcha\Response` object, which provides an `isValid()` method:
 
 ```php
+// Validating the reCAPTCHA:
 if (! $result->isValid()) {
    // Failed validation
 }
 ```
 
-Another possibility is the use [`Laminas\Captcha`](https://docs.laminas.dev/laminas-captcha) adapter, or to use
-that adapter as a backend for the [CAPTCHA form element](https://docs.laminas.dev/laminas-form/element/captcha/).
-In each case, the details of rendering and validating the reCAPTCHA are automated.
+If you wish to automate the details of rendering and validating the reCAPTCHA,
+you should investigate the [laminas-captcha reCAPTCHA adapter](https://docs.laminas.dev/laminas-captcha/adapters/#laminascaptcharecaptcha),
+or use that adapter as a backend for the [CAPTCHA form element](https://docs.laminas.dev/laminas-form/element/captcha/).
