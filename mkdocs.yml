@@ -1,10 +1,11 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
   - Home: index.md
   - Introduction: intro.md
+  - Basic Usage: basic-usage.md
 site_name: laminas-recaptcha
-site_description: 'PHP OOP wrapper for the ReCaptcha web service'
+site_description: 'OOP wrapper for the ReCaptcha web service'
 repo_url: 'https://github.com/laminas/laminas-recaptcha'
 extra:
   project: Components
