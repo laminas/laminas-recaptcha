@@ -7,5 +7,9 @@ scanned text that Optical Character Recognition (OCR) software has been unable t
 if a user correctly provides the first word, the second is likely correctly entered as well, and can be used to
 improve OCR software for digitizing books.
 
-In order to use the reCAPTCHA service, you will need to [sign up for an account](https://www.google.com/recaptcha/admin)
-and register one or more domains with the service in order to generate public and private keys.
+> ### Additional requirements
+> 
+> In order to use the reCAPTCHA service, you will need to
+> [sign up for an account](https://www.google.com/recaptcha/admin) and register
+> one or more domains with the service in order to generate public and private
+> keys.
