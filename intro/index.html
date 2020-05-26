@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PHP OOP wrapper for the ReCaptcha web service">  
+    <meta name="description" content="OOP wrapper for the ReCaptcha web service">  
     <link rel="canonical" href="https://docs.laminas.dev/laminas-recaptcha/intro/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -136,6 +136,20 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
+                            </li>
+                        
+                    
+                
+            
         </ul>
     </div>
 
@@ -201,17 +215,6 @@
 
     
     
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#simplest-use" class="toc__link nav-link">Simplest use</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
 
                 
 
@@ -241,39 +244,20 @@
     
     
 
-    <h1 id="laminas-recaptcha">laminas-recaptcha</h1>
+    <h1 id="introduction">Introduction</h1>
 <p><code>Laminas\ReCaptcha\ReCaptcha</code> provides a client for the <a href="https://www.google.com/recaptcha/">reCAPTCHA Web Service</a>.
 Per the reCAPTCHA site, "reCAPTCHA is a free CAPTCHA service that helps to digitize books". Each reCAPTCHA requires
 the user to input two words, the first of which is the actual CAPTCHA, and the second of which is a word from some
 scanned text that Optical Character Recognition (OCR) software has been unable to identify. The assumption is that
 if a user correctly provides the first word, the second is likely correctly entered as well, and can be used to
 improve OCR software for digitizing books.</p>
-<p>In order to use the reCAPTCHA service, you will need to <a href="https://www.google.com/recaptcha/admin">sign up for an account</a>
-and register one or more domains with the service in order to generate public and private keys.</p>
-<h2 id="simplest-use">Simplest use</h2>
-<p>Instantiate a <code>Laminas\ReCaptcha\ReCaptcha</code> object, passing it your public and private keys:</p>
-<h3>Creating an instance of the reCAPTCHA service</h3>
-<pre class="highlight"><code class="language-php">$recaptcha = new Laminas\ReCaptcha\ReCaptcha($pubKey, $privKey);</code></pre>
-
-<h3>Displaying the reCAPTCHA</h3>
-<p>To render the reCAPTCHA, simply call the <code>getHTML()</code> method:</p>
-<pre class="highlight"><code class="language-php">echo $recaptcha-&gt;getHTML();</code></pre>
-
-<h3>Verifying the form fields</h3>
-<p>When the form is submitted, you should receive one field: <code>g-recaptcha-response</code>.
-Pass these to the reCAPTCHA object's <code>verify()</code> method:</p>
-<pre class="highlight"><code class="language-php">$result = $recaptcha-&gt;verify($_POST['g-recaptcha-response']);</code></pre>
-
-<p>Once you have the result, test against it to see if it is valid. The result is a
-<code>Laminas\ReCaptcha\Response</code> object, which provides an <code>isValid()</code> method.</p>
-<h3>Validating the reCAPTCHA</h3>
-<pre class="highlight"><code class="language-php">if (!$result-&gt;isValid()) {
-   // Failed validation
-}</code></pre>
-
-<p>It is even simpler to use <a href="https://docs.laminas.dev/laminas-captcha"><code>Laminas\Captcha</code></a> adapter, or to use
-that adapter as a backend for the <a href="https://docs.laminas.dev/laminas-form/element/captcha/">CAPTCHA form element</a>.
-In each case, the details of rendering and validating the reCAPTCHA are automated for you.</p>
+<blockquote>
+<h3>Additional requirements</h3>
+<p>In order to use the reCAPTCHA service, you will need to
+<a href="https://www.google.com/recaptcha/admin">sign up for an account</a> and register
+one or more domains with the service in order to generate public and private
+keys.</p>
+</blockquote>
 
 
 
@@ -292,6 +276,10 @@ In each case, the details of rendering and validating the reCAPTCHA are automate
 
         
         <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../basic-usage/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
             
         </li>
     </ul>
@@ -340,6 +328,20 @@ In each case, the details of rendering and validating the reCAPTCHA are automate
                         
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../basic-usage/" class="subnavigation__link">Basic Usage</a>
                             </li>
                         
                     
