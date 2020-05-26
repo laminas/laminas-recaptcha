@@ -1,4 +1,4 @@
-# laminas-recaptcha
+# Introduction
 
 `Laminas\ReCaptcha\ReCaptcha` provides a client for the [reCAPTCHA Web Service](https://www.google.com/recaptcha/).
 Per the reCAPTCHA site, "reCAPTCHA is a free CAPTCHA service that helps to digitize books". Each reCAPTCHA requires
