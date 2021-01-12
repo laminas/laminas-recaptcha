@@ -11,7 +11,7 @@ namespace Laminas\ReCaptcha;
 use Laminas\Http\Response as HTTPResponse;
 
 /**
- * Model responses from the ReCaptcha and Mailhide APIs.
+ * Model responses from the ReCaptcha and MailHide APIs.
  */
 class Response
 {
@@ -39,7 +39,7 @@ class Response
      *
      * @param string $status
      * @param array $errorCodes
-     * @param HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
+     * @param ?HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
     public function __construct($status = null, $errorCodes = [], HTTPResponse $httpResponse = null)
     {
@@ -92,7 +92,7 @@ class Response
     /**
      * Set the error codes
      *
-     * @param array $errorCodes
+     * @param string|array $errorCodes
      * @return self
      */
     public function setErrorCodes($errorCodes)

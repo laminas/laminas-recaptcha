@@ -34,7 +34,7 @@ class ReCaptchaTest extends TestCase
      */
     private $reCaptcha;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->siteKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
