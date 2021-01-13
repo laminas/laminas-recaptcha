@@ -252,7 +252,7 @@ class ReCaptchaTest extends TestCase
 
         $html = $this->reCaptcha->getHtml();
 
-        $this->assertContains('?hl=en', $html);
+        $this->assertStringContainsString('?hl=en', $html);
     }
 
     /** @group Laminas-10991 */
@@ -261,7 +261,7 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setParam('noscript', true);
         $html = $this->reCaptcha->getHtml();
-        $this->assertContains('<iframe', $html);
+        $this->assertStringContainsString('<iframe', $html);
     }
 
     public function testVerifyWithMissingSecretKey()
