@@ -34,7 +34,7 @@ class ReCaptchaTest extends TestCase
      */
     private $reCaptcha;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->siteKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
@@ -252,7 +252,7 @@ class ReCaptchaTest extends TestCase
 
         $html = $this->reCaptcha->getHtml();
 
-        $this->assertContains('?hl=en', $html);
+        $this->assertStringContainsString('?hl=en', $html);
     }
 
     /** @group Laminas-10991 */
@@ -261,7 +261,7 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setParam('noscript', true);
         $html = $this->reCaptcha->getHtml();
-        $this->assertContains('<iframe', $html);
+        $this->assertStringContainsString('<iframe', $html);
     }
 
     public function testVerifyWithMissingSecretKey()

@@ -29,7 +29,7 @@ class MailHideTest extends TestCase
      */
     private $mailHide;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->publicKey  = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
         $this->privateKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY');
