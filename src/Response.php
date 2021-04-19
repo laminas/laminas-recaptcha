@@ -39,9 +39,9 @@ class Response
      *
      * @param string $status
      * @param array $errorCodes
-     * @param ?HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
+     * @param null|HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
-    public function __construct($status = null, $errorCodes = [], HTTPResponse $httpResponse = null)
+    public function __construct($status = null, $errorCodes = [], ?HTTPResponse $httpResponse = null)
     {
         if ($status !== null) {
             $this->setStatus($status);
