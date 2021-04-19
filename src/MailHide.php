@@ -8,10 +8,29 @@
 
 namespace Laminas\ReCaptcha;
 
+use Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\EmailAddress as EmailAddressValidator;
 use Laminas\Validator\ValidatorInterface;
 use Traversable;
+
+use function array_merge;
+use function base64_encode;
+use function chr;
+use function explode;
+use function extension_loaded;
+use function htmlentities;
+use function is_array;
+use function pack;
+use function sprintf;
+use function str_pad;
+use function strlen;
+use function strtr;
+use function substr;
+use function trigger_error;
+
+use const E_USER_WARNING;
+use const ENT_COMPAT;
 
 /**
  * Render and validate MailHide reCaptchas.
@@ -21,10 +40,10 @@ class MailHide extends ReCaptcha
     /**#@+
      * Encryption constants
      */
-    const ENCRYPTION_MODE       = MCRYPT_MODE_CBC;
-    const ENCRYPTION_CIPHER     = MCRYPT_RIJNDAEL_128;
-    const ENCRYPTION_BLOCK_SIZE = 16;
-    const ENCRYPTION_IV         = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+    public const ENCRYPTION_MODE       = MCRYPT_MODE_CBC;
+    public const ENCRYPTION_CIPHER     = MCRYPT_RIJNDAEL_128;
+    public const ENCRYPTION_BLOCK_SIZE = 16;
+    public const ENCRYPTION_IV         = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
     /**#@-*/
 
     /**
@@ -32,18 +51,16 @@ class MailHide extends ReCaptcha
      *
      * @var string
      */
-    const MAILHIDE_SERVER = 'http://mailhide.recaptcha.net/d';
+    public const MAILHIDE_SERVER = 'http://mailhide.recaptcha.net/d';
 
     /**
      * The email address to protect
      *
      * @var string
      */
-    protected $email = null;
+    protected $email;
 
-    /**
-     * @var ValidatorInterface
-     */
+    /** @var ValidatorInterface */
     protected $emailValidator;
 
     /**
@@ -51,21 +68,21 @@ class MailHide extends ReCaptcha
      *
      * @var string
      */
-    protected $privateKeyPacked = null;
+    protected $privateKeyPacked;
 
     /**
      * The local part of the email
      *
      * @var string
      */
-    protected $emailLocalPart = null;
+    protected $emailLocalPart;
 
     /**
      * The domain part of the email
      *
      * @var string
      */
-    protected $emailDomainPart = null;
+    protected $emailDomainPart;
 
     /**
      * Local constructor
@@ -100,7 +117,6 @@ class MailHide extends ReCaptcha
         }
     }
 
-
     /**
      * Get emailValidator
      *
@@ -117,7 +133,6 @@ class MailHide extends ReCaptcha
     /**
      * Set email validator
      *
-     * @param  ValidatorInterface $validator
      * @return MailHide
      */
     public function setEmailValidator(ValidatorInterface $validator)
@@ -125,7 +140,6 @@ class MailHide extends ReCaptcha
         $this->emailValidator = $validator;
         return $this;
     }
-
 
     /**
      * See if the mcrypt extension is available
@@ -137,7 +151,7 @@ class MailHide extends ReCaptcha
         if (! extension_loaded('mcrypt')) {
             throw new MailHideException(sprintf(
                 'Use of the %s component requires the mcrypt extension to be enabled in PHP',
-                __CLASS__
+                self::class
             ));
         }
     }
@@ -154,7 +168,7 @@ class MailHide extends ReCaptcha
     {
         try {
             $return = $this->getHtml();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $return = '';
             trigger_error($e->getMessage(), E_USER_WARNING);
         }
@@ -219,6 +233,7 @@ class MailHide extends ReCaptcha
      * uses, even though the parent ReCaptcha API uses "site key"
      *
      * @param string $publicKey
+     * @return $this
      */
     public function setPublicKey($publicKey)
     {
@@ -266,7 +281,7 @@ class MailHide extends ReCaptcha
             $emailParts[0] = substr($emailParts[0], 0, 4);
         }
 
-        $this->emailLocalPart = $emailParts[0];
+        $this->emailLocalPart  = $emailParts[0];
         $this->emailDomainPart = $emailParts[1];
 
         return $this;
@@ -331,7 +346,7 @@ class MailHide extends ReCaptcha
         $enc = $this->getOption('encoding');
 
         /* Genrate the HTML used to represent the email address */
-        $html = htmlentities($this->getEmailLocalPart(), ENT_COMPAT, $enc)
+        return htmlentities($this->getEmailLocalPart(), ENT_COMPAT, $enc)
             . '<a href="'
                 . htmlentities($url, ENT_COMPAT, $enc)
                 . '" onclick="window.open(\''
@@ -344,8 +359,6 @@ class MailHide extends ReCaptcha
                 . $this->options['linkTitle']
                 . '">' . $this->options['linkHiddenText'] . '</a>@'
                 . htmlentities($this->getEmailDomainPart(), ENT_COMPAT, $enc);
-
-        return $html;
     }
 
     /**
