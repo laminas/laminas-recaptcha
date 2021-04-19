@@ -1,7 +1,6 @@
 # Laminas\ReCaptcha component
 
-[![Build Status](https://travis-ci.com/laminas/laminas-recaptcha.svg?branch=master)](https://travis-ci.com/laminas/laminas-recaptcha)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-recaptcha/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-recaptcha?branch=master)
+[![Build Status](https://github.com/laminas/laminas-recaptcha/workflows/Continuous%20Integration/badge.svg)](https://github.com/laminas/laminas-recaptcha/actions?query=workflow%3A"Continuous+Integration")
 
 ## Install
 
