@@ -5,54 +5,64 @@
  * @copyright https://github.com/laminas/laminas-recaptcha/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-recaptcha/blob/master/LICENSE.md New BSD License
  */
+
 namespace Laminas\ReCaptcha;
 
 use Exception as PhpException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
+use Laminas\ReCaptcha\Response;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function sprintf;
+use function trigger_error;
+
+use const E_USER_WARNING;
 
 /**
  * Render and verify ReCaptchas
  */
 class ReCaptcha
 {
-
     /**
      * URI to the API
      *
      * @var string
      */
-    const API_SERVER = 'https://www.google.com/recaptcha/api';
+    public const API_SERVER = 'https://www.google.com/recaptcha/api';
 
     /**
      * URI to the verify server
      *
      * @var string
      */
-    const VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify';
+    public const VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify';
 
     /**
      * Site key used when displaying the captcha
      *
      * @var string
      */
-    protected $siteKey = null;
+    protected $siteKey;
 
     /**
      * Secret key used when verifying user input
      *
      * @var string
      */
-    protected $secretKey = null;
+    protected $secretKey;
 
     /**
      * Ip address used when verifying user input
      *
      * @var string
      */
-    protected $ip = null;
+    protected $ip;
 
     /**
      * Parameters for the object
@@ -71,24 +81,19 @@ class ReCaptcha
      * @var array
      */
     protected $options = [
-        'theme' => 'light',
-        'type' => 'image',
-        'size' => 'normal',
-        'tabindex' => 0,
-        'callback' => null,
+        'theme'            => 'light',
+        'type'             => 'image',
+        'size'             => 'normal',
+        'tabindex'         => 0,
+        'callback'         => null,
         'expired-callback' => null,
-        'hl' => null // Auto-detect language
+        'hl'               => null, // Auto-detect language
     ];
 
-    /**
-     *
-     * @var HttpClient
-     */
-    protected $httpClient = null;
+    /** @var HttpClient */
+    protected $httpClient;
 
     /**
-     * Class constructor
-     *
      * @param string $siteKey
      * @param string $secretKey
      * @param array|Traversable $params
@@ -101,7 +106,7 @@ class ReCaptcha
         $params = null,
         $options = null,
         $ip = null,
-        HttpClient $httpClient = null
+        ?HttpClient $httpClient = null
     ) {
         if ($siteKey !== null) {
             $this->setSiteKey($siteKey);
@@ -128,12 +133,14 @@ class ReCaptcha
         $this->setHttpClient($httpClient ?: new HttpClient());
     }
 
+    /** @return $this */
     public function setHttpClient(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
         return $this;
     }
 
+    /** @return HttpClient */
     public function getHttpClient()
     {
         return $this->httpClient;
@@ -349,7 +356,7 @@ class ReCaptcha
     /**
      * Set the secret key
      *
-     * @param string $secreteKey
+     * @param string $secretKey
      * @return self
      */
     public function setSecretKey($secretKey)
@@ -364,8 +371,6 @@ class ReCaptcha
      *
      * This method uses the public key to fetch a recaptcha form.
      *
-     * @param null|string $name
-     *            Base name for recaptcha form elements
      * @return string
      * @throws Exception
      */
@@ -394,14 +399,16 @@ class ReCaptcha
 
         $data = "data-sitekey=\"{$this->siteKey}\"";
 
-        foreach ([
-            'theme',
-            'type',
-            'size',
-            'tabindex',
-            'callback',
-            'expired-callback'
-        ] as $option) {
+        foreach (
+            [
+                'theme',
+                'type',
+                'size',
+                'tabindex',
+                'callback',
+                'expired-callback',
+            ] as $option
+        ) {
             if (! empty($this->options[$option])) {
                 $data .= " data-$option=\"{$this->options[$option]}\"";
             }
@@ -461,9 +468,9 @@ HTML;
         $httpClient = $this->getHttpClient();
 
         $params = [
-            'secret' => $this->secretKey,
+            'secret'   => $this->secretKey,
             'remoteip' => $this->ip,
-            'response' => $responseField
+            'response' => $responseField,
         ];
 
         $request = new HttpRequest();
@@ -482,7 +489,7 @@ HTML;
      * \Laminas\ReCaptcha\Response object.
      *
      * @param string $responseField
-     * @return \Laminas\ReCaptcha\Response
+     * @return Response
      */
     public function verify($responseField)
     {

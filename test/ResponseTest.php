@@ -12,11 +12,11 @@ use Laminas\Http\Response;
 use Laminas\ReCaptcha;
 use PHPUnit\Framework\TestCase;
 
+use function json_encode;
+
 class ResponseTest extends TestCase
 {
-    /**
-     * @var ReCaptcha\Response
-     */
+    /** @var ReCaptcha\Response */
     protected $response;
 
     protected function setUp(): void
@@ -62,8 +62,8 @@ class ResponseTest extends TestCase
         $status       = false;
         $errorCodes   = ['foo', 'bar'];
         $responseBody = json_encode([
-            'success' => $status,
-            'error-codes' => $errorCodes
+            'success'     => $status,
+            'error-codes' => $errorCodes,
         ]);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);
@@ -78,7 +78,7 @@ class ResponseTest extends TestCase
 
     public function testConstructor()
     {
-        $status = true;
+        $status     = true;
         $errorCodes = ['ok'];
 
         $response = new ReCaptcha\Response($status, $errorCodes);
@@ -92,8 +92,8 @@ class ResponseTest extends TestCase
         $status       = false;
         $errorCodes   = ['foobar'];
         $responseBody = json_encode([
-            'success' => $status,
-            'error-codes' => $errorCodes
+            'success'     => $status,
+            'error-codes' => $errorCodes,
         ]);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);

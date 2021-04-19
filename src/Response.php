@@ -10,6 +10,11 @@ namespace Laminas\ReCaptcha;
 
 use Laminas\Http\Response as HTTPResponse;
 
+use function array_key_exists;
+use function is_array;
+use function is_string;
+use function json_decode;
+
 /**
  * Model responses from the ReCaptcha and MailHide APIs.
  */
@@ -22,7 +27,7 @@ class Response
      *
      * @var boolean
      */
-    protected $status = null;
+    protected $status;
 
     /**
      * Error codes
@@ -119,7 +124,6 @@ class Response
     /**
      * Populate this instance based on a Laminas_Http_Response object
      *
-     * @param HTTPResponse $response
      * @return self
      */
     public function setFromHttpResponse(HTTPResponse $response)
@@ -128,7 +132,7 @@ class Response
 
         $parts = json_decode($body, true);
 
-        $status = false;
+        $status     = false;
         $errorCodes = [];
 
         if (is_array($parts) && array_key_exists('success', $parts)) {

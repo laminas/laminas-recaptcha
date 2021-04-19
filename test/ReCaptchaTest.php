@@ -9,34 +9,32 @@
 namespace LaminasTest\ReCaptcha;
 
 use Laminas\Config;
+use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Client\Adapter\Test;
-use Laminas\Http\Client as HttpClient;
 use Laminas\ReCaptcha\Exception;
 use Laminas\ReCaptcha\ReCaptcha;
 use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 use PHPUnit\Framework\TestCase;
 
+use function getenv;
+use function sprintf;
+use function strstr;
+
 class ReCaptchaTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $siteKey;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $secretKey;
 
-    /**
-     * @var ReCaptcha
-     */
+    /** @var ReCaptcha */
     private $reCaptcha;
 
     protected function setUp(): void
     {
-        $this->siteKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
+        $this->siteKey   = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
         if (empty($this->siteKey) || empty($this->siteKey)) {
@@ -71,7 +69,7 @@ class ReCaptchaTest extends TestCase
 
     public function testSingleParam()
     {
-        $key = 'ssl';
+        $key   = 'ssl';
         $value = true;
 
         $this->reCaptcha->setParam($key, $value);
@@ -90,14 +88,14 @@ class ReCaptchaTest extends TestCase
         ];
 
         $this->reCaptcha->setParams($params);
-        $_params = $this->reCaptcha->getParams();
+        $receivedParams = $this->reCaptcha->getParams();
 
-        $this->assertSame($params['ssl'], $_params['ssl']);
+        $this->assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
     public function testSingleOption()
     {
-        $key = 'theme';
+        $key   = 'theme';
         $value = 'dark';
 
         $this->reCaptcha->setOption($key, $value);
@@ -113,14 +111,14 @@ class ReCaptchaTest extends TestCase
     {
         $options = [
             'theme' => 'dark',
-            'hl' => 'en',
+            'hl'    => 'en',
         ];
 
         $this->reCaptcha->setOptions($options);
-        $_options = $this->reCaptcha->getOptions();
+        $receivedOptions = $this->reCaptcha->getOptions();
 
-        $this->assertSame($options['theme'], $_options['theme']);
-        $this->assertSame($options['hl'], $_options['hl']);
+        $this->assertSame($options['theme'], $receivedOptions['theme']);
+        $this->assertSame($options['hl'], $receivedOptions['hl']);
     }
 
     public function testSetMultipleParamsFromLaminasConfig()
@@ -132,9 +130,9 @@ class ReCaptchaTest extends TestCase
         $config = new Config\Config($params);
 
         $this->reCaptcha->setParams($config);
-        $_params = $this->reCaptcha->getParams();
+        $receivedParams = $this->reCaptcha->getParams();
 
-        $this->assertSame($params['ssl'], $_params['ssl']);
+        $this->assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
     public function testSetInvalidParams()
@@ -148,16 +146,16 @@ class ReCaptchaTest extends TestCase
     {
         $options = [
             'theme' => 'dark',
-            'hl' => 'en',
+            'hl'    => 'en',
         ];
 
         $config = new Config\Config($options);
 
         $this->reCaptcha->setOptions($config);
-        $_options = $this->reCaptcha->getOptions();
+        $receivedOptions = $this->reCaptcha->getOptions();
 
-        $this->assertSame($options['theme'], $_options['theme']);
-        $this->assertSame($options['hl'], $_options['hl']);
+        $this->assertSame($options['theme'], $receivedOptions['theme']);
+        $this->assertSame($options['hl'], $receivedOptions['hl']);
     }
 
     public function testSetInvalidOptions()
@@ -175,21 +173,21 @@ class ReCaptchaTest extends TestCase
 
         $options = [
             'theme' => 'dark',
-            'hl' => 'en',
+            'hl'    => 'en',
         ];
 
         $ip = '127.0.0.1';
 
         $reCaptcha = new ReCaptcha($this->siteKey, $this->secretKey, $params, $options, $ip);
 
-        $_params = $reCaptcha->getParams();
-        $_options = $reCaptcha->getOptions();
+        $receivedParams  = $reCaptcha->getParams();
+        $receivedOptions = $reCaptcha->getOptions();
 
         $this->assertSame($this->siteKey, $reCaptcha->getSiteKey());
         $this->assertSame($this->secretKey, $reCaptcha->getSecretKey());
-        $this->assertSame($params['noscript'], $_params['noscript']);
-        $this->assertSame($options['theme'], $_options['theme']);
-        $this->assertSame($options['hl'], $_options['hl']);
+        $this->assertSame($params['noscript'], $receivedParams['noscript']);
+        $this->assertSame($options['theme'], $receivedOptions['theme']);
+        $this->assertSame($options['hl'], $receivedOptions['hl']);
         $this->assertSame($ip, $reCaptcha->getIp());
     }
 
@@ -219,8 +217,8 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setIp('127.0.0.1');
 
         $adapter = new Test();
-        $client = new HttpClient(null, [
-            'adapter' => $adapter
+        $client  = new HttpClient(null, [
+            'adapter' => $adapter,
         ]);
 
         $this->reCaptcha->setHttpClient($client);

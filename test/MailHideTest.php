@@ -8,25 +8,24 @@
 
 namespace LaminasTest\ReCaptcha;
 
+use Laminas\Config\Config;
 use Laminas\ReCaptcha;
 use Laminas\ReCaptcha\MailHideException;
 use PHPUnit\Framework\TestCase;
 
+use function extension_loaded;
+use function getenv;
+use function substr_count;
+
 class MailHideTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $publicKey;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $privateKey;
 
-    /**
-     * @var ReCaptcha\MailHide
-     */
+    /** @var ReCaptcha\MailHide */
     private $mailHide;
 
     protected function setUp(): void
@@ -37,10 +36,11 @@ class MailHideTest extends TestCase
         if (! extension_loaded('mcrypt')) {
             $this->markTestSkipped('Laminas\ReCaptcha tests skipped due to missing mcrypt extension');
         }
-        if (empty($this->publicKey)
-            || $this->publicKey == 'public mailhide key'
+        if (
+            empty($this->publicKey)
+            || $this->publicKey === 'public mailhide key'
             || empty($this->privateKey)
-            || $this->privateKey == 'private mailhide key'
+            || $this->privateKey === 'private mailhide key'
         ) {
             $this->markTestSkipped('Laminas\ReCaptcha\MailHide tests skipped due to missing keys');
         }
@@ -80,22 +80,22 @@ class MailHideTest extends TestCase
 
         $options = [
             'theme' => 'black',
-            'lang' => 'no',
+            'lang'  => 'no',
         ];
 
-        $config = new \Laminas\Config\Config($options);
+        $config = new Config($options);
 
-        $mailHide = new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config);
-        $_options = $mailHide->getOptions();
+        $mailHide        = new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config);
+        $receivedOptions = $mailHide->getOptions();
 
         $this->assertSame($this->publicKey, $mailHide->getPublicKey());
         $this->assertSame($this->privateKey, $mailHide->getPrivateKey());
         $this->assertSame($mail, $mailHide->getEmail());
-        $this->assertSame($options['theme'], $_options['theme']);
-        $this->assertSame($options['lang'], $_options['lang']);
+        $this->assertSame($options['theme'], $receivedOptions['theme']);
+        $this->assertSame($options['lang'], $receivedOptions['lang']);
     }
 
-    protected function checkHtml($html)
+    protected function checkHtml(string $html): void
     {
         $server = ReCaptcha\MailHide::MAILHIDE_SERVER;
         $pubKey = $this->publicKey;
