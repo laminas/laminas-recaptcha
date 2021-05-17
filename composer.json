@@ -1,25 +1,12 @@
 {
     "name": "laminas/laminas-recaptcha",
     "description": "OOP wrapper for the ReCaptcha web service",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "recaptcha"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
-        "issues": "https://github.com/laminas/laminas-recaptcha/issues",
-        "source": "https://github.com/laminas/laminas-recaptcha",
-        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "ext-json": "*",
@@ -27,6 +14,9 @@
         "laminas/laminas-json": "^3.2",
         "laminas/laminas-stdlib": "^3.3",
         "laminas/laminas-zendframework-bridge": "^1.1"
+    },
+    "replace": {
+        "zendframework/zendservice-recaptcha": "^3.2.0"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.1.4",
@@ -37,6 +27,10 @@
     "suggest": {
         "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
     },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {},
     "autoload": {
         "psr-4": {
             "Laminas\\ReCaptcha\\": "src/"
@@ -57,7 +51,12 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zendservice-recaptcha": "^3.2.0"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-recaptcha/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-recaptcha",
+        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
+        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom"
     }
 }
