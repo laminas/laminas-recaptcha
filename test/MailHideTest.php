@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\ReCaptcha;
 
 use Laminas\Config\Config;
