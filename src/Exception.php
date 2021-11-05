@@ -8,6 +8,6 @@
 
 namespace Laminas\ReCaptcha;
 
-class Exception extends \Exception
+class Exception extends \Exception implements ExceptionInterface
 {
 }
