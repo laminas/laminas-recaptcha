@@ -1,4 +1,7 @@
 {
+    "extensions": [
+        "mcrypt"
+    ],
     "exclude": [
         {"name": "PHPUnit on PHP 5.6 with locked dependencies"},
         {"name": "PHPUnit on PHP 7.0 with locked dependencies"},
