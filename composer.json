@@ -29,7 +29,7 @@
         "laminas/laminas-zendframework-bridge": "^1.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~2.1.4",
+        "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-config": "^3.4",
         "laminas/laminas-validator": "^2.14",
         "phpunit/phpunit": "^9.4.3"
