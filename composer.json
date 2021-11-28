@@ -21,18 +21,17 @@
     "extra": {
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
-        "laminas/laminas-http": "^2.14",
-        "laminas/laminas-json": "^3.2",
-        "laminas/laminas-stdlib": "^3.3",
-        "laminas/laminas-zendframework-bridge": "^1.1"
+        "laminas/laminas-http": "^2.15",
+        "laminas/laminas-json": "^3.3",
+        "laminas/laminas-stdlib": "^3.6"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.3.0",
-        "laminas/laminas-config": "^3.4",
-        "laminas/laminas-validator": "^2.14",
-        "phpunit/phpunit": "^9.4.3"
+        "laminas/laminas-config": "^3.7",
+        "laminas/laminas-validator": "^2.15",
+        "phpunit/phpunit": "^9.5.4"
     },
     "suggest": {
         "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
@@ -57,7 +56,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zendservice-recaptcha": "^3.2.0"
+    "conflict": {
+        "zendframework/zendservice-recaptcha": "*"
     }
 }
