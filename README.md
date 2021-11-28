@@ -6,8 +6,8 @@
 
 You can install using [Composer][1]:
 
-```
-composer require laminas/laminas-recaptcha
+```bash
+$ composer require laminas/laminas-recaptcha
 ```
 
 ## Documentation
@@ -15,7 +15,6 @@ composer require laminas/laminas-recaptcha
 Documentation is on the Laminas website:
 
 - [https://docs.laminas.dev/laminas-recaptcha][2]
-
 
 [1]: https://getcomposer.org/download/
 [2]: https://docs.laminas.dev/laminas-recaptcha
