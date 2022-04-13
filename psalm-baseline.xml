@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.22.0@fc2c6ab4d5fa5d644d8617089f012f3bb84b8703">
+  <file src="src/ReCaptcha.php">
+    <InvalidNullableReturnType occurrences="1">
+      <code>HttpClient</code>
+    </InvalidNullableReturnType>
+    <MixedArgument occurrences="4">
+      <code>$this-&gt;options[$option]</code>
+      <code>$this-&gt;options['hl']</code>
+      <code>$this-&gt;options['onload']</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="4">
+      <code>$k</code>
+      <code>$k</code>
+      <code>$options</code>
+      <code>$params</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="2">
+      <code>$v</code>
+      <code>$v</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>fromArray</code>
+    </MixedMethodCall>
+    <MixedReturnTypeCoercion occurrences="2">
+      <code>$this-&gt;params</code>
+      <code>array&lt;string,mixed&gt;</code>
+    </MixedReturnTypeCoercion>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$options</code>
+    </MoreSpecificImplementedParamType>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;httpClient</code>
+    </NullableReturnStatement>
+    <PossiblyNullReference occurrences="1">
+      <code>setEncType</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="src/Response.php">
+    <MixedArgument occurrences="1">
+      <code>$errorCodes</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$errorCodes</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="2">
+      <code>$errorCodes</code>
+      <code>$parts</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$status</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_array($errorCodes)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/ReCaptchaTest.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>$this-&gt;siteKey === ''</code>
+    </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$config</code>
+      <code>$config</code>
+    </MixedArgumentTypeCoercion>
+    <PossiblyFalsePropertyAssignmentValue occurrences="2">
+      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY')</code>
+      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY')</code>
+    </PossiblyFalsePropertyAssignmentValue>
+  </file>
+  <file src="test/ResponseTest.php">
+    <MixedArgument occurrences="2">
+      <code>$response['errorCodes']</code>
+      <code>$response['status']</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>iterable</code>
+    </MixedInferredReturnType>
+  </file>
+</files>
