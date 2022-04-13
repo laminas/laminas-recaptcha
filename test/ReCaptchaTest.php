@@ -32,6 +32,9 @@ final class ReCaptchaTest extends TestCase
 
     protected function setUp(): void
     {
+        // Fake the _SERVER value
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+
         $this->siteKey   = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
@@ -269,9 +272,6 @@ final class ReCaptchaTest extends TestCase
      */
     public function testConstructorWithNoIp(): void
     {
-        // Fake the _SERVER value
-        //        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-
         $reCaptcha = new ReCaptcha(null, null, null, null, null);
 
         $this->assertSame($_SERVER['REMOTE_ADDR'], $reCaptcha->getIp());
