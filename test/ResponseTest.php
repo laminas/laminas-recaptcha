@@ -24,7 +24,7 @@ final class ResponseTest extends TestCase
         $this->response = new ReCaptcha\Response();
     }
 
-    protected function validResponsesProvider(): iterable
+    public function validResponsesProvider(): iterable
     {
         yield 'true' => [['status' => true, 'errorCodes' => ['ok']]];
         yield 'false-single' => [['status' => false, 'errorCodes' => ['invalid-key']]];
