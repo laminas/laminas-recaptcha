@@ -6,61 +6,89 @@ namespace LaminasTest\ReCaptcha;
 
 use Laminas\Http\Response;
 use Laminas\ReCaptcha;
+use Laminas\ReCaptcha\Contract\ResponseInterface;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 use function json_encode;
 
-class ResponseTest extends TestCase
+use const JSON_THROW_ON_ERROR;
+
+final class ResponseTest extends TestCase
 {
-    /** @var ReCaptcha\Response */
-    protected $response;
+    private ResponseInterface $response;
 
     protected function setUp(): void
     {
         $this->response = new ReCaptcha\Response();
     }
 
-    public function testSetAndGet()
+    protected function validResponsesProvider(): iterable
     {
-        /* Set and get status */
-        $status = true;
-        $this->response->setStatus($status);
-        $this->assertTrue($this->response->getStatus());
-
-        $status = false;
-        $this->response->setStatus($status);
-        $this->assertFalse($this->response->getStatus());
-
-        /* Set and get the error codes */
-        $errorCodes = 'foobar';
-        $this->response->setErrorCodes($errorCodes);
-        $this->assertSame([$errorCodes], $this->response->getErrorCodes());
-
-        $errorCodes = ['foo', 'bar'];
-        $this->response->setErrorCodes($errorCodes);
-        $this->assertSame($errorCodes, $this->response->getErrorCodes());
+        yield 'true' => [['status' => true, 'errorCodes' => ['ok']]];
+        yield 'false-single' => [['status' => false, 'errorCodes' => ['invalid-key']]];
+        yield 'false-multiple' => [['status' => false, 'errorCodes' => ['invalid-response', 'invalid-key']]];
     }
 
-    public function testIsValid()
+    /**
+     * @dataProvider validResponsesProvider
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::getErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::getStatus
+     * @covers \Laminas\ReCaptcha\Response::setErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     * @throws ReCaptcha\Exception
+     */
+    public function testSetAndGet(array $response): void
+    {
+        /* Set and get status */
+        $this->response->setStatus($response['status']);
+        $this->assertSame($response['status'], $this->response->getStatus());
+
+        /* Set and get the error codes */
+        $this->response->setErrorCodes($response['errorCodes']);
+        $this->assertSame($response['errorCodes'], $this->response->getErrorCodes());
+    }
+
+    /**
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::isValid
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     */
+    public function testIsValid(): void
     {
         $this->response->setStatus(true);
         $this->assertTrue($this->response->isValid());
     }
 
-    public function testIsInvalid()
+    /**
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::isValid
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     */
+    public function testIsInvalid(): void
     {
         $this->response->setStatus(false);
         $this->assertFalse($this->response->isValid());
     }
 
-    public function testSetFromHttpResponse()
+    /**
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::getErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::getStatus
+     * @covers \Laminas\ReCaptcha\Response::setErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::setFromHttpResponse
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     * @throws Throwable
+     */
+    public function testSetFromHttpResponse(): void
     {
         $status       = false;
         $errorCodes   = ['foo', 'bar'];
         $responseBody = json_encode([
             'success'     => $status,
             'error-codes' => $errorCodes,
-        ]);
+        ], JSON_THROW_ON_ERROR);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);
         $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
@@ -72,7 +100,15 @@ class ResponseTest extends TestCase
         $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
-    public function testConstructor()
+    /**
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::getErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::getStatus
+     * @covers \Laminas\ReCaptcha\Response::setErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     * @throws Throwable
+     */
+    public function testConstructor(): void
     {
         $status     = true;
         $errorCodes = ['ok'];
@@ -83,14 +119,23 @@ class ResponseTest extends TestCase
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 
-    public function testConstructorWithHttpResponse()
+    /**
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::getErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::getStatus
+     * @covers \Laminas\ReCaptcha\Response::setErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::setFromHttpResponse
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     * @throws Throwable
+     */
+    public function testConstructorWithHttpResponse(): void
     {
         $status       = false;
         $errorCodes   = ['foobar'];
         $responseBody = json_encode([
             'success'     => $status,
             'error-codes' => $errorCodes,
-        ]);
+        ], JSON_THROW_ON_ERROR);
         $httpResponse = new Response();
         $httpResponse->setStatusCode(200);
         $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
