@@ -37,9 +37,7 @@ final class ResponseTest extends TestCase
      * @covers \Laminas\ReCaptcha\Response::getStatus
      * @covers \Laminas\ReCaptcha\Response::setErrorCodes
      * @covers \Laminas\ReCaptcha\Response::setStatus
-     *
      * @dataProvider validResponsesProvider
-     *
      * @throws Exception
      */
     public function testSetAndGet(array $response): void
