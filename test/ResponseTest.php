@@ -7,6 +7,7 @@ namespace LaminasTest\ReCaptcha;
 use Laminas\Http\Response;
 use Laminas\ReCaptcha;
 use Laminas\ReCaptcha\Contract\ResponseInterface;
+use Laminas\ReCaptcha\Exception;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -31,13 +32,15 @@ final class ResponseTest extends TestCase
     }
 
     /**
-     * @dataProvider validResponsesProvider
      * @covers \Laminas\ReCaptcha\Response::__construct
      * @covers \Laminas\ReCaptcha\Response::getErrorCodes
      * @covers \Laminas\ReCaptcha\Response::getStatus
      * @covers \Laminas\ReCaptcha\Response::setErrorCodes
      * @covers \Laminas\ReCaptcha\Response::setStatus
-     * @throws ReCaptcha\Exception
+     *
+     * @dataProvider validResponsesProvider
+     *
+     * @throws Exception
      */
     public function testSetAndGet(array $response): void
     {
