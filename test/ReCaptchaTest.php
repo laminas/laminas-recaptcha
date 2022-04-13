@@ -8,32 +8,34 @@ use Laminas\Config;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Client\Adapter\Curl;
 use Laminas\Http\Client\Adapter\Test;
+use Laminas\Http\Response;
+use Laminas\ReCaptcha\Contract\ResponseInterface;
 use Laminas\ReCaptcha\Exception;
 use Laminas\ReCaptcha\ReCaptcha;
-use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 use function getenv;
+use function json_encode;
 use function sprintf;
 use function strstr;
 
-class ReCaptchaTest extends TestCase
+use const JSON_THROW_ON_ERROR;
+
+final class ReCaptchaTest extends TestCase
 {
-    /** @var string */
-    private $siteKey;
+    private string $siteKey;
 
-    /** @var string */
-    private $secretKey;
+    private string $secretKey;
 
-    /** @var ReCaptcha */
-    private $reCaptcha;
+    private ReCaptcha $reCaptcha;
 
     protected function setUp(): void
     {
         $this->siteKey   = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
-        if (empty($this->siteKey) || empty($this->siteKey)) {
+        if ($this->siteKey === '' || $this->siteKey === '') {
             $this->markTestSkipped('Laminas\ReCaptcha\ReCaptcha tests skipped due to missing keys');
         }
 
@@ -47,7 +49,17 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha = new ReCaptcha(null, null, null, null, null, $httpClient);
     }
 
-    public function testSetAndGet()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     */
+    public function testSetAndGet(): void
     {
         /* Set and get IP address */
         $ip = '127.0.0.1';
@@ -63,7 +75,14 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($this->secretKey, $this->reCaptcha->getSecretKey());
     }
 
-    public function testSingleParam()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParam
+     */
+    public function testSingleParam(): void
     {
         $key   = 'ssl';
         $value = true;
@@ -72,12 +91,27 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getParam($key));
     }
 
-    public function testGetNonExistingParam()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     */
+    public function testGetNonExistingParam(): void
     {
         $this->assertNull($this->reCaptcha->getParam('foobar'));
     }
 
-    public function testMultipleParams()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getParams
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParams
+     */
+    public function testMultipleParams(): void
     {
         $params = [
             'ssl' => true,
@@ -89,7 +123,14 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
-    public function testSingleOption()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOption
+     */
+    public function testSingleOption(): void
     {
         $key   = 'theme';
         $value = 'dark';
@@ -98,12 +139,26 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($value, $this->reCaptcha->getOption($key));
     }
 
-    public function testGetNonExistingOption()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     */
+    public function testGetNonExistingOption(): void
     {
         $this->assertNull($this->reCaptcha->getOption('foobar'));
     }
 
-    public function testMultipleOptions()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOptions
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOptions
+     */
+    public function testMultipleOptions(): void
     {
         $options = [
             'theme' => 'dark',
@@ -117,7 +172,16 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($options['hl'], $receivedOptions['hl']);
     }
 
-    public function testSetMultipleParamsFromLaminasConfig()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getParams
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParams
+     * @throws Exception
+     */
+    public function testSetMultipleParamsFromLaminasConfig(): void
     {
         $params = [
             'ssl' => true,
@@ -131,14 +195,15 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
-    public function testSetInvalidParams()
-    {
-        $this->expectException(Exception::class);
-        $var = 'string';
-        $this->reCaptcha->setParams($var);
-    }
-
-    public function testSetMultipleOptionsFromLaminasConfig()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOptions
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOptions
+     */
+    public function testSetMultipleOptionsFromLaminasConfig(): void
     {
         $options = [
             'theme' => 'dark',
@@ -154,14 +219,23 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($options['hl'], $receivedOptions['hl']);
     }
 
-    public function testSetInvalidOptions()
-    {
-        $this->expectException(Exception::class);
-        $var = 'string';
-        $this->reCaptcha->setOptions($var);
-    }
-
-    public function testConstructor()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getOptions
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getParams
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOptions
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParams
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     */
+    public function testConstructor(): void
     {
         $params = [
             'noscript' => true,
@@ -187,10 +261,16 @@ class ReCaptchaTest extends TestCase
         $this->assertSame($ip, $reCaptcha->getIp());
     }
 
-    public function testConstructorWithNoIp()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     */
+    public function testConstructorWithNoIp(): void
     {
         // Fake the _SERVER value
-        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+        //        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
         $reCaptcha = new ReCaptcha(null, null, null, null, null);
 
@@ -199,21 +279,54 @@ class ReCaptchaTest extends TestCase
         unset($_SERVER['REMOTE_ADDR']);
     }
 
-    public function testGetHtmlWithNoPublicKey()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getHtml
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     */
+    public function testGetHtmlWithNoPublicKey(): void
     {
         $this->expectException(Exception::class);
 
         $this->reCaptcha->getHtml();
     }
 
-    public function testVerify()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::post
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::verify
+     * @covers \Laminas\ReCaptcha\Response::__construct
+     * @covers \Laminas\ReCaptcha\Response::getStatus
+     * @covers \Laminas\ReCaptcha\Response::setErrorCodes
+     * @covers \Laminas\ReCaptcha\Response::setFromHttpResponse
+     * @covers \Laminas\ReCaptcha\Response::setStatus
+     * @throws Throwable
+     */
+    public function testVerify(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->setIp('127.0.0.1');
 
-        $adapter = new Test();
-        $client  = new HttpClient(null, [
+        $adapter      = new Test();
+        $responseBody = json_encode([
+            'success'     => false,
+            'error-codes' => ['valid'],
+        ], JSON_THROW_ON_ERROR);
+
+        $httpResponse = new Response();
+        $httpResponse->setStatusCode(200);
+        $httpResponse->getHeaders()->addHeaderLine('Content-Type', 'text/html');
+        $httpResponse->setContent($responseBody);
+
+        $adapter->setResponse($httpResponse);
+
+        $client = new HttpClient(null, [
             'adapter' => $adapter,
         ]);
 
@@ -222,11 +335,18 @@ class ReCaptchaTest extends TestCase
         $resp = $this->reCaptcha->verify('responseField');
 
         // See if we have a valid object and that the status is false
-        $this->assertInstanceOf(ReCaptchaResponse::class, $resp);
+        $this->assertInstanceOf(ResponseInterface::class, $resp);
         $this->assertFalse($resp->getStatus());
     }
 
-    public function testGetHtml()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getHtml
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     */
+    public function testGetHtml(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
 
@@ -239,7 +359,15 @@ class ReCaptchaTest extends TestCase
         $this->assertNotTrue(strstr($html, '<iframe'));
     }
 
-    public function testGetHtmlWithLanguage()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getHtml
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setOption
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     */
+    public function testGetHtmlWithLanguage(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setOption('hl', 'en');
@@ -249,26 +377,54 @@ class ReCaptchaTest extends TestCase
         $this->assertStringContainsString('?hl=en', $html);
     }
 
-    /** @group Laminas-10991 */
-    public function testHtmlGenerationWithNoScriptElements()
+    /**
+     * @group Laminas-10991
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::getHtml
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setParam
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::verify
+     */
+    public function testHtmlGenerationWithNoScriptElements(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setParam('noscript', true);
+
         $html = $this->reCaptcha->getHtml();
         $this->assertStringContainsString('<iframe', $html);
     }
 
-    public function testVerifyWithMissingSecretKey()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::post
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::verify
+     */
+    public function testVerifyWithMissingSecretKey(): void
     {
         $this->expectException(Exception::class);
 
         $this->reCaptcha->verify('response');
     }
 
-    public function testVerifyWithMissingIp()
+    /**
+     * @covers \Laminas\ReCaptcha\ReCaptcha::__construct
+     * @covers \Laminas\ReCaptcha\ReCaptcha::post
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setHttpClient
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setIp
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSecretKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::setSiteKey
+     * @covers \Laminas\ReCaptcha\ReCaptcha::verify
+     */
+    public function testVerifyWithMissingIp(): void
     {
         $this->expectException(Exception::class);
 
+        $this->reCaptcha->setIp(null);
         $this->reCaptcha->setSecretKey($this->secretKey);
         $this->reCaptcha->verify('response');
     }

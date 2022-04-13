@@ -7,23 +7,24 @@ namespace Laminas\ReCaptcha;
 use Exception as PhpException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\ReCaptcha\Contract\ReCaptchaInterface;
+use Laminas\ReCaptcha\Contract\ResponseInterface;
 use Laminas\ReCaptcha\Response;
 use Laminas\Stdlib\ArrayUtils;
+use Throwable;
 use Traversable;
 
-use function get_class;
-use function gettype;
-use function is_array;
-use function is_object;
+use function array_key_exists;
 use function sprintf;
 use function trigger_error;
 
 use const E_USER_WARNING;
 
 /**
- * Render and verify ReCaptchas
+ * Render and verify ReCaptcha
  */
-class ReCaptcha
+final class ReCaptcha implements ReCaptchaInterface
 {
     /**
      * URI to the API
@@ -33,39 +34,25 @@ class ReCaptcha
     public const API_SERVER = 'https://www.google.com/recaptcha/api';
 
     /**
-     * URI to the verify server
+     * URI to the site verify endpoint
      *
      * @var string
      */
     public const VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify';
 
-    /**
-     * Site key used when displaying the captcha
-     *
-     * @var string
-     */
-    protected $siteKey;
+    /** Site key used when displaying the captcha */
+    private ?string $siteKey = null;
 
-    /**
-     * Secret key used when verifying user input
-     *
-     * @var string
-     */
-    protected $secretKey;
+    /** Secret key used when verifying user input */
+    private ?string $secretKey = null;
 
-    /**
-     * Ip address used when verifying user input
-     *
-     * @var string
-     */
-    protected $ip;
+    /** Ip address used when verifying user input */
+    private ?string $ip = null;
 
-    /**
-     * Parameters for the object
+    /** Parameters for the object
      *
-     * @var array
-     */
-    protected $params = [
+     * @var mixed[] */
+    private array $params = [
         'noscript' => false, /* Includes the <noscript> tag */
     ];
 
@@ -74,9 +61,9 @@ class ReCaptcha
      *
      * See the different options on https://developers.google.com/recaptcha/docs/display#config
      *
-     * @var array
+     * @var array<string,mixed>
      */
-    protected $options = [
+    private array $options = [
         'theme'            => 'light',
         'type'             => 'image',
         'size'             => 'normal',
@@ -86,22 +73,15 @@ class ReCaptcha
         'hl'               => null, // Auto-detect language
     ];
 
-    /** @var HttpClient */
-    protected $httpClient;
+    private ?HttpClient $httpClient = null;
 
-    /**
-     * @param string $siteKey
-     * @param string $secretKey
-     * @param array|Traversable $params
-     * @param array|Traversable $options
-     * @param string $ip
-     */
+    /** @throws Exception */
     public function __construct(
-        $siteKey = null,
-        $secretKey = null,
-        $params = null,
-        $options = null,
-        $ip = null,
+        ?string $siteKey = null,
+        ?string $secretKey = null,
+        ?iterable $params = [],
+        ?iterable $options = [],
+        ?string $ip = null,
         ?HttpClient $httpClient = null
     ) {
         if ($siteKey !== null) {
@@ -112,11 +92,18 @@ class ReCaptcha
             $this->setSecretKey($secretKey);
         }
 
-        if ($ip !== null) {
-            $this->setIp($ip);
-        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
-            $this->setIp($_SERVER['REMOTE_ADDR']);
-        }
+        $this->setIp(
+            $ip ??
+                // https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip
+                $_SERVER['HTTP_CF_CONNECTING_IP'] ??
+                $_SERVER['HTTP_CLIENT_IP'] ??
+                $_SERVER['HTTP_X_FORWARDED_FOR'] ??
+                $_SERVER['HTTP_X_FORWARDED'] ??
+                $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'] ??
+                $_SERVER['HTTP_FORWARDED_FOR'] ??
+                $_SERVER['HTTP_FORWARDED'] ??
+                $_SERVER['REMOTE_ADDR']
+        );
 
         if ($params !== null) {
             $this->setParams($params);
@@ -129,15 +116,13 @@ class ReCaptcha
         $this->setHttpClient($httpClient ?: new HttpClient());
     }
 
-    /** @return $this */
-    public function setHttpClient(HttpClient $httpClient)
+    public function setHttpClient(HttpClient $httpClient): self
     {
         $this->httpClient = $httpClient;
         return $this;
     }
 
-    /** @return HttpClient */
-    public function getHttpClient()
+    public function getHttpClient(): HttpClient
     {
         return $this->httpClient;
     }
@@ -148,16 +133,14 @@ class ReCaptcha
      * When the instance is used as a string it will display the recaptcha.
      * Since we can't throw exceptions within this method we will trigger
      * a user warning instead.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         try {
             $return = $this->getHtml();
-        } catch (PhpException $e) {
+        } catch (PhpException $phpException) {
             $return = '';
-            trigger_error($e->getMessage(), E_USER_WARNING);
+            trigger_error($phpException->getMessage(), E_USER_WARNING);
         }
 
         return $return;
@@ -165,23 +148,16 @@ class ReCaptcha
 
     /**
      * Set the ip property
-     *
-     * @param string $ip
-     * @return self
      */
-    public function setIp($ip)
+    public function setIp(?string $ip): self
     {
         $this->ip = $ip;
 
         return $this;
     }
 
-    /**
-     * Get the ip property
-     *
-     * @return string
-     */
-    public function getIp()
+    /** Get the ip property */
+    public function getIp(): ?string
     {
         return $this->ip;
     }
@@ -189,11 +165,9 @@ class ReCaptcha
     /**
      * Set a single parameter
      *
-     * @param string $key
-     * @param string $value
-     * @return self
+     * @param mixed $value
      */
-    public function setParam($key, $value)
+    public function setParam(string $key, $value): self
     {
         $this->params[$key] = $value;
 
@@ -203,22 +177,12 @@ class ReCaptcha
     /**
      * Set parameters
      *
-     * @param array|Traversable $params
-     * @return self
      * @throws Exception
      */
-    public function setParams($params)
+    public function setParams(iterable $params): self
     {
         if ($params instanceof Traversable) {
             $params = ArrayUtils::iteratorToArray($params);
-        }
-
-        if (! is_array($params)) {
-            throw new Exception(sprintf(
-                '%s expects an array or Traversable set of params; received "%s"',
-                __METHOD__,
-                is_object($params) ? get_class($params) : gettype($params)
-            ));
         }
 
         foreach ($params as $k => $v) {
@@ -231,9 +195,9 @@ class ReCaptcha
     /**
      * Get the parameter array
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -241,26 +205,19 @@ class ReCaptcha
     /**
      * Get a single parameter
      *
-     * @param string $key
      * @return mixed
      */
-    public function getParam($key)
+    public function getParam(string $key)
     {
-        if (! isset($this->params[$key])) {
-            return null;
-        }
-
-        return $this->params[$key];
+        return $this->params[$key] ?? null;
     }
 
     /**
      * Set a single option
      *
-     * @param string $key
-     * @param string $value
-     * @return self
+     * @param mixed $value
      */
-    public function setOption($key, $value)
+    public function setOption(string $key, $value): self
     {
         $this->options[$key] = $value;
 
@@ -270,22 +227,17 @@ class ReCaptcha
     /**
      * Set options
      *
-     * @param array|Traversable $options
-     * @return self
+     * @param iterable<string,mixed> $options
      * @throws Exception
      */
-    public function setOptions($options)
+    public function setOptions(iterable $options): self
     {
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (is_array($options)) {
-            foreach ($options as $k => $v) {
-                $this->setOption($k, $v);
-            }
-        } else {
-            throw new Exception('Expected array or Traversable object');
+        foreach ($options as $k => $v) {
+            $this->setOption($k, $v);
         }
 
         return $this;
@@ -294,9 +246,9 @@ class ReCaptcha
     /**
      * Get the options array
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -304,10 +256,9 @@ class ReCaptcha
     /**
      * Get a single option
      *
-     * @param string $key
      * @return mixed
      */
-    public function getOption($key)
+    public function getOption(string $key)
     {
         if (! isset($this->options[$key])) {
             return null;
@@ -318,21 +269,16 @@ class ReCaptcha
 
     /**
      * Get the site key
-     *
-     * @return string
      */
-    public function getSiteKey()
+    public function getSiteKey(): ?string
     {
         return $this->siteKey;
     }
 
     /**
      * Set the site key
-     *
-     * @param string $siteKey
-     * @return self
      */
-    public function setSiteKey($siteKey)
+    public function setSiteKey(string $siteKey): self
     {
         $this->siteKey = $siteKey;
 
@@ -341,21 +287,16 @@ class ReCaptcha
 
     /**
      * Get the secret key
-     *
-     * @return string
      */
-    public function getSecretKey()
+    public function getSecretKey(): ?string
     {
         return $this->secretKey;
     }
 
     /**
      * Set the secret key
-     *
-     * @param string $secretKey
-     * @return self
      */
-    public function setSecretKey($secretKey)
+    public function setSecretKey(string $secretKey): self
     {
         $this->secretKey = $secretKey;
 
@@ -367,22 +308,19 @@ class ReCaptcha
      *
      * This method uses the public key to fetch a recaptcha form.
      *
-     * @return string
      * @throws Exception
      */
-    public function getHtml()
+    public function getHtml(): string
     {
         if ($this->siteKey === null) {
             throw new Exception('Missing site key');
         }
 
-        $host = self::API_SERVER;
-
         // Should we use an onload callback?
-        if (! empty($this->options['onload'])) {
+        if (array_key_exists('onload', $this->options)) {
             return sprintf(
                 '<script type="text/javascript" src="%s.js?onload=%s&render=explicit" async defer></script>',
-                $host,
+                self::API_SERVER,
                 $this->options['onload']
             );
         }
@@ -390,29 +328,20 @@ class ReCaptcha
         $langOption = '';
 
         if (! empty($this->options['hl'])) {
-            $langOption = "?hl={$this->options['hl']}";
+            $langOption = sprintf('?hl=%s', $this->options['hl']);
         }
 
-        $data = "data-sitekey=\"{$this->siteKey}\"";
+        $data = sprintf('data-sitekey="%s"', $this->siteKey);
 
-        foreach (
-            [
-                'theme',
-                'type',
-                'size',
-                'tabindex',
-                'callback',
-                'expired-callback',
-            ] as $option
-        ) {
+        foreach (['theme', 'type', 'size', 'tabindex', 'callback', 'expired-callback'] as $option) {
             if (! empty($this->options[$option])) {
-                $data .= " data-$option=\"{$this->options[$option]}\"";
+                $data .= sprintf(' data-%s="%s"', $option, $this->options[$option]);
             }
         }
 
         $return = <<<HTML
-<script type="text/javascript" src="{$host}.js{$langOption}" async defer></script>
-<div class="g-recaptcha" $data></div>
+<script type="text/javascript" src="{self::API_SERVER}.js{$langOption}" async defer></script>
+<div class="g-recaptcha" {$data}></div>
 HTML;
 
         if ($this->params['noscript']) {
@@ -421,8 +350,8 @@ HTML;
   <div style="width: 302px; height: 422px;">
     <div style="width: 302px; height: 422px; position: relative;">
       <div style="width: 302px; height: 422px; position: absolute;">
-        <iframe src="{$host}/fallback?k={$this->siteKey}"
-                frameborder="0" scrolling="no"
+        <iframe src="{self::API_SERVER}/fallback?k={$this->siteKey}"
+                border="0" scrolling="no"
                 style="width: 302px; height:422px; border-style: none;">
         </iframe>
       </div>
@@ -440,17 +369,16 @@ HTML;
 </noscript>
 HTML;
         }
+
         return $return;
     }
 
     /**
-     * Gets a solution to the verify server
+     * Posts a solution to the site verify endpoint
      *
-     * @param string $responseField
-     * @return \Laminas\Http\Response
      * @throws Exception
      */
-    protected function post($responseField)
+    private function post(string $responseField): HttpResponse
     {
         if ($this->secretKey === null) {
             throw new Exception('Missing secret key');
@@ -460,36 +388,27 @@ HTML;
             throw new Exception('Missing ip address');
         }
 
-        /* Fetch an instance of the http client */
-        $httpClient = $this->getHttpClient();
-
-        $params = [
+        $request = new HttpRequest();
+        $request->setUri(self::VERIFY_SERVER);
+        $request->setMethod(HttpRequest::METHOD_POST);
+        $request->getPost()->fromArray([
             'secret'   => $this->secretKey,
             'remoteip' => $this->ip,
             'response' => $responseField,
-        ];
+        ]);
 
-        $request = new HttpRequest();
-        $request->setUri(self::VERIFY_SERVER);
-        $request->getPost()->fromArray($params);
-        $request->setMethod(HttpRequest::METHOD_POST);
-        $httpClient->setEncType($httpClient::ENC_URLENCODED);
+        $this->httpClient->setEncType(HttpClient::ENC_URLENCODED);
 
-        return $httpClient->send($request);
+        return $this->httpClient->send($request);
     }
 
     /**
      * Verify the user input
      *
-     * This method calls up the post method and returns a
-     * \Laminas\ReCaptcha\Response object.
-     *
-     * @param string $responseField
-     * @return Response
+     * @throws Throwable
      */
-    public function verify($responseField)
+    public function verify(string $responseField): ResponseInterface
     {
-        $response = $this->post($responseField);
-        return new Response(null, null, $response);
+        return new Response(null, null, $this->post($responseField));
     }
 }
