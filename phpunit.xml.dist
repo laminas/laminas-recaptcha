@@ -25,7 +25,6 @@
     </coverage>
     <php>
         <ini name="date.timezone" value="UTC"/>
-        <server name="REMOTE_ADDR" value="127.0.0.1"/>
         <!-- Laminas\ReCaptcha online test env variables -->
         <!-- Change these if you want to use your own keys -->
         <env name="TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY" value="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"/>
