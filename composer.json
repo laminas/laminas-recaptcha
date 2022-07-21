@@ -18,23 +18,27 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.3.99"
+            "php": "7.4.99"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
     },
     "require": {
-        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
         "laminas/laminas-http": "^2.15",
-        "laminas/laminas-json": "^3.3",
-        "laminas/laminas-stdlib": "^3.6"
+        "laminas/laminas-stdlib": "^3.10.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-config": "^3.7",
         "laminas/laminas-validator": "^2.15",
-        "phpunit/phpunit": "^9.5.4"
+        "phpunit/phpunit": "^9.5.4",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "vimeo/psalm": "^4.24"
     },
     "suggest": {
         "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
