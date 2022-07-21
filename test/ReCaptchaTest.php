@@ -19,14 +19,11 @@ use function strstr;
 
 class ReCaptchaTest extends TestCase
 {
-    /** @var string */
-    private $siteKey;
+    private string $siteKey;
 
-    /** @var string */
-    private $secretKey;
+    private string $secretKey;
 
-    /** @var ReCaptcha */
-    private $reCaptcha;
+    private ReCaptcha $reCaptcha;
 
     protected function setUp(): void
     {
