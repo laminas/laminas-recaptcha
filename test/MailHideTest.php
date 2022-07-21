@@ -6,6 +6,7 @@ namespace LaminasTest\ReCaptcha;
 
 use Laminas\Config\Config;
 use Laminas\ReCaptcha;
+use Laminas\ReCaptcha\MailHide;
 use Laminas\ReCaptcha\MailHideException;
 use PHPUnit\Framework\TestCase;
 
@@ -15,14 +16,11 @@ use function substr_count;
 
 class MailHideTest extends TestCase
 {
-    /** @var string */
-    private $publicKey;
+    private string $publicKey;
 
-    /** @var string */
-    private $privateKey;
+    private string $privateKey;
 
-    /** @var ReCaptcha\MailHide */
-    private $mailHide;
+    private MailHide $mailHide;
 
     protected function setUp(): void
     {
