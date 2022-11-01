@@ -36,9 +36,9 @@
         "laminas/laminas-coding-standard": "~2.4.0",
         "laminas/laminas-config": "^3.7",
         "laminas/laminas-validator": "^2.15",
-        "phpunit/phpunit": "^9.5.4",
+        "phpunit/phpunit": "^9.5.26",
         "psalm/plugin-phpunit": "^0.17.0",
-        "vimeo/psalm": "^4.24"
+        "vimeo/psalm": "^4.29.0"
     },
     "suggest": {
         "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
