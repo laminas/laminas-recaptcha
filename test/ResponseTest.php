@@ -20,7 +20,7 @@ class ResponseTest extends TestCase
         $this->response = new ReCaptcha\Response();
     }
 
-    public function testSetAndGet()
+    public function testSetAndGet(): void
     {
         /* Set and get status */
         $status = true;
@@ -41,19 +41,19 @@ class ResponseTest extends TestCase
         $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
-    public function testIsValid()
+    public function testIsValid(): void
     {
         $this->response->setStatus(true);
         $this->assertTrue($this->response->isValid());
     }
 
-    public function testIsInvalid()
+    public function testIsInvalid(): void
     {
         $this->response->setStatus(false);
         $this->assertFalse($this->response->isValid());
     }
 
-    public function testSetFromHttpResponse()
+    public function testSetFromHttpResponse(): void
     {
         $status       = false;
         $errorCodes   = ['foo', 'bar'];
@@ -72,7 +72,7 @@ class ResponseTest extends TestCase
         $this->assertSame($errorCodes, $this->response->getErrorCodes());
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $status     = true;
         $errorCodes = ['ok'];
@@ -83,7 +83,7 @@ class ResponseTest extends TestCase
         $this->assertSame($errorCodes, $response->getErrorCodes());
     }
 
-    public function testConstructorWithHttpResponse()
+    public function testConstructorWithHttpResponse(): void
     {
         $status       = false;
         $errorCodes   = ['foobar'];
