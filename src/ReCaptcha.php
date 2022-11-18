@@ -9,12 +9,11 @@ use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\ReCaptcha\Response;
 use Laminas\Stdlib\ArrayUtils;
+use Stringable;
 use Traversable;
 
-use function get_class;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function sprintf;
 use function trigger_error;
 
@@ -22,8 +21,10 @@ use const E_USER_WARNING;
 
 /**
  * Render and verify ReCaptchas
+ *
+ * @final This class should not be extended and will be marked final in version 4.0
  */
-class ReCaptcha
+class ReCaptcha implements Stringable
 {
     /**
      * URI to the API
@@ -148,16 +149,14 @@ class ReCaptcha
      * When the instance is used as a string it will display the recaptcha.
      * Since we can't throw exceptions within this method we will trigger
      * a user warning instead.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         try {
             $return = $this->getHtml();
-        } catch (PhpException $e) {
+        } catch (PhpException $phpException) {
             $return = '';
-            trigger_error($e->getMessage(), E_USER_WARNING);
+            trigger_error($phpException->getMessage(), E_USER_WARNING);
         }
 
         return $return;
@@ -217,7 +216,7 @@ class ReCaptcha
             throw new Exception(sprintf(
                 '%s expects an array or Traversable set of params; received "%s"',
                 __METHOD__,
-                is_object($params) ? get_class($params) : gettype($params)
+                get_debug_type($params)
             ));
         }
 
@@ -390,10 +389,10 @@ class ReCaptcha
         $langOption = '';
 
         if (! empty($this->options['hl'])) {
-            $langOption = "?hl={$this->options['hl']}";
+            $langOption = sprintf('?hl=%s', $this->options['hl']);
         }
 
-        $data = "data-sitekey=\"{$this->siteKey}\"";
+        $data = sprintf('data-sitekey="%s"', $this->siteKey);
 
         foreach (
             [
@@ -406,13 +405,13 @@ class ReCaptcha
             ] as $option
         ) {
             if (! empty($this->options[$option])) {
-                $data .= " data-$option=\"{$this->options[$option]}\"";
+                $data .= sprintf(' data-%s="%s"', $option, $this->options[$option]);
             }
         }
 
         $return = <<<HTML
 <script type="text/javascript" src="{$host}.js{$langOption}" async defer></script>
-<div class="g-recaptcha" $data></div>
+<div class="g-recaptcha" {$data}></div>
 HTML;
 
         if ($this->params['noscript']) {
@@ -440,6 +439,7 @@ HTML;
 </noscript>
 HTML;
         }
+
         return $return;
     }
 

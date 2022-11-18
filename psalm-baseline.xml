@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/MailHide.php">
+    <DeprecatedClass occurrences="5">
+      <code>new MailHideException('Invalid email address provided')</code>
+      <code>new MailHideException('Missing email address')</code>
+      <code>new MailHideException('Missing private key')</code>
+      <code>new MailHideException('Missing public key')</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="4">
       <code>$this-&gt;getPrivateKey() === null</code>
       <code>$this-&gt;getPublicKey() === null</code>
       <code>null === $this-&gt;emailValidator</code>
       <code>null === ($email = $this-&gt;getEmail())</code>
     </DocblockTypeContradiction>
+    <ImplementedParamTypeMismatch occurrences="1">
+      <code>$email</code>
+    </ImplementedParamTypeMismatch>
+    <InvalidExtendClass occurrences="1">
+      <code>ReCaptcha</code>
+    </InvalidExtendClass>
     <LessSpecificReturnStatement occurrences="1">
       <code>parent::setSiteKey($publicKey)</code>
     </LessSpecificReturnStatement>
+    <MethodSignatureMismatch occurrences="3">
+      <code>public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)</code>
+      <code>public function __toString()</code>
+      <code>public function getHtml($email = null)</code>
+    </MethodSignatureMismatch>
     <MissingReturnType occurrences="1">
       <code>requireMcrypt</code>
     </MissingReturnType>
@@ -51,6 +68,11 @@
       <code>$email</code>
     </UnusedVariable>
   </file>
+  <file src="src/MailHideException.php">
+    <InvalidExtendClass occurrences="1">
+      <code>Exception</code>
+    </InvalidExtendClass>
+  </file>
   <file src="src/ReCaptcha.php">
     <DocblockTypeContradiction occurrences="4">
       <code>$this-&gt;ip === null</code>
@@ -58,9 +80,10 @@
       <code>$this-&gt;siteKey === null</code>
       <code>is_array($params)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="5">
-      <code>$_SERVER['REMOTE_ADDR']</code>
+    <MixedArgument occurrences="6">
       <code>$httpClient::ENC_URLENCODED</code>
+      <code>$this-&gt;options[$option]</code>
+      <code>$this-&gt;options['hl']</code>
       <code>$this-&gt;options['onload']</code>
       <code>$v</code>
       <code>$v</code>
@@ -109,6 +132,15 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="test/MailHideTest.php">
+    <DeprecatedClass occurrences="7">
+      <code>MailHide</code>
+      <code>MailHideException::class</code>
+      <code>MailHideException::class</code>
+      <code>MailHideException::class</code>
+      <code>ReCaptcha\MailHide::MAILHIDE_SERVER</code>
+      <code>new ReCaptcha\MailHide($this-&gt;publicKey, $this-&gt;privateKey, $mail, $config)</code>
+      <code>new ReCaptcha\MailHide()</code>
+    </DeprecatedClass>
     <DeprecatedMethod occurrences="2">
       <code>assertRegExp</code>
       <code>assertRegExp</code>
@@ -144,28 +176,6 @@
       <code>$value</code>
       <code>true</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="20">
-      <code>testConstructor</code>
-      <code>testConstructorWithNoIp</code>
-      <code>testGetHtml</code>
-      <code>testGetHtmlWithLanguage</code>
-      <code>testGetHtmlWithNoPublicKey</code>
-      <code>testGetNonExistingOption</code>
-      <code>testGetNonExistingParam</code>
-      <code>testHtmlGenerationWithNoScriptElements</code>
-      <code>testMultipleOptions</code>
-      <code>testMultipleParams</code>
-      <code>testSetAndGet</code>
-      <code>testSetInvalidOptions</code>
-      <code>testSetInvalidParams</code>
-      <code>testSetMultipleOptionsFromLaminasConfig</code>
-      <code>testSetMultipleParamsFromLaminasConfig</code>
-      <code>testSingleOption</code>
-      <code>testSingleParam</code>
-      <code>testVerify</code>
-      <code>testVerifyWithMissingIp</code>
-      <code>testVerifyWithMissingSecretKey</code>
-    </MissingReturnType>
     <ParadoxicalCondition occurrences="1">
       <code>empty($this-&gt;siteKey) || empty($this-&gt;siteKey)</code>
     </ParadoxicalCondition>

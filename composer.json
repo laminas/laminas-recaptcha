@@ -8,26 +8,15 @@
     ],
     "homepage": "https://laminas.dev",
     "support": {
-        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
         "issues": "https://github.com/laminas/laminas-recaptcha/issues",
-        "source": "https://github.com/laminas/laminas-recaptcha",
-        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom",
+        "forum": "https://discourse.laminas.dev",
         "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4.99"
-        },
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "extra": {
+        "source": "https://github.com/laminas/laminas-recaptcha",
+        "docs": "https://docs.laminas.dev/laminas-recaptcha/",
+        "rss": "https://github.com/laminas/laminas-recaptcha/releases.atom"
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "ext-json": "*",
         "laminas/laminas-http": "^2.15",
         "laminas/laminas-stdlib": "^3.10.1"
@@ -39,6 +28,9 @@
         "phpunit/phpunit": "^9.5.26",
         "psalm/plugin-phpunit": "^0.18.0",
         "vimeo/psalm": "^4.29.0"
+    },
+    "conflict": {
+        "zendframework/zendservice-recaptcha": "*"
     },
     "suggest": {
         "laminas/laminas-validator": "~2.0, if using ReCaptcha's Mailhide API"
@@ -53,6 +45,16 @@
             "LaminasTest\\ReCaptcha\\": "test/"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "8.0.99"
+        },
+        "sort-packages": true
+    },
+    "extra": {},
     "scripts": {
         "check": [
             "@cs-check",
@@ -62,8 +64,5 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
-    },
-    "conflict": {
-        "zendframework/zendservice-recaptcha": "*"
     }
 }

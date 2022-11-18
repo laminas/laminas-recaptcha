@@ -31,7 +31,7 @@ class ReCaptchaTest extends TestCase
         $this->secretKey = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY');
 
         if (empty($this->siteKey) || empty($this->siteKey)) {
-            $this->markTestSkipped('Laminas\ReCaptcha\ReCaptcha tests skipped due to missing keys');
+            static::markTestSkipped('Laminas\ReCaptcha\ReCaptcha tests skipped due to missing keys');
         }
 
         $httpClient = new HttpClient(
@@ -44,37 +44,37 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha = new ReCaptcha(null, null, null, null, null, $httpClient);
     }
 
-    public function testSetAndGet()
+    public function testSetAndGet(): void
     {
         /* Set and get IP address */
         $ip = '127.0.0.1';
         $this->reCaptcha->setIp($ip);
-        $this->assertSame($ip, $this->reCaptcha->getIp());
+        static::assertSame($ip, $this->reCaptcha->getIp());
 
         /* Set and get site key */
         $this->reCaptcha->setSiteKey($this->siteKey);
-        $this->assertSame($this->siteKey, $this->reCaptcha->getSiteKey());
+        static::assertSame($this->siteKey, $this->reCaptcha->getSiteKey());
 
         /* Set and get secret key */
         $this->reCaptcha->setSecretKey($this->secretKey);
-        $this->assertSame($this->secretKey, $this->reCaptcha->getSecretKey());
+        static::assertSame($this->secretKey, $this->reCaptcha->getSecretKey());
     }
 
-    public function testSingleParam()
+    public function testSingleParam(): void
     {
         $key   = 'ssl';
         $value = true;
 
         $this->reCaptcha->setParam($key, $value);
-        $this->assertSame($value, $this->reCaptcha->getParam($key));
+        static::assertSame($value, $this->reCaptcha->getParam($key));
     }
 
-    public function testGetNonExistingParam()
+    public function testGetNonExistingParam(): void
     {
-        $this->assertNull($this->reCaptcha->getParam('foobar'));
+        static::assertNull($this->reCaptcha->getParam('foobar'));
     }
 
-    public function testMultipleParams()
+    public function testMultipleParams(): void
     {
         $params = [
             'ssl' => true,
@@ -83,24 +83,24 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setParams($params);
         $receivedParams = $this->reCaptcha->getParams();
 
-        $this->assertSame($params['ssl'], $receivedParams['ssl']);
+        static::assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
-    public function testSingleOption()
+    public function testSingleOption(): void
     {
         $key   = 'theme';
         $value = 'dark';
 
         $this->reCaptcha->setOption($key, $value);
-        $this->assertSame($value, $this->reCaptcha->getOption($key));
+        static::assertSame($value, $this->reCaptcha->getOption($key));
     }
 
-    public function testGetNonExistingOption()
+    public function testGetNonExistingOption(): void
     {
-        $this->assertNull($this->reCaptcha->getOption('foobar'));
+        static::assertNull($this->reCaptcha->getOption('foobar'));
     }
 
-    public function testMultipleOptions()
+    public function testMultipleOptions(): void
     {
         $options = [
             'theme' => 'dark',
@@ -110,11 +110,11 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setOptions($options);
         $receivedOptions = $this->reCaptcha->getOptions();
 
-        $this->assertSame($options['theme'], $receivedOptions['theme']);
-        $this->assertSame($options['hl'], $receivedOptions['hl']);
+        static::assertSame($options['theme'], $receivedOptions['theme']);
+        static::assertSame($options['hl'], $receivedOptions['hl']);
     }
 
-    public function testSetMultipleParamsFromLaminasConfig()
+    public function testSetMultipleParamsFromLaminasConfig(): void
     {
         $params = [
             'ssl' => true,
@@ -125,17 +125,17 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setParams($config);
         $receivedParams = $this->reCaptcha->getParams();
 
-        $this->assertSame($params['ssl'], $receivedParams['ssl']);
+        static::assertSame($params['ssl'], $receivedParams['ssl']);
     }
 
-    public function testSetInvalidParams()
+    public function testSetInvalidParams(): void
     {
         $this->expectException(Exception::class);
         $var = 'string';
         $this->reCaptcha->setParams($var);
     }
 
-    public function testSetMultipleOptionsFromLaminasConfig()
+    public function testSetMultipleOptionsFromLaminasConfig(): void
     {
         $options = [
             'theme' => 'dark',
@@ -147,18 +147,18 @@ class ReCaptchaTest extends TestCase
         $this->reCaptcha->setOptions($config);
         $receivedOptions = $this->reCaptcha->getOptions();
 
-        $this->assertSame($options['theme'], $receivedOptions['theme']);
-        $this->assertSame($options['hl'], $receivedOptions['hl']);
+        static::assertSame($options['theme'], $receivedOptions['theme']);
+        static::assertSame($options['hl'], $receivedOptions['hl']);
     }
 
-    public function testSetInvalidOptions()
+    public function testSetInvalidOptions(): void
     {
         $this->expectException(Exception::class);
         $var = 'string';
         $this->reCaptcha->setOptions($var);
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $params = [
             'noscript' => true,
@@ -176,34 +176,34 @@ class ReCaptchaTest extends TestCase
         $receivedParams  = $reCaptcha->getParams();
         $receivedOptions = $reCaptcha->getOptions();
 
-        $this->assertSame($this->siteKey, $reCaptcha->getSiteKey());
-        $this->assertSame($this->secretKey, $reCaptcha->getSecretKey());
-        $this->assertSame($params['noscript'], $receivedParams['noscript']);
-        $this->assertSame($options['theme'], $receivedOptions['theme']);
-        $this->assertSame($options['hl'], $receivedOptions['hl']);
-        $this->assertSame($ip, $reCaptcha->getIp());
+        static::assertSame($this->siteKey, $reCaptcha->getSiteKey());
+        static::assertSame($this->secretKey, $reCaptcha->getSecretKey());
+        static::assertSame($params['noscript'], $receivedParams['noscript']);
+        static::assertSame($options['theme'], $receivedOptions['theme']);
+        static::assertSame($options['hl'], $receivedOptions['hl']);
+        static::assertSame($ip, $reCaptcha->getIp());
     }
 
-    public function testConstructorWithNoIp()
+    public function testConstructorWithNoIp(): void
     {
         // Fake the _SERVER value
         $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 
         $reCaptcha = new ReCaptcha(null, null, null, null, null);
 
-        $this->assertSame($_SERVER['REMOTE_ADDR'], $reCaptcha->getIp());
+        static::assertSame($_SERVER['REMOTE_ADDR'], $reCaptcha->getIp());
 
         unset($_SERVER['REMOTE_ADDR']);
     }
 
-    public function testGetHtmlWithNoPublicKey()
+    public function testGetHtmlWithNoPublicKey(): void
     {
         $this->expectException(Exception::class);
 
         $this->reCaptcha->getHtml();
     }
 
-    public function testVerify()
+    public function testVerify(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setSecretKey($this->secretKey);
@@ -219,50 +219,51 @@ class ReCaptchaTest extends TestCase
         $resp = $this->reCaptcha->verify('responseField');
 
         // See if we have a valid object and that the status is false
-        $this->assertInstanceOf(ReCaptchaResponse::class, $resp);
-        $this->assertFalse($resp->getStatus());
+        static::assertInstanceOf(ReCaptchaResponse::class, $resp);
+        static::assertFalse($resp->getStatus());
     }
 
-    public function testGetHtml()
+    public function testGetHtml(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
 
         $html = $this->reCaptcha->getHtml();
 
         // See if the options for the captcha exist in the string
-        $this->assertNotFalse(strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
+        static::assertNotFalse(strstr($html, sprintf('data-sitekey="%s"', $this->siteKey)));
 
         // See if the js/iframe src is correct
-        $this->assertNotTrue(strstr($html, '<iframe'));
+        static::assertNotTrue(strstr($html, '<iframe'));
     }
 
-    public function testGetHtmlWithLanguage()
+    public function testGetHtmlWithLanguage(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setOption('hl', 'en');
 
         $html = $this->reCaptcha->getHtml();
 
-        $this->assertStringContainsString('?hl=en', $html);
+        static::assertStringContainsString('?hl=en', $html);
     }
 
     /** @group Laminas-10991 */
-    public function testHtmlGenerationWithNoScriptElements()
+    public function testHtmlGenerationWithNoScriptElements(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
         $this->reCaptcha->setParam('noscript', true);
+
         $html = $this->reCaptcha->getHtml();
-        $this->assertStringContainsString('<iframe', $html);
+        static::assertStringContainsString('<iframe', $html);
     }
 
-    public function testVerifyWithMissingSecretKey()
+    public function testVerifyWithMissingSecretKey(): void
     {
         $this->expectException(Exception::class);
 
         $this->reCaptcha->verify('response');
     }
 
-    public function testVerifyWithMissingIp()
+    public function testVerifyWithMissingIp(): void
     {
         $this->expectException(Exception::class);
 
