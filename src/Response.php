@@ -10,9 +10,6 @@ use function array_key_exists;
 use function is_array;
 use function is_string;
 use function json_decode;
-use function trim;
-
-use const JSON_THROW_ON_ERROR;
 
 /**
  * Model responses from the ReCaptcha and MailHide APIs.
@@ -20,18 +17,33 @@ use const JSON_THROW_ON_ERROR;
 class Response
 {
     /**
+     * Status
+     *
+     * true if the response is valid or false otherwise
+     *
+     * @var boolean
+     */
+    protected $status;
+
+    /**
+     * Error codes
+     *
+     * The error codes if the status is false. The different error codes can be found in the
+     * recaptcha API docs.
+     *
+     * @var array
+     */
+    protected $errorCodes = [];
+
+    /**
      * Class constructor used to construct a response
      *
-     * @param ?bool $status returns true if the response is valid or false otherwise
-     * @param ?array $errorCodes The error codes if the status is false.
-     *                           The different error codes can be found in the recaptcha API docs.
-     * @param ?HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
+     * @param string $status
+     * @param array $errorCodes
+     * @param null|HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
-    public function __construct(
-        private ?bool $status = null,
-        private ?array $errorCodes = null,
-        private ?HTTPResponse $httpResponse = null
-    ) {
+    public function __construct($status = null, $errorCodes = [], ?HTTPResponse $httpResponse = null)
+    {
         if ($status !== null) {
             $this->setStatus($status);
         }
@@ -47,8 +59,11 @@ class Response
 
     /**
      * Set the status
+     *
+     * @param bool $status
+     * @return self
      */
-    public function setStatus(bool $status): self
+    public function setStatus($status)
     {
         $this->status = (bool) $status;
 
@@ -57,16 +72,20 @@ class Response
 
     /**
      * Get the status
+     *
+     * @return bool
      */
-    public function getStatus(): bool
+    public function getStatus()
     {
         return $this->status;
     }
 
     /**
      * Alias for getStatus()
+     *
+     * @return bool
      */
-    public function isValid(): bool
+    public function isValid()
     {
         return $this->getStatus();
     }
@@ -74,9 +93,10 @@ class Response
     /**
      * Set the error codes
      *
-     * @param mixed[] $errorCodes
+     * @param string|array $errorCodes
+     * @return self
      */
-    public function setErrorCodes(string|array $errorCodes): self
+    public function setErrorCodes($errorCodes)
     {
         if (is_string($errorCodes)) {
             $errorCodes = [$errorCodes];
@@ -89,20 +109,24 @@ class Response
 
     /**
      * Get the error codes
+     *
+     * @return array
      */
-    public function getErrorCodes(): array
+    public function getErrorCodes()
     {
         return $this->errorCodes;
     }
 
     /**
      * Populate this instance based on a Laminas_Http_Response object
+     *
+     * @return self
      */
-    public function setFromHttpResponse(HTTPResponse $response): self
+    public function setFromHttpResponse(HTTPResponse $response)
     {
         $body = $response->getBody();
 
-        $parts = '' !== trim($body) ? json_decode($body, true, 512, JSON_THROW_ON_ERROR) : [];
+        $parts = json_decode($body, true);
 
         $status     = false;
         $errorCodes = [];
