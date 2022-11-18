@@ -22,6 +22,8 @@ use const E_USER_WARNING;
 
 /**
  * Render and verify ReCaptchas
+ *
+ * @final This class should not be extended and will be marked final in version 4.0
  */
 class ReCaptcha
 {

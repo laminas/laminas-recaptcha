@@ -13,6 +13,8 @@ use function json_decode;
 
 /**
  * Model responses from the ReCaptcha and MailHide APIs.
+ *
+ * @final This class should not be extended and will be marked final in version 4.0
  */
 class Response
 {
