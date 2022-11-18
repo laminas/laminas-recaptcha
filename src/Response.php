@@ -10,6 +10,9 @@ use function array_key_exists;
 use function is_array;
 use function is_string;
 use function json_decode;
+use function trim;
+
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Model responses from the ReCaptcha and MailHide APIs.
@@ -126,7 +129,7 @@ class Response
      */
     public function setFromHttpResponse(HTTPResponse $response)
     {
-        $body = $response->getBody();
+        $body  = $response->getBody();
         $parts = '' !== trim($body) ? json_decode($body, true, 512, JSON_THROW_ON_ERROR) : [];
 
         $status     = false;

@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\ReCaptcha;
 
-use Stringable;
 use Exception as PhpException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\ReCaptcha\Response;
 use Laminas\Stdlib\ArrayUtils;
+use Stringable;
 use Traversable;
 
-use function get_class;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function sprintf;
 use function trigger_error;
 
