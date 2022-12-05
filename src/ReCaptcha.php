@@ -7,7 +7,6 @@ namespace Laminas\ReCaptcha;
 use Exception as PhpException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
-use Laminas\ReCaptcha\Response;
 use Laminas\Stdlib\ArrayUtils;
 use Stringable;
 use Traversable;
@@ -64,7 +63,7 @@ class ReCaptcha implements Stringable
     /**
      * Parameters for the object
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $params = [
         'noscript' => false, /* Includes the <noscript> tag */
@@ -75,7 +74,7 @@ class ReCaptcha implements Stringable
      *
      * See the different options on https://developers.google.com/recaptcha/docs/display#config
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $options = [
         'theme'            => 'light',
@@ -93,8 +92,8 @@ class ReCaptcha implements Stringable
     /**
      * @param string $siteKey
      * @param string $secretKey
-     * @param array|Traversable $params
-     * @param array|Traversable $options
+     * @param iterable<string, mixed> $params
+     * @param iterable<string, mixed> $options
      * @param string $ip
      */
     public function __construct(
@@ -189,7 +188,7 @@ class ReCaptcha implements Stringable
      * Set a single parameter
      *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      * @return self
      */
     public function setParam($key, $value)
@@ -202,7 +201,7 @@ class ReCaptcha implements Stringable
     /**
      * Set parameters
      *
-     * @param array|Traversable $params
+     * @param iterable<string, mixed> $params
      * @return self
      * @throws Exception
      */
@@ -230,7 +229,7 @@ class ReCaptcha implements Stringable
     /**
      * Get the parameter array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getParams()
     {
@@ -256,7 +255,7 @@ class ReCaptcha implements Stringable
      * Set a single option
      *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      * @return self
      */
     public function setOption($key, $value)
@@ -269,7 +268,7 @@ class ReCaptcha implements Stringable
     /**
      * Set options
      *
-     * @param array|Traversable $options
+     * @param iterable<string, mixed> $options
      * @return self
      * @throws Exception
      */
@@ -293,7 +292,7 @@ class ReCaptcha implements Stringable
     /**
      * Get the options array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

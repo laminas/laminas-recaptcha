@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
   <file src="src/MailHide.php">
     <DeprecatedClass occurrences="5">
       <code>new MailHideException('Invalid email address provided')</code>
@@ -22,8 +22,10 @@
     <LessSpecificReturnStatement occurrences="1">
       <code>parent::setSiteKey($publicKey)</code>
     </LessSpecificReturnStatement>
-    <MethodSignatureMismatch occurrences="3">
+    <MethodSignatureMismatch occurrences="5">
       <code>public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)</code>
+      <code>public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)</code>
+      <code>public function __toString()</code>
       <code>public function __toString()</code>
       <code>public function getHtml($email = null)</code>
     </MethodSignatureMismatch>
@@ -50,6 +52,10 @@
     <MoreSpecificReturnType occurrences="1">
       <code>$this</code>
     </MoreSpecificReturnType>
+    <PossiblyInvalidArgument occurrences="2">
+      <code>$options</code>
+      <code>$options</code>
+    </PossiblyInvalidArgument>
     <PropertyNotSetInConstructor occurrences="8">
       <code>$email</code>
       <code>$emailDomainPart</code>
@@ -64,9 +70,6 @@
       <code>MCRYPT_MODE_CBC</code>
       <code>MCRYPT_RIJNDAEL_128</code>
     </UndefinedConstant>
-    <UnusedVariable occurrences="1">
-      <code>$email</code>
-    </UnusedVariable>
   </file>
   <file src="src/MailHideException.php">
     <InvalidExtendClass occurrences="1">
@@ -80,18 +83,12 @@
       <code>$this-&gt;siteKey === null</code>
       <code>is_array($params)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="4">
       <code>$httpClient::ENC_URLENCODED</code>
       <code>$this-&gt;options[$option]</code>
       <code>$this-&gt;options['hl']</code>
       <code>$this-&gt;options['onload']</code>
-      <code>$v</code>
-      <code>$v</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>$k</code>
-      <code>$k</code>
-    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="2">
       <code>$v</code>
       <code>$v</code>
@@ -112,9 +109,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$status</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="2">
       <code>$errorCodes</code>
       <code>$status</code>
@@ -172,22 +166,12 @@
       <code>$var</code>
       <code>$var</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="2">
-      <code>$value</code>
-      <code>true</code>
-    </InvalidScalarArgument>
-    <ParadoxicalCondition occurrences="1">
-      <code>empty($this-&gt;siteKey) || empty($this-&gt;siteKey)</code>
-    </ParadoxicalCondition>
     <PossiblyFalsePropertyAssignmentValue occurrences="2">
       <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY')</code>
       <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY')</code>
     </PossiblyFalsePropertyAssignmentValue>
   </file>
   <file src="test/ResponseTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$status</code>
-    </InvalidScalarArgument>
     <MissingReturnType occurrences="6">
       <code>testConstructor</code>
       <code>testConstructorWithHttpResponse</code>

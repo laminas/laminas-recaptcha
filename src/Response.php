@@ -43,7 +43,7 @@ class Response
     /**
      * Class constructor used to construct a response
      *
-     * @param string $status
+     * @param bool|null $status
      * @param array $errorCodes
      * @param null|HTTPResponse $httpResponse If this is set the content will override $status and $errorCode
      */
