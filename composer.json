@@ -22,7 +22,7 @@
         "laminas/laminas-stdlib": "^3.10.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~2.4.0",
+        "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-config": "^3.8",
         "laminas/laminas-validator": "^2.29",
         "phpunit/phpunit": "^9.5.27",
