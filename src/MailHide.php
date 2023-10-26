@@ -279,8 +279,12 @@ class MailHide extends ReCaptcha
             $emailParts[0] = substr($emailParts[0], 0, 4);
         }
 
+        if(!isset($emailParts[1]) {
+            $emailParts[1] = "";
+        }
+
         $this->emailLocalPart  = $emailParts[0];
-        $this->emailDomainPart = $emailParts[1] ?? '';
+        $this->emailDomainPart = $emailParts[1];
 
         return $this;
     }
