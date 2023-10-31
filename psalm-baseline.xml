@@ -71,6 +71,9 @@
       <code>MCRYPT_MODE_CBC</code>
       <code>MCRYPT_RIJNDAEL_128</code>
     </UndefinedConstant>
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$emailParts[1]</code>
+    </PossiblyUndefinedArrayOffset>
   </file>
   <file src="src/MailHideException.php">
     <InvalidExtendClass occurrences="1">
