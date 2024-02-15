@@ -188,7 +188,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
      * @inheritDoc
      * @return $this
      */
-    public function setParam($key, $value): self
+    public function setParam(string $key, mixed $value): self
     {
         $this->params[$key] = $value;
 
@@ -250,7 +250,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
      * @inheritDoc
      * @return $this
      */
-    public function setOption($key, $value): self
+    public function setOption(string $key, mixed $value): self
     {
         $this->options[$key] = $value;
 
@@ -316,7 +316,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
      * @inheritDoc
      * @return $this
      */
-    public function setSiteKey($siteKey): self
+    public function setSiteKey(string $siteKey): self
     {
         $this->siteKey = $siteKey;
 
@@ -335,7 +335,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
      * @inheritDoc
      * @return $this
      */
-    public function setSecretKey($secretKey): self
+    public function setSecretKey(string $secretKey): self
     {
         $this->secretKey = $secretKey;
 
