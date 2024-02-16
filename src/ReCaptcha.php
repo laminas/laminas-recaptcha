@@ -19,11 +19,11 @@ use function trigger_error;
 use const E_USER_WARNING;
 
 /**
- * Render and verify ReCaptchas
+ * Render and verify v2 ReCaptchas
  *
  * @final This class should not be extended and will be marked final in version 4.0
  */
-class ReCaptcha implements Stringable
+class ReCaptcha implements RecaptchaServiceInterface, Stringable
 {
     /**
      * URI to the API
@@ -185,11 +185,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Set a single parameter
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return self
+     * @inheritDoc
      */
     public function setParam($key, $value)
     {
@@ -227,9 +223,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Get the parameter array
-     *
-     * @return array<string, mixed>
+     * @inheritDoc
      */
     public function getParams()
     {
@@ -252,11 +246,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Set a single option
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return self
+     * @inheritDoc
      */
     public function setOption($key, $value)
     {
@@ -269,7 +259,7 @@ class ReCaptcha implements Stringable
      * Set options
      *
      * @param iterable<string, mixed> $options
-     * @return self
+     * @return $this
      * @throws Exception
      */
     public function setOptions($options)
@@ -290,9 +280,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Get the options array
-     *
-     * @return array<string, mixed>
+     * @inheritDoc
      */
     public function getOptions()
     {
@@ -315,9 +303,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Get the site key
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getSiteKey()
     {
@@ -325,10 +311,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Set the site key
-     *
-     * @param string $siteKey
-     * @return self
+     * @inheritDoc
      */
     public function setSiteKey($siteKey)
     {
@@ -338,9 +321,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Get the secret key
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getSecretKey()
     {
@@ -348,10 +329,7 @@ class ReCaptcha implements Stringable
     }
 
     /**
-     * Set the secret key
-     *
-     * @param string $secretKey
-     * @return self
+     * @inheritDoc
      */
     public function setSecretKey($secretKey)
     {
@@ -478,17 +456,14 @@ HTML;
     }
 
     /**
-     * Verify the user input
+     * {@inheritDoc}
      *
      * This method calls up the post method and returns a
      * \Laminas\ReCaptcha\Response object.
-     *
-     * @param string $responseField
-     * @return Response
      */
     public function verify($responseField)
     {
         $response = $this->post($responseField);
-        return new Response(null, null, $response);
+        return new Response(null, [], $response);
     }
 }
