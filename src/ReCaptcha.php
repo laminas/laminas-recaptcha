@@ -186,7 +186,6 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
 
     /**
      * @inheritDoc
-     * @return $this
      */
     public function setParam($key, $value)
     {
