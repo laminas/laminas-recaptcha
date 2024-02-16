@@ -188,7 +188,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
      * @inheritDoc
      * @return $this
      */
-    public function setParam(string $key, mixed $value): self
+    public function setParam($key, $value)
     {
         $this->params[$key] = $value;
 
@@ -226,7 +226,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
     /**
      * @inheritDoc
      */
-    public function getParams(): array
+    public function getParams()
     {
         return $this->params;
     }
@@ -248,9 +248,8 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
 
     /**
      * @inheritDoc
-     * @return $this
      */
-    public function setOption(string $key, mixed $value): self
+    public function setOption($key, $value)
     {
         $this->options[$key] = $value;
 
@@ -284,7 +283,7 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
     /**
      * @inheritDoc
      */
-    public function getOptions(): array
+    public function getOptions()
     {
         return $this->options;
     }
@@ -307,16 +306,15 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
     /**
      * @inheritDoc
      */
-    public function getSiteKey(): string
+    public function getSiteKey()
     {
         return $this->siteKey;
     }
 
     /**
      * @inheritDoc
-     * @return $this
      */
-    public function setSiteKey(string $siteKey): self
+    public function setSiteKey($siteKey)
     {
         $this->siteKey = $siteKey;
 
@@ -326,16 +324,15 @@ class ReCaptcha implements RecaptchaServiceInterface, Stringable
     /**
      * @inheritDoc
      */
-    public function getSecretKey(): string
+    public function getSecretKey()
     {
         return $this->secretKey;
     }
 
     /**
      * @inheritDoc
-     * @return $this
      */
-    public function setSecretKey(string $secretKey): self
+    public function setSecretKey($secretKey)
     {
         $this->secretKey = $secretKey;
 
@@ -465,9 +462,9 @@ HTML;
      * This method calls up the post method and returns a
      * \Laminas\ReCaptcha\Response object.
      */
-    public function verify(string $responseField): Response
+    public function verify($responseField)
     {
         $response = $this->post($responseField);
-        return new Response(null, null, $response);
+        return new Response(null, [], $response);
     }
 }

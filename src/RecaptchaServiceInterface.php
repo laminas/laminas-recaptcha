@@ -14,47 +14,68 @@ interface RecaptchaServiceInterface
      *
      * @return array<string, mixed>
      */
-    public function getOptions(): array;
+    public function getOptions();
 
     /**
      * Set a single option
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return $this
      */
-    public function setOption(string $key, mixed $value): self;
+    public function setOption($key, $value);
 
     /**
      * Get the parameter array
      *
      * @return array<string, mixed>
      */
-    public function getParams(): array;
+    public function getParams();
 
     /**
      * Set a single parameter
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return $this
      */
-    public function setParam(string $key, mixed $value): self;
+    public function setParam($key, $value);
 
     /**
      * Get the site key
+     *
+     * @return string
      */
-    public function getSiteKey(): string;
+    public function getSiteKey();
 
     /**
      * Set the site key
+     *
+     * @param string $siteKey
+     * @return $this
      */
-    public function setSiteKey(string $siteKey): self;
+    public function setSiteKey($siteKey);
 
     /**
      * Get the secret key
+     *
+     * @return string
      */
-    public function getSecretKey(): string;
+    public function getSecretKey();
 
     /**
      * Set the secret key
+     *
+     * @param string $secretKey
+     * @return $this
      */
-    public function setSecretKey(string $secretKey): self;
+    public function setSecretKey($secretKey);
 
     /**
      * Verify the user input
+     *
+     * @param string $responseField
+     * @return Response
      */
-    public function verify(string $responseField): Response;
+    public function verify($responseField);
 }
