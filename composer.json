@@ -26,7 +26,7 @@
         "laminas/laminas-config": "^3.8",
         "laminas/laminas-validator": "^2.29",
         "phpunit/phpunit": "^9.5.27",
-        "psalm/plugin-phpunit": "^0.18.4",
+        "psalm/plugin-phpunit": "^0.19.0",
         "vimeo/psalm": "^5.4"
     },
     "conflict": {
