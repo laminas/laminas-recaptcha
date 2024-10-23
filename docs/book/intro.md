@@ -7,7 +7,7 @@ scanned text that Optical Character Recognition (OCR) software has been unable t
 if a user correctly provides the first word, the second is likely correctly entered as well, and can be used to
 improve OCR software for digitizing books.
 
-<!-- markdownlint-disable-next-line header-increment -->
+<!-- markdownlint-disable-next-line heading-increment -->
 > ## Additional Requirements
 >
 > In order to use the reCAPTCHA service, you will need to
