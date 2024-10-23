@@ -8,7 +8,7 @@ if a user correctly provides the first word, the second is likely correctly ente
 improve OCR software for digitizing books.
 
 <!-- markdownlint-disable-next-line heading-increment -->
-> ## Additional Requirements
+> ### Additional Requirements
 >
 > In order to use the reCAPTCHA service, you will need to
 > [sign up for an account](https://www.google.com/recaptcha/admin) and register
