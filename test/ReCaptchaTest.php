@@ -11,6 +11,7 @@ use Laminas\Http\Client\Adapter\Test;
 use Laminas\ReCaptcha\Exception;
 use Laminas\ReCaptcha\ReCaptcha;
 use Laminas\ReCaptcha\Response as ReCaptchaResponse;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function getenv;
@@ -25,7 +26,7 @@ class ReCaptchaTest extends TestCase
 
     private ReCaptcha $reCaptcha;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->siteKey   = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');

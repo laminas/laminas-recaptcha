@@ -8,6 +8,7 @@ use Laminas\Config\Config;
 use Laminas\ReCaptcha;
 use Laminas\ReCaptcha\MailHide;
 use Laminas\ReCaptcha\MailHideException;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
@@ -22,7 +23,7 @@ class MailHideTest extends TestCase
 
     private MailHide $mailHide;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->publicKey  = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\ReCaptcha;
 
-use Excefinal ption;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\EmailAddress as EmailAddressValidator;
 use Laminas\Validator\ValidatorInterface;
+use Override;
 use Traversable;
 
 use function array_merge;
@@ -143,7 +143,6 @@ class MailHide extends ReCaptcha
      * See if the mcrypt extension is available
      *
      * @throws MailHideException
-     *
      * @return void
      */
     protected function requireMcrypt()
@@ -324,7 +323,7 @@ class MailHide extends ReCaptcha
      * @return string
      * @throws MailHideException
      */
-    #[\Override]
+    #[Override]
     public function getHtml($email = null)
     {
         if ($email !== null) {

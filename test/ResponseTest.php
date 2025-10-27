@@ -6,6 +6,7 @@ namespace LaminasTest\ReCaptcha;
 
 use Laminas\Http\Response;
 use Laminas\ReCaptcha;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;
@@ -18,7 +19,7 @@ class ResponseTest extends TestCase
     /** @var ReCaptcha\Response */
     protected $response;
 
-    #[\Override]
+    #[Override]
     protected function setUp(): void
     {
         $this->response = new ReCaptcha\Response();
