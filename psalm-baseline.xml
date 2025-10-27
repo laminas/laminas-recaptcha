@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
   <file src="src/MailHide.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[MailHide]]></code>
-    </ClassMustBeFinal>
     <DeprecatedClass>
       <code><![CDATA[new MailHideException('Invalid email address provided')]]></code>
       <code><![CDATA[new MailHideException('Missing email address')]]></code>
@@ -34,14 +31,7 @@
       <code><![CDATA[public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)]]></code>
       <code><![CDATA[public function __toString()]]></code>
       <code><![CDATA[public function __toString()]]></code>
-      <code><![CDATA[public function getHtml($email = null)]]></code>
     </MethodSignatureMismatch>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getHtml($email = null)]]></code>
-    </MissingOverrideAttribute>
-    <MissingReturnType>
-      <code><![CDATA[requireMcrypt]]></code>
-    </MissingReturnType>
     <MixedArgument>
       <code><![CDATA[$enc]]></code>
       <code><![CDATA[self::ENCRYPTION_CIPHER]]></code>
@@ -92,9 +82,6 @@
     </UndefinedConstant>
   </file>
   <file src="src/MailHideException.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[MailHideException]]></code>
-    </ClassMustBeFinal>
     <InvalidExtendClass>
       <code><![CDATA[Exception]]></code>
     </InvalidExtendClass>
@@ -106,9 +93,6 @@
       <code><![CDATA[$this->siteKey === null]]></code>
       <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function __toString(): string]]></code>
-    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$httpClient::ENC_URLENCODED]]></code>
       <code><![CDATA[$this->options[$option]]]></code>
@@ -152,15 +136,11 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="test/MailHideTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[MailHideTest]]></code>
-    </ClassMustBeFinal>
     <DeprecatedClass>
       <code><![CDATA[MailHide]]></code>
       <code><![CDATA[MailHideException::class]]></code>
       <code><![CDATA[MailHideException::class]]></code>
       <code><![CDATA[MailHideException::class]]></code>
-      <code><![CDATA[ReCaptcha\MailHide::MAILHIDE_SERVER]]></code>
       <code><![CDATA[new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config)]]></code>
       <code><![CDATA[new ReCaptcha\MailHide()]]></code>
     </DeprecatedClass>
@@ -168,20 +148,6 @@
       <code><![CDATA[assertRegExp]]></code>
       <code><![CDATA[assertRegExp]]></code>
     </DeprecatedMethod>
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected function setUp(): void]]></code>
-    </MissingOverrideAttribute>
-    <MissingReturnType>
-      <code><![CDATA[testConstructor]]></code>
-      <code><![CDATA[testEmailLocalPart]]></code>
-      <code><![CDATA[testGetHtml]]></code>
-      <code><![CDATA[testGetHtmlWithMissingPrivateKey]]></code>
-      <code><![CDATA[testGetHtmlWithMissingPublicKey]]></code>
-      <code><![CDATA[testGetHtmlWithNoEmail]]></code>
-      <code><![CDATA[testGetHtmlWithParamter]]></code>
-      <code><![CDATA[testSetGetEmail]]></code>
-      <code><![CDATA[testSetGetPrivateKey]]></code>
-    </MissingReturnType>
     <PossiblyFalsePropertyAssignmentValue>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY')]]></code>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY')]]></code>
@@ -190,24 +156,12 @@
       <code><![CDATA[empty($this->privateKey)]]></code>
       <code><![CDATA[empty($this->publicKey)]]></code>
     </RiskyTruthyFalsyComparison>
-    <UnusedVariable>
-      <code><![CDATA[$html]]></code>
-      <code><![CDATA[$html]]></code>
-      <code><![CDATA[$html]]></code>
-      <code><![CDATA[$server]]></code>
-    </UnusedVariable>
   </file>
   <file src="test/ReCaptchaTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ReCaptchaTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$var]]></code>
       <code><![CDATA[$var]]></code>
     </InvalidArgument>
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <PossiblyFalsePropertyAssignmentValue>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY')]]></code>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY')]]></code>
@@ -220,20 +174,6 @@
     </TypeDoesNotContainType>
   </file>
   <file src="test/ResponseTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ResponseTest]]></code>
-    </ClassMustBeFinal>
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected function setUp(): void]]></code>
-    </MissingOverrideAttribute>
-    <MissingReturnType>
-      <code><![CDATA[testConstructor]]></code>
-      <code><![CDATA[testConstructorWithHttpResponse]]></code>
-      <code><![CDATA[testIsInvalid]]></code>
-      <code><![CDATA[testIsValid]]></code>
-      <code><![CDATA[testSetAndGet]]></code>
-      <code><![CDATA[testSetFromHttpResponse]]></code>
-    </MissingReturnType>
     <NullArgument>
       <code><![CDATA[null]]></code>
     </NullArgument>

@@ -7,7 +7,6 @@ namespace Laminas\ReCaptcha;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\EmailAddress as EmailAddressValidator;
 use Laminas\Validator\ValidatorInterface;
-use Override;
 use Traversable;
 
 use function array_merge;
@@ -323,7 +322,6 @@ final class MailHide extends ReCaptcha
      * @return string
      * @throws MailHideException
      */
-    #[Override]
     public function getHtml($email = null)
     {
         if ($email !== null) {
