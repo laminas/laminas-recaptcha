@@ -31,7 +31,11 @@
       <code><![CDATA[public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)]]></code>
       <code><![CDATA[public function __toString()]]></code>
       <code><![CDATA[public function __toString()]]></code>
+      <code><![CDATA[public function getHtml($email = null)]]></code>
     </MethodSignatureMismatch>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getHtml($email = null)]]></code>
+    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$enc]]></code>
       <code><![CDATA[self::ENCRYPTION_CIPHER]]></code>
