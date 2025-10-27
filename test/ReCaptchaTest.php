@@ -18,7 +18,7 @@ use function getenv;
 use function sprintf;
 use function strstr;
 
-class ReCaptchaTest extends TestCase
+final class ReCaptchaTest extends TestCase
 {
     private string $siteKey;
 

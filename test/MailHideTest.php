@@ -15,7 +15,7 @@ use function extension_loaded;
 use function getenv;
 use function substr_count;
 
-class MailHideTest extends TestCase
+final class MailHideTest extends TestCase
 {
     private string $publicKey;
 

@@ -7,6 +7,6 @@ namespace Laminas\ReCaptcha;
 /**
  * @deprecated This class is deprecated and will be removed in version 4.0
  */
-class MailHideException extends Exception
+final class MailHideException extends Exception
 {
 }

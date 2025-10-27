@@ -33,7 +33,7 @@ use const ENT_COMPAT;
  *
  * @deprecated This class is deprecated and will be removed in version 4.0
  */
-class MailHide extends ReCaptcha
+final class MailHide extends ReCaptcha
 {
     /**#@+
      * Encryption constants
