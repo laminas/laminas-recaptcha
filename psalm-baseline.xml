@@ -1,191 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/MailHide.php">
-    <DeprecatedClass occurrences="5">
-      <code>new MailHideException('Invalid email address provided')</code>
-      <code>new MailHideException('Missing email address')</code>
-      <code>new MailHideException('Missing private key')</code>
-      <code>new MailHideException('Missing public key')</code>
+    <DeprecatedClass>
+      <code><![CDATA[new MailHideException('Invalid email address provided')]]></code>
+      <code><![CDATA[new MailHideException('Missing email address')]]></code>
+      <code><![CDATA[new MailHideException('Missing private key')]]></code>
+      <code><![CDATA[new MailHideException('Missing public key')]]></code>
+      <code><![CDATA[new MailHideException(sprintf(
+                'Use of the %s component requires the mcrypt extension to be enabled in PHP',
+                self::class
+            ))]]></code>
     </DeprecatedClass>
-    <DocblockTypeContradiction occurrences="4">
-      <code>$this-&gt;getPrivateKey() === null</code>
-      <code>$this-&gt;getPublicKey() === null</code>
-      <code>null === $this-&gt;emailValidator</code>
-      <code>null === ($email = $this-&gt;getEmail())</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$this->getPrivateKey() === null]]></code>
+      <code><![CDATA[$this->getPublicKey() === null]]></code>
+      <code><![CDATA[null === $this->emailValidator]]></code>
+      <code><![CDATA[null === ($email = $this->getEmail())]]></code>
     </DocblockTypeContradiction>
-    <ImplementedParamTypeMismatch occurrences="1">
-      <code>$email</code>
+    <ImplementedParamTypeMismatch>
+      <code><![CDATA[$email]]></code>
     </ImplementedParamTypeMismatch>
-    <InvalidExtendClass occurrences="1">
-      <code>ReCaptcha</code>
+    <InvalidExtendClass>
+      <code><![CDATA[ReCaptcha]]></code>
     </InvalidExtendClass>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>parent::setSiteKey($publicKey)</code>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[parent::setSiteKey($publicKey)]]></code>
     </LessSpecificReturnStatement>
-    <MethodSignatureMismatch occurrences="5">
-      <code>public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)</code>
-      <code>public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)</code>
-      <code>public function __toString()</code>
-      <code>public function __toString()</code>
-      <code>public function getHtml($email = null)</code>
+    <MethodSignatureMismatch>
+      <code><![CDATA[public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)]]></code>
+      <code><![CDATA[public function __construct($publicKey = null, $privateKey = null, $email = null, $options = null)]]></code>
+      <code><![CDATA[public function __toString()]]></code>
+      <code><![CDATA[public function __toString()]]></code>
+      <code><![CDATA[public function getHtml($email = null)]]></code>
     </MethodSignatureMismatch>
-    <MissingReturnType occurrences="1">
-      <code>requireMcrypt</code>
+    <MissingReturnType>
+      <code><![CDATA[requireMcrypt]]></code>
     </MissingReturnType>
-    <MixedArgument occurrences="5">
-      <code>$enc</code>
-      <code>$options</code>
-      <code>$this-&gt;getDefaultOptions()</code>
-      <code>self::ENCRYPTION_CIPHER</code>
-      <code>self::ENCRYPTION_MODE</code>
+    <MixedArgument>
+      <code><![CDATA[$enc]]></code>
+      <code><![CDATA[self::ENCRYPTION_CIPHER]]></code>
+      <code><![CDATA[self::ENCRYPTION_MODE]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$enc</code>
-      <code>$options</code>
-      <code>$options</code>
+    <MixedAssignment>
+      <code><![CDATA[$enc]]></code>
     </MixedAssignment>
-    <MixedOperand occurrences="4">
-      <code>$this-&gt;options['linkHiddenText']</code>
-      <code>$this-&gt;options['linkTitle']</code>
-      <code>$this-&gt;options['popupHeight']</code>
-      <code>$this-&gt;options['popupWidth']</code>
+    <MixedOperand>
+      <code><![CDATA[$this->options['linkHiddenText']]]></code>
+      <code><![CDATA[$this->options['linkTitle']]]></code>
+      <code><![CDATA[$this->options['popupHeight']]]></code>
+      <code><![CDATA[$this->options['popupWidth']]]></code>
     </MixedOperand>
-    <MoreSpecificReturnType occurrences="1">
-      <code>$this</code>
+    <MoreSpecificReturnType>
+      <code><![CDATA[$this]]></code>
     </MoreSpecificReturnType>
-    <PossiblyInvalidArgument occurrences="2">
-      <code>$options</code>
-      <code>$options</code>
+    <ParamNameMismatch>
+      <code><![CDATA[$email]]></code>
+      <code><![CDATA[$privateKey]]></code>
+      <code><![CDATA[$publicKey]]></code>
+    </ParamNameMismatch>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$options]]></code>
     </PossiblyInvalidArgument>
-    <PropertyNotSetInConstructor occurrences="8">
-      <code>$email</code>
-      <code>$emailDomainPart</code>
-      <code>$emailLocalPart</code>
-      <code>$emailValidator</code>
-      <code>$privateKeyPacked</code>
-      <code>MailHide</code>
-      <code>MailHide</code>
-      <code>MailHide</code>
-    </PropertyNotSetInConstructor>
-    <UndefinedConstant occurrences="2">
-      <code>MCRYPT_MODE_CBC</code>
-      <code>MCRYPT_RIJNDAEL_128</code>
-    </UndefinedConstant>
-    <PossiblyUndefinedArrayOffset occurrences="1">
-      <code>$emailParts[1]</code>
+    <PossiblyNullPropertyAssignmentValue>
+      <code><![CDATA[$emailParts[1]]]></code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUndefinedArrayOffset>
+      <code><![CDATA[$emailParts[1]]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$email]]></code>
+      <code><![CDATA[$emailDomainPart]]></code>
+      <code><![CDATA[$emailLocalPart]]></code>
+      <code><![CDATA[$emailValidator]]></code>
+      <code><![CDATA[$privateKeyPacked]]></code>
+      <code><![CDATA[MailHide]]></code>
+      <code><![CDATA[MailHide]]></code>
+      <code><![CDATA[MailHide]]></code>
+    </PropertyNotSetInConstructor>
+    <UndefinedConstant>
+      <code><![CDATA[MCRYPT_MODE_CBC]]></code>
+      <code><![CDATA[MCRYPT_RIJNDAEL_128]]></code>
+    </UndefinedConstant>
   </file>
   <file src="src/MailHideException.php">
-    <InvalidExtendClass occurrences="1">
-      <code>Exception</code>
+    <InvalidExtendClass>
+      <code><![CDATA[Exception]]></code>
     </InvalidExtendClass>
   </file>
   <file src="src/ReCaptcha.php">
-    <DocblockTypeContradiction occurrences="4">
-      <code>$this-&gt;ip === null</code>
-      <code>$this-&gt;secretKey === null</code>
-      <code>$this-&gt;siteKey === null</code>
-      <code>is_array($params)</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$this->ip === null]]></code>
+      <code><![CDATA[$this->secretKey === null]]></code>
+      <code><![CDATA[$this->siteKey === null]]></code>
+      <code><![CDATA[is_array($params)]]></code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="4">
-      <code>$httpClient::ENC_URLENCODED</code>
-      <code>$this-&gt;options[$option]</code>
-      <code>$this-&gt;options['hl']</code>
-      <code>$this-&gt;options['onload']</code>
+    <MixedArgument>
+      <code><![CDATA[$httpClient::ENC_URLENCODED]]></code>
+      <code><![CDATA[$this->options[$option]]]></code>
+      <code><![CDATA[$this->options['hl']]]></code>
+      <code><![CDATA[$this->options['onload']]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
+    <MixedAssignment>
+      <code><![CDATA[$v]]></code>
+      <code><![CDATA[$v]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>fromArray</code>
+    <MixedMethodCall>
+      <code><![CDATA[fromArray]]></code>
     </MixedMethodCall>
-    <NullArgument occurrences="1">
-      <code>null</code>
+    <NullArgument>
+      <code><![CDATA[null]]></code>
     </NullArgument>
-    <PropertyNotSetInConstructor occurrences="3">
-      <code>$ip</code>
-      <code>$secretKey</code>
-      <code>$siteKey</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$ip]]></code>
+      <code><![CDATA[$secretKey]]></code>
+      <code><![CDATA[$siteKey]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_array($options)</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[is_array($options)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Response.php">
-    <MixedArgument occurrences="2">
-      <code>$errorCodes</code>
-      <code>$status</code>
+    <MixedArgument>
+      <code><![CDATA[$errorCodes]]></code>
+      <code><![CDATA[$status]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$errorCodes</code>
-      <code>$parts</code>
-      <code>$status</code>
+    <MixedAssignment>
+      <code><![CDATA[$errorCodes]]></code>
+      <code><![CDATA[$parts]]></code>
+      <code><![CDATA[$status]]></code>
     </MixedAssignment>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$status</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$status]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(bool) $status</code>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(bool) $status]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="test/MailHideTest.php">
-    <DeprecatedClass occurrences="7">
-      <code>MailHide</code>
-      <code>MailHideException::class</code>
-      <code>MailHideException::class</code>
-      <code>MailHideException::class</code>
-      <code>ReCaptcha\MailHide::MAILHIDE_SERVER</code>
-      <code>new ReCaptcha\MailHide($this-&gt;publicKey, $this-&gt;privateKey, $mail, $config)</code>
-      <code>new ReCaptcha\MailHide()</code>
+    <DeprecatedClass>
+      <code><![CDATA[MailHide]]></code>
+      <code><![CDATA[MailHideException::class]]></code>
+      <code><![CDATA[MailHideException::class]]></code>
+      <code><![CDATA[MailHideException::class]]></code>
+      <code><![CDATA[ReCaptcha\MailHide::MAILHIDE_SERVER]]></code>
+      <code><![CDATA[new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config)]]></code>
+      <code><![CDATA[new ReCaptcha\MailHide()]]></code>
     </DeprecatedClass>
-    <DeprecatedMethod occurrences="2">
-      <code>assertRegExp</code>
-      <code>assertRegExp</code>
+    <DeprecatedMethod>
+      <code><![CDATA[assertRegExp]]></code>
+      <code><![CDATA[assertRegExp]]></code>
     </DeprecatedMethod>
-    <MissingReturnType occurrences="9">
-      <code>testConstructor</code>
-      <code>testEmailLocalPart</code>
-      <code>testGetHtml</code>
-      <code>testGetHtmlWithMissingPrivateKey</code>
-      <code>testGetHtmlWithMissingPublicKey</code>
-      <code>testGetHtmlWithNoEmail</code>
-      <code>testGetHtmlWithParamter</code>
-      <code>testSetGetEmail</code>
-      <code>testSetGetPrivateKey</code>
+    <MissingReturnType>
+      <code><![CDATA[testConstructor]]></code>
+      <code><![CDATA[testEmailLocalPart]]></code>
+      <code><![CDATA[testGetHtml]]></code>
+      <code><![CDATA[testGetHtmlWithMissingPrivateKey]]></code>
+      <code><![CDATA[testGetHtmlWithMissingPublicKey]]></code>
+      <code><![CDATA[testGetHtmlWithNoEmail]]></code>
+      <code><![CDATA[testGetHtmlWithParamter]]></code>
+      <code><![CDATA[testSetGetEmail]]></code>
+      <code><![CDATA[testSetGetPrivateKey]]></code>
     </MissingReturnType>
-    <PossiblyFalsePropertyAssignmentValue occurrences="2">
-      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY')</code>
-      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY')</code>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY')]]></code>
     </PossiblyFalsePropertyAssignmentValue>
-    <UnusedVariable occurrences="4">
-      <code>$html</code>
-      <code>$html</code>
-      <code>$html</code>
-      <code>$server</code>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($this->privateKey)]]></code>
+      <code><![CDATA[empty($this->publicKey)]]></code>
+    </RiskyTruthyFalsyComparison>
+    <UnusedVariable>
+      <code><![CDATA[$html]]></code>
+      <code><![CDATA[$html]]></code>
+      <code><![CDATA[$html]]></code>
+      <code><![CDATA[$server]]></code>
     </UnusedVariable>
   </file>
   <file src="test/ReCaptchaTest.php">
-    <InvalidArgument occurrences="2">
-      <code>$var</code>
-      <code>$var</code>
+    <InvalidArgument>
+      <code><![CDATA[$var]]></code>
+      <code><![CDATA[$var]]></code>
     </InvalidArgument>
-    <PossiblyFalsePropertyAssignmentValue occurrences="2">
-      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY')</code>
-      <code>getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY')</code>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SECRET_KEY')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY')]]></code>
     </PossiblyFalsePropertyAssignmentValue>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($this->siteKey)]]></code>
+    </RiskyTruthyFalsyComparison>
+    <TypeDoesNotContainType>
+      <code><![CDATA[empty($this->siteKey)]]></code>
+    </TypeDoesNotContainType>
   </file>
   <file src="test/ResponseTest.php">
-    <MissingReturnType occurrences="6">
-      <code>testConstructor</code>
-      <code>testConstructorWithHttpResponse</code>
-      <code>testIsInvalid</code>
-      <code>testIsValid</code>
-      <code>testSetAndGet</code>
-      <code>testSetFromHttpResponse</code>
+    <MissingReturnType>
+      <code><![CDATA[testConstructor]]></code>
+      <code><![CDATA[testConstructorWithHttpResponse]]></code>
+      <code><![CDATA[testIsInvalid]]></code>
+      <code><![CDATA[testIsValid]]></code>
+      <code><![CDATA[testSetAndGet]]></code>
+      <code><![CDATA[testSetFromHttpResponse]]></code>
     </MissingReturnType>
-    <NullArgument occurrences="1">
-      <code>null</code>
+    <NullArgument>
+      <code><![CDATA[null]]></code>
     </NullArgument>
   </file>
 </files>
