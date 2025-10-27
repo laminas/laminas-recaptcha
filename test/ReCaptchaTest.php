@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -25,6 +25,7 @@ class ReCaptchaTest extends TestCase
 
     private ReCaptcha $reCaptcha;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->siteKey   = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_SITE_KEY');

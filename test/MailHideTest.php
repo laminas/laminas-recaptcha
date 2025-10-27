@@ -1,4 +1,4 @@
-<?php
+final <?php
 
 declare(strict_types=1);
 
@@ -22,6 +22,7 @@ class MailHideTest extends TestCase
 
     private MailHide $mailHide;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->publicKey  = getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY');
@@ -41,13 +42,13 @@ class MailHideTest extends TestCase
         $this->mailHide = new ReCaptcha\MailHide();
     }
 
-    public function testSetGetPrivateKey()
+    public function testSetGetPrivateKey(): void
     {
         $this->mailHide->setPrivateKey($this->privateKey);
         $this->assertSame($this->privateKey, $this->mailHide->getPrivateKey());
     }
 
-    public function testSetGetEmail()
+    public function testSetGetEmail(): void
     {
         $mail = 'mail@example.com';
 
@@ -56,7 +57,7 @@ class MailHideTest extends TestCase
         $this->assertSame('example.com', $this->mailHide->getEmailDomainPart());
     }
 
-    public function testEmailLocalPart()
+    public function testEmailLocalPart(): void
     {
         $this->mailHide->setEmail('abcd@example.com');
         $this->assertSame('a', $this->mailHide->getEmailLocalPart());
@@ -68,7 +69,7 @@ class MailHideTest extends TestCase
         $this->assertSame('abcd', $this->mailHide->getEmailLocalPart());
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $mail = 'mail@example.com';
 
@@ -91,7 +92,6 @@ class MailHideTest extends TestCase
 
     protected function checkHtml(string $html): void
     {
-        $server = ReCaptcha\MailHide::MAILHIDE_SERVER;
         $pubKey = $this->publicKey;
 
         $this->assertEquals(2, substr_count($html, 'k=' . $pubKey));
@@ -99,7 +99,7 @@ class MailHideTest extends TestCase
         $this->assertRegExp('/c\=[a-zA-Z0-9_=-]+\\\'/', $html);
     }
 
-    public function testGetHtml()
+    public function testGetHtml(): void
     {
         $mail = 'mail@example.com';
 
@@ -112,14 +112,14 @@ class MailHideTest extends TestCase
         $this->checkHtml($html);
     }
 
-    public function testGetHtmlWithNoEmail()
+    public function testGetHtmlWithNoEmail(): void
     {
         $this->expectException(MailHideException::class);
 
-        $html = $this->mailHide->getHtml();
+        $this->mailHide->getHtml();
     }
 
-    public function testGetHtmlWithMissingPublicKey()
+    public function testGetHtmlWithMissingPublicKey(): void
     {
         $mail = 'mail@example.com';
 
@@ -127,10 +127,10 @@ class MailHideTest extends TestCase
         $this->mailHide->setPrivateKey($this->privateKey);
 
         $this->expectException(MailHideException::class);
-        $html = $this->mailHide->getHtml();
+        $this->mailHide->getHtml();
     }
 
-    public function testGetHtmlWithMissingPrivateKey()
+    public function testGetHtmlWithMissingPrivateKey(): void
     {
         $this->expectException(MailHideException::class);
 
@@ -139,10 +139,10 @@ class MailHideTest extends TestCase
         $this->mailHide->setEmail($mail);
         $this->mailHide->setPublicKey($this->publicKey);
 
-        $html = $this->mailHide->getHtml();
+        $this->mailHide->getHtml();
     }
 
-    public function testGetHtmlWithParamter()
+    public function testGetHtmlWithParamter(): void
     {
         $mail = 'mail@example.com';
 

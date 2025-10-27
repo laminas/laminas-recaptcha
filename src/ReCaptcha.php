@@ -149,6 +149,7 @@ class ReCaptcha implements Stringable
      * Since we can't throw exceptions within this method we will trigger
      * a user warning instead.
      */
+    #[\Override]
     public function __toString(): string
     {
         try {
