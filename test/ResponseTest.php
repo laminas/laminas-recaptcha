@@ -13,10 +13,8 @@ use function json_encode;
 
 /**
  * @deprecated This class is deprecated and will be removed in version 4.0
- *
- * @final This class should not be extended and will be marked final in version 4.0
  */
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     /** @var ReCaptcha\Response */
     protected $response;

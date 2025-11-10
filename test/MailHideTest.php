@@ -15,10 +15,7 @@ use function extension_loaded;
 use function getenv;
 use function substr_count;
 
-/**
- * @final This class should not be extended and will be marked final in version 4.0
- */
-class MailHideTest extends TestCase
+final class MailHideTest extends TestCase
 {
     private string $publicKey;
 

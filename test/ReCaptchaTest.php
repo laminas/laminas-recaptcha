@@ -18,10 +18,7 @@ use function getenv;
 use function sprintf;
 use function strstr;
 
-/**
- * @final This class should not be extended and will be marked final in version 4.0
- */
-class ReCaptchaTest extends TestCase
+final class ReCaptchaTest extends TestCase
 {
     private string $siteKey;
 
