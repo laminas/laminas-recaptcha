@@ -12,6 +12,7 @@ use Laminas\ReCaptcha\Exception;
 use Laminas\ReCaptcha\ReCaptcha;
 use Laminas\ReCaptcha\Response as ReCaptchaResponse;
 use Override;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function getenv;
@@ -248,7 +249,7 @@ final class ReCaptchaTest extends TestCase
         static::assertStringContainsString('?hl=en', $html);
     }
 
-    /** @group Laminas-10991 */
+    #[Group('Laminas-10991')]
     public function testHtmlGenerationWithNoScriptElements(): void
     {
         $this->reCaptcha->setSiteKey($this->siteKey);
