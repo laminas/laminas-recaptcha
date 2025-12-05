@@ -148,10 +148,6 @@
       <code><![CDATA[new ReCaptcha\MailHide($this->publicKey, $this->privateKey, $mail, $config)]]></code>
       <code><![CDATA[new ReCaptcha\MailHide()]]></code>
     </DeprecatedClass>
-    <DeprecatedMethod>
-      <code><![CDATA[assertRegExp]]></code>
-      <code><![CDATA[assertRegExp]]></code>
-    </DeprecatedMethod>
     <PossiblyFalsePropertyAssignmentValue>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PRIVATE_KEY')]]></code>
       <code><![CDATA[getenv('TESTS_LAMINAS_SERVICE_RECAPTCHA_MAILHIDE_PUBLIC_KEY')]]></code>
@@ -160,6 +156,10 @@
       <code><![CDATA[empty($this->privateKey)]]></code>
       <code><![CDATA[empty($this->publicKey)]]></code>
     </RiskyTruthyFalsyComparison>
+    <UndefinedMethod>
+      <code><![CDATA[assertRegExp]]></code>
+      <code><![CDATA[assertRegExp]]></code>
+    </UndefinedMethod>
   </file>
   <file src="test/ReCaptchaTest.php">
     <InvalidArgument>
