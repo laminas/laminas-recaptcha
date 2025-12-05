@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\ReCaptcha;
 
-use Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\EmailAddress as EmailAddressValidator;
 use Laminas\Validator\ValidatorInterface;
@@ -32,6 +31,8 @@ use const ENT_COMPAT;
  * Render and validate MailHide reCaptchas.
  *
  * @deprecated This class is deprecated and will be removed in version 4.0
+ *
+ * @final
  */
 class MailHide extends ReCaptcha
 {
@@ -143,6 +144,7 @@ class MailHide extends ReCaptcha
      * See if the mcrypt extension is available
      *
      * @throws MailHideException
+     * @return void
      */
     protected function requireMcrypt()
     {

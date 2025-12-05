@@ -8,6 +8,7 @@ use Exception as PhpException;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Stdlib\ArrayUtils;
+use Override;
 use Stringable;
 use Traversable;
 
@@ -149,6 +150,7 @@ class ReCaptcha implements Stringable
      * Since we can't throw exceptions within this method we will trigger
      * a user warning instead.
      */
+    #[Override]
     public function __toString(): string
     {
         try {
