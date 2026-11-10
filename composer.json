@@ -27,7 +27,7 @@
         "laminas/laminas-validator": "^2.30.1",
         "phpunit/phpunit": "^11.5",
         "psalm/plugin-phpunit": "^0.22.0",
-        "vimeo/psalm": "^6.13"
+        "vimeo/psalm": "^7.0"
     },
     "conflict": {
         "zendframework/zendservice-recaptcha": "*"
